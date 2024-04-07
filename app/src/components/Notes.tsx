@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
-import useNotesStore from "../stores/notesStore";
+import { useEffect } from "react";
+import notesStore from "../stores/notesStore";
 import { Link } from "react-router-dom";
+import DeleteNote from "./DeleteNote";
 
 export default function Notes() {
 
-    const { notes, getNotes } = useNotesStore();
+    const { notes, getNotes, loading } = notesStore();
 
     useEffect(() => {
         getNotes()
-    }, [])
+    }, [getNotes])
+
+    if(loading) return <div>Loading...</div>
 
     return (
-        <div className='flex flex-col w-max m-10'>
+        <div>
             {notes.map(note => (
                 <div className="mb-8" key={note.id}>
                     <h2>Title: {note.title}</h2>
@@ -21,6 +24,7 @@ export default function Notes() {
                     <p>Deadline: {note.deadlineDate}</p>
                     <p>Checked: {note.checked ? 'Yes' : 'No'}</p>
                     <Link to={`/note/${note.id}`}>Edit</Link>
+                    <DeleteNote noteId={note.id} />
                 </div>
             ))}
         </div>
