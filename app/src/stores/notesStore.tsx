@@ -1,18 +1,23 @@
 import { create } from 'zustand'
 import { Note } from '../model/Note'
-import { getDocs, collection, addDoc, DocumentReference, getDoc, deleteDoc, doc } from "firebase/firestore";
+import { getDocs, collection, addDoc, DocumentReference, getDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 interface NotesState {
   notes: Note[];
+  note: Note | null;
   loading: boolean;
   getNotes: () => Promise<void>;
-  createNote: (title: string, description: string, deadlineDate: string) => Promise<void>;
+  getNote: (id: string) => Promise<void>;
+  createNote: (title: string, description: string, creationDate: string, deadlineDate: string) => Promise<void>;
   deleteNote: (id: string) => Promise<void>;
+  updateNote: (id: string, title: string, description: string, deadlineDate: string) => Promise<void>;
 }
 
 const notesStore = create<NotesState>()((set) => ({
     notes: [],
+
+    note: null,
 
     loading: false,
 
@@ -32,15 +37,22 @@ const notesStore = create<NotesState>()((set) => ({
         set({ loading: false })
     },
 
-    createNote: async (title, description, deadlineDate) => {
-        const notesRef = collection(db, "notes")
-
-        const formatDate = (date: Date) => {
-            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    getNote: async (id) => {
+        set({ loading: true })
+        try {
+            const noteRef = doc(db, "notes", id);
+            const docSnap = await getDoc(noteRef);
+            const noteData = { ...docSnap.data(), id: docSnap.id } as Note;
+            set({ note: noteData })
+        } catch (error) {
+            console.error(error);
         }
+        set({ loading: false })
+    },
 
-        const creationDate = formatDate(new Date())
-
+    createNote: async (title, description, creationDate, deadlineDate) => {
+        const notesRef = collection(db, "notes")
+        
         try {
             const docRef: DocumentReference = await addDoc(notesRef, {
                 title,
@@ -79,6 +91,19 @@ const notesStore = create<NotesState>()((set) => ({
             set({ notes: notes.filter(note => note.id !== id) })
         } catch (error) {
             console.log(error)
+        }
+    },
+
+    updateNote: async (id, title, description, deadlineDate) => {
+        const noteDoc = doc(db, "notes", id)
+        try {
+            await updateDoc(noteDoc, {
+                title,
+                description,
+                deadlineDate
+            })
+        } catch (error) {
+            console.error(error)
         }
     }
 

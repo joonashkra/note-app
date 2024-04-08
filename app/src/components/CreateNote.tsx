@@ -23,13 +23,16 @@ export default function CreateNote() {
     }
 
     const formatDate = (date: Date) => {
-        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        const dateString = (date as Date).toDateString()
+        return `${dateString}`;
     }
+
+    const creationDate = formatDate(new Date())
 
     const handleCreateNote = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formattedDeadlineDate = formatDate(noteDeadlineDate as Date);
-        createNote(noteTitle, noteDescription, formattedDeadlineDate);
+        createNote(noteTitle, noteDescription, creationDate, formattedDeadlineDate);
     }
 
     return (

@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import DeleteNote from '../components/DeleteNote';
 import UpdateNote from '../components/UpdateNote';
+import { Link } from "react-router-dom"
 export default function NotePage() {
 
   const { id } = useParams();
@@ -8,8 +9,9 @@ export default function NotePage() {
   return (
     <div>
         <h1>Note: {id}</h1>
-        <UpdateNote />
+        <UpdateNote noteId={id as string}/>
         <DeleteNote noteId={id as string}/>
+        <Link to="/">Go Back Home</Link>
     </div>
   )
 }
