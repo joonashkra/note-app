@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import notesStore from "../stores/notesStore";
 import { Link } from "react-router-dom";
 import DeleteNote from "./DeleteNote";
+import CheckNote from "./CheckNote";
 
 export default function Notes() {
 
@@ -22,7 +23,7 @@ export default function Notes() {
                     <p>Description: {note.description}</p>
                     <p>Created: {note.creationDate}</p>
                     <p>Deadline: {note.deadlineDate}</p>
-                    <p>Checked: {note.checked ? 'Yes' : 'No'}</p>
+                    <CheckNote noteId={note.id} noteChecked={note.checked}/>
                     <Link to={`/note/${note.id}`}>Edit</Link>
                     <DeleteNote noteId={note.id} />
                 </div>

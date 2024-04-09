@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import notesStore from "../stores/notesStore";
+import CheckNote from "./CheckNote";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -54,6 +55,7 @@ export default function UpdateNote({ noteId }: { noteId: string }) {
       <input value={newNoteDescription} onChange={handleNewNoteDescription} className="p-1" placeholder='Description...' />
       <input value={formatDate(newNoteDeadlineDate as Date)} onClick={() => setDisplayCalendar(!displayCalendar)} readOnly />
       <Calendar className={displayCalendar ? "text-black" : "hidden"} onChange={setNewNoteDeadlineDate} value={newNoteDeadlineDate} />
+      <CheckNote noteId={note?.id as string} noteChecked={note?.checked as boolean}/>
       <button type="submit">Update</button>
     </form>
   )

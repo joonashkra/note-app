@@ -37,8 +37,10 @@ export default function CreateNote() {
 
     return (
         <form onSubmit={handleCreateNote} className='flex flex-col w-max items-start gap-2'>
+            <label>Note Info:</label>
             <input onChange={handleNoteTitle} className="p-1" placeholder='Title...' />
             <input onChange={handleNoteDescription} className="p-1" placeholder='Description...' />
+            <label>Enter deadline date:</label>
             <input value={formatDate(noteDeadlineDate as Date)} onClick={() => setDisplayCalendar(!displayCalendar)} readOnly />
             <Calendar className={displayCalendar ? "text-black" : "hidden"} onChange={setNoteDeadlineDate} value={noteDeadlineDate} />
             <button type="submit">Create</button>

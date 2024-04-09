@@ -32,11 +32,11 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="flex flex-col w-max">
+    <div className="flex flex-col w-max gap-2">
         <input type="email" onChange={handleEmailChange} className="mb-4 p-2" placeholder="Email..."/>
         <input type="password" onChange={handlePasswordChange} className="mb-4 p-2" placeholder="Password..."/>
-        <button onClick={signIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Log In</button> 
-        <button onClick={logOut} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Log Out</button> 
+        <button onClick={signIn}>Log In</button> 
+        <button onClick={logOut}>Log Out</button> 
     </div>
   )
 }

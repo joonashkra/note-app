@@ -12,6 +12,7 @@ interface NotesState {
   createNote: (title: string, description: string, creationDate: string, deadlineDate: string) => Promise<void>;
   deleteNote: (id: string) => Promise<void>;
   updateNote: (id: string, title: string, description: string, deadlineDate: string) => Promise<void>;
+  checkNote: (id: string, checked: boolean) => Promise<void>;
 }
 
 const notesStore = create<NotesState>()((set) => ({
@@ -102,6 +103,21 @@ const notesStore = create<NotesState>()((set) => ({
                 description,
                 deadlineDate
             })
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    checkNote: async (id, checked) => {
+        console.log("checkNote")
+
+        const noteDoc = doc(db, "notes", id)
+
+        try {
+            await updateDoc(noteDoc, {
+                checked
+            })
+            console.log("updateDoc")
         } catch (error) {
             console.error(error)
         }
