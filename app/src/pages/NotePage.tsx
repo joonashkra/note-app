@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import DeleteNote from '../components/DeleteNote';
-import UpdateNote from '../components/UpdateNote';
+import DeleteNote from '../components/notes/DeleteNote';
+import UpdateNote from '../components/notes/UpdateNote';
 import { Link } from "react-router-dom"
 export default function NotePage() {
 

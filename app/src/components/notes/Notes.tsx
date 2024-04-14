@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import notesStore from "../stores/notesStore";
 import { Link } from "react-router-dom";
 import DeleteNote from "./DeleteNote";
 import CheckNote from "./CheckNote";
+import { useNotesStore } from "../../stores/notesStore";
 
 export default function Notes() {
 
-    const { notes, getNotes, loading } = notesStore();
+    const { notes, getNotes, loading } = useNotesStore((state) => ({ notes: state.notes, getNotes: state.getNotes, loading: state.loading}))
 
     useEffect(() => {
         getNotes()

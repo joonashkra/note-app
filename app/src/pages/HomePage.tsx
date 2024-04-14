@@ -1,5 +1,5 @@
 
-import Notes from "../components/Notes";
+import Notes from "../components/notes/Notes";
 
 
 export default function HomePage() {

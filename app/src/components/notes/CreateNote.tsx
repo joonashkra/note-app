@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
-import useNotesStore from "../stores/notesStore";
+import { useNotesStore } from "../../stores/notesStore";
+import { formatDate } from "../../utils/dateUtil";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -12,20 +13,7 @@ export default function CreateNote() {
     const [noteDescription, setNoteDescription] = useState("");
     const [noteDeadlineDate, setNoteDeadlineDate] = useState<Value>(new Date());
     const [displayCalendar, setDisplayCalendar] = useState(false);
-    const { createNote } = useNotesStore();
-    
-    const handleNoteTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNoteTitle(e.target.value);
-    }
-
-    const handleNoteDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNoteDescription(e.target.value);
-    }
-
-    const formatDate = (date: Date) => {
-        const dateString = (date as Date).toDateString()
-        return `${dateString}`;
-    }
+    const createNote = useNotesStore((state) => state.createNote);
 
     const creationDate = formatDate(new Date())
 
@@ -38,10 +26,10 @@ export default function CreateNote() {
     return (
         <form onSubmit={handleCreateNote} className='flex flex-col w-max items-start gap-2'>
             <label>Note Info:</label>
-            <input onChange={handleNoteTitle} className="p-1" placeholder='Title...' />
-            <input onChange={handleNoteDescription} className="p-1" placeholder='Description...' />
+            <input name="title" onChange={(e) => setNoteTitle(e.target.value)} className="p-1" placeholder='Title...' />
+            <input name="description" onChange={(e) => setNoteDescription(e.target.value)} className="p-1" placeholder='Description...' />
             <label>Enter deadline date:</label>
-            <input value={formatDate(noteDeadlineDate as Date)} onClick={() => setDisplayCalendar(!displayCalendar)} readOnly />
+            <input name="deadline" value={formatDate(noteDeadlineDate as Date)} onClick={() => setDisplayCalendar(!displayCalendar)} readOnly />
             <Calendar className={displayCalendar ? "text-black" : "hidden"} onChange={setNoteDeadlineDate} value={noteDeadlineDate} />
             <button type="submit">Create</button>
         </form>

@@ -1,17 +1,20 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom';
+import { useAuthStore } from '../../stores/authStore';
 
 export default function NavBar() {
 
     const [dropdown, setDropDown] = useState(false)
+    const { loggedIn, logout } = useAuthStore((state) => ({ loggedIn: state.loggedIn, logout: state.logout }))
 
     const newRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         document.addEventListener("mousedown", handleOutsideClick);
         return () => {
         document.removeEventListener("mousedown", handleOutsideClick);
         };
-    });
+    }, []);
 
     const handleDropDown = () => {
         setDropDown(!dropdown)
@@ -23,16 +26,21 @@ export default function NavBar() {
         }
     }
 
+    const handleLogOut = () => {
+        window.confirm("You are about to be logged out.")
+        logout()
+    }
+
     return (
         <div ref={newRef} className="sm:flex sm:flex-row sm:justify-between flex-col bg-black text-white sm:p-8 p-4 transform ease-in-out duration-200">
             <div className={dropdown ? 'font-navFont flex justify-center items-center text-center text-2xl font-normal mb-6 sm:mb-0' : 'font-navFont flex justify-center items-center text-center text-2xl font-normal mb-2 sm:mb-0'}>
                 <h1>NotesApp</h1>
             </div>
             <nav className={dropdown ? 'sm:flex justify-center items-center text-center' : 'sm:flex hidden justify-center items-center text-center'}>
-                <ul className="flex sm:flex-row flex-col sm:gap-8 md:gap-12 lg:gap-14 gap-4 text-xl font-normal" onClick={handleDropDown}>
+                <ul className="flex sm:flex-row flex-col sm:gap-8 md:gap-12 lg:gap-14 gap-4 text-xl font-normal text-white" onClick={handleDropDown}>
                     <NavLink to="/" className="hover:text-cyan-300">Home</NavLink>
                     <NavLink to="/create" className="hover:text-cyan-300">Create Note</NavLink>
-                    <NavLink to="/login" className="hover:text-cyan-300">Log In</NavLink>
+                    {loggedIn === true ? <NavLink to="/login" onClick={handleLogOut}>Log Out</NavLink> : <NavLink to="/login" className="hover:text-cyan-300">Log In</NavLink>}
                 </ul>
             </nav>
             <div onClick={handleDropDown} className={dropdown ? 'flex justify-center items-center text-center sm:hidden mt-8 transition-all duration-300' : 'flex justify-center items-center text-center sm:hidden transition-all duration-300'}>

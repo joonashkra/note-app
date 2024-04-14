@@ -1,10 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import notesStore from "../stores/notesStore";
+import { useNotesStore } from "../../stores/notesStore";
 import { useState } from "react";
 
-export default function DeleteNote({ noteId }: { noteId: string }) {
+type DeleteNoteProps = {
+  noteId: string;
+}
 
-  const { deleteNote } = notesStore()
+export default function DeleteNote({ noteId }: DeleteNoteProps) {
+
+  const deleteNote = useNotesStore((state) => state.deleteNote)
   const navigate = useNavigate()
   const location = useLocation()
   const [showRedirectMessage, setShowRedirectMessage] = useState(false)

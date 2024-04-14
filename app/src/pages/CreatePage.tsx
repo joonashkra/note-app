@@ -1,5 +1,5 @@
 
-import CreateNote from '../components/CreateNote'
+import CreateNote from '../components/notes/CreateNote'
 
 export default function CreatePage() {
   return (

@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react"
-import notesStore from "../stores/notesStore"
+import { useNotesStore } from "../../stores/notesStore"
 
-export default function CheckNote({ noteId, noteChecked }: { noteId: string, noteChecked: boolean }) {
+type CheckNoteProps = {
+    noteId: string;
+    noteChecked: boolean;
+}
 
-    const { checkNote } = notesStore()
+export default function CheckNote({ noteId, noteChecked }: CheckNoteProps) {
+
+    const checkNote = useNotesStore((state) => state.checkNote)
     const [checked, setChecked] = useState(noteChecked)
 
     useEffect(() => {

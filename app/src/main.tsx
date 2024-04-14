@@ -6,7 +6,8 @@ import LoginPage from './pages/LoginPage'
 import ErrorPage from './pages/ErrorPage'
 import NotePage from './pages/NotePage'
 import CreatePage from './pages/CreatePage'
-import NavBarWrapper from './components/NavBarWrapper'
+import NavBarWrapper from './components/general/NavBarWrapper'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />,
+        element: (<ProtectedRoute><HomePage /></ProtectedRoute>)
       },
       {
         path: '/login',
@@ -23,19 +24,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/note/:id',
-        element: <NotePage />
+        element: (<ProtectedRoute><NotePage /></ProtectedRoute>)
       },
       {
         path: '/create',
-        element: <CreatePage />
+        element: (<ProtectedRoute><CreatePage /></ProtectedRoute>)
       },
     ],
-    errorElement: <ErrorPage />
+    errorElement: (<ProtectedRoute><ErrorPage /></ProtectedRoute>)
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <div>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
   </div>
 )

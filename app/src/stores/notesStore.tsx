@@ -1,9 +1,9 @@
 import { create } from 'zustand'
-import { Note } from '../model/Note'
+import { Note } from '../types/Note'
 import { getDocs, collection, addDoc, DocumentReference, getDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-interface NotesState {
+type NotesStore = {
   notes: Note[];
   note: Note | null;
   loading: boolean;
@@ -15,7 +15,7 @@ interface NotesState {
   checkNote: (id: string, checked: boolean) => Promise<void>;
 }
 
-const notesStore = create<NotesState>()((set) => ({
+export const useNotesStore = create<NotesStore>()((set) => ({
     notes: [],
 
     note: null,
@@ -74,7 +74,7 @@ const notesStore = create<NotesState>()((set) => ({
                     checked: docSnapshot.data().checked,
                 }
 
-                const { notes } = notesStore.getState()
+                const { notes } = useNotesStore.getState()
 
                 set({ notes: [...notes, newNote] })
             }
@@ -86,7 +86,7 @@ const notesStore = create<NotesState>()((set) => ({
 
     deleteNote: async (id) => {
         const noteDoc = doc(db, "notes", id)
-        const { notes } = notesStore.getState()
+        const { notes } = useNotesStore.getState()
         try {
             await deleteDoc(noteDoc)
             set({ notes: notes.filter(note => note.id !== id) })
@@ -124,6 +124,3 @@ const notesStore = create<NotesState>()((set) => ({
     }
 
 }))
-
-
-export default notesStore
