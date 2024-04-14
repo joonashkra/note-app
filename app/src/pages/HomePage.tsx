@@ -6,7 +6,7 @@ export default function HomePage() {
 
   return (
     <div className='flex flex-col m-10'>
-      <h1>HomePage</h1>
+      <h1 className="text-3xl mb-5">Home</h1>
       <Notes/>
     </div>
   )

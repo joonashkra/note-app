@@ -34,9 +34,12 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
     
     const handleUpdateNote = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const formattedDeadlineDate = formatDate(newNoteDeadlineDate as Date);
-        await updateNote(noteId, newNoteTitle, newNoteDescription, formattedDeadlineDate);
-        window.location.reload()
+        const confirmUpdate = window.confirm("Do you wish to apply these changes permanently?")
+        if(confirmUpdate) {
+          const formattedDeadlineDate = formatDate(newNoteDeadlineDate as Date);
+          await updateNote(noteId, newNoteTitle, newNoteDescription, formattedDeadlineDate);
+          window.location.reload()
+        }
     }
 
     if(loading) return <div>Loading...</div>

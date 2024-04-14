@@ -109,15 +109,12 @@ export const useNotesStore = create<NotesStore>()((set) => ({
     },
 
     checkNote: async (id, checked) => {
-        console.log("checkNote")
-
         const noteDoc = doc(db, "notes", id)
 
         try {
             await updateDoc(noteDoc, {
                 checked
             })
-            console.log("updateDoc")
         } catch (error) {
             console.error(error)
         }
