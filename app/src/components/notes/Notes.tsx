@@ -17,7 +17,7 @@ export default function Notes() {
     return (
         <div>
             {notes.map(note => (
-                <div className="mb-8 p-3 bg-black/80 rounded-md" key={note.id}>
+                <div className="mb-8 p-3 bg-dark rounded-md" key={note.id}>
                     <div className="flex flex-row justify-between">
                         <h2 className="text-2xl">{note.title}</h2>
                         <EditNoteBtn note={note} />
@@ -30,10 +30,10 @@ export default function Notes() {
                     </div>
                     <div className="flex flex-row justify-between m-1">
                         <div className="flex flex-row gap-2">
-                            <p>Completed:</p>
+                            <p>Done:</p>
                             <CheckNote noteId={note.id} noteChecked={note.checked}/>
                         </div>
-                        <div className="flex flex-row m-1">
+                        <div className="flex flex-row">
                             <DeleteNote noteId={note.id} />
                         </div>
                     </div>

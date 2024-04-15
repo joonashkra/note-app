@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
+import { Menu } from '../../assets/Menu';
+import { ChevronUp } from '../../assets/ChevronUp';
 
 export default function NavBar() {
 
     const [dropdown, setDropDown] = useState(false)
     const { loggedIn, logout } = useAuthStore((state) => ({ loggedIn: state.loggedIn, logout: state.logout }))
 
-    const newRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleOutsideClick);
@@ -21,7 +23,7 @@ export default function NavBar() {
     }
 
     const handleOutsideClick = (e: MouseEvent) => {
-        if (newRef.current && !newRef.current.contains(e.target as Node)) {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
             setDropDown(false)
         }
     }
@@ -32,8 +34,8 @@ export default function NavBar() {
     }
 
     return (
-        <div ref={newRef} className="sm:flex sm:flex-row sm:justify-between flex-col bg-black/80 text-white sm:p-8 p-4 transform ease-in-out duration-200">
-            <div className={dropdown ? 'font-navFont flex justify-center items-center text-center text-sm font-normal mb-6 sm:mb-0' : 'font-navFont flex justify-center items-center text-center text-sm font-normal mb-2 sm:mb-0'}>
+        <div ref={dropdownRef} className="sm:flex sm:flex-row sm:justify-between flex-col bg-black/80 text-white sm:p-8 p-4 transform ease-in-out duration-200">
+            <div className={dropdown ? 'font-navFont flex justify-center items-center text-center text-xs font-normal mb-6 sm:mb-0' : 'font-navFont flex justify-center items-center text-center text-xs font-normal mb-2 sm:mb-0'}>
                 <h1>NoteVault</h1>
             </div>
             <nav className={dropdown ? 'sm:flex justify-center items-center text-center' : 'sm:flex hidden justify-center items-center text-center'}>
@@ -44,8 +46,8 @@ export default function NavBar() {
                 </ul>
             </nav>
             <div onClick={handleDropDown} className={dropdown ? 'flex justify-center items-center text-center sm:hidden mt-8 transition-all duration-300' : 'flex justify-center items-center text-center sm:hidden transition-all duration-300'}>
-                {!dropdown && <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5ebbe6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>}
-                {dropdown && <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5ebbe6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg>}
+                {!dropdown && <Menu/>}
+                {dropdown && <ChevronUp/>}
             </div>
         </div>
     );
