@@ -9,7 +9,7 @@ type EditNoteBtnProps = {
 
 export default function EditNoteBtn({ note }: EditNoteBtnProps) {
   return (
-    <Link to={`/note/${note.id}`} className='m-1'>
+    <Link to={`/note/${note.id}`} className='m-1' title="Edit Note">
         <Edit/>
     </Link>
   )

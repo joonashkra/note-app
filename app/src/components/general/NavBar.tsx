@@ -35,17 +35,17 @@ export default function NavBar() {
 
     return (
         <div ref={dropdownRef} className="sm:flex sm:flex-row sm:justify-between flex-col bg-black/80 text-white sm:p-8 p-4 transform ease-in-out duration-200">
-            <div className={dropdown ? 'font-navFont flex justify-center items-center text-center text-xs font-normal mb-6 sm:mb-0' : 'font-navFont flex justify-center items-center text-center text-xs font-normal mb-2 sm:mb-0'}>
-                <h1>NoteVault</h1>
+            <div className={dropdown ? 'font-navFont flex justify-center items-center text-center text-4xl font-normal mb-6 sm:mb-0' : 'font-navFont flex justify-center items-center text-center text-4xl font-normal mb-2 sm:mb-0'}>
+                <h2>NoteVault</h2>
             </div>
             <nav className={dropdown ? 'sm:flex justify-center items-center text-center' : 'sm:flex hidden justify-center items-center text-center'}>
                 <ul className="flex sm:flex-row flex-col sm:gap-8 md:gap-12 lg:gap-14 gap-4 text-xl font-normal" onClick={handleDropDown}>
-                    <NavLink to="/" className="hover:text-light text-white">Home</NavLink>
-                    <NavLink to="/create" className="hover:text-light text-white">Create Note</NavLink>
-                    {loggedIn === true ? <NavLink to="/login" onClick={handleLogOut} className="text-white hover:text-light">Log Out</NavLink> : <NavLink to="/login" className="text-white hover:text-light">Log In</NavLink>}
+                    <NavLink title='Navigate to Homepage' to="/" className={({ isActive }) => isActive ? "text-light" : "hover:text-light text-white"}>Home</NavLink>
+                    <NavLink title='Navigate to Create a Note' to="/create" className={({ isActive }) => isActive ? "text-light" : "hover:text-light text-white"}>Create Note</NavLink>
+                    {loggedIn === true ? <NavLink title='Click to Log Out' to="/login" onClick={handleLogOut} className="text-white hover:text-light">Log Out</NavLink> : <NavLink title='Navigate to Login' to="/login" className={({ isActive }) => isActive ? "text-light" : "hover:text-light text-white"}>Log In</NavLink>}
                 </ul>
             </nav>
-            <div onClick={handleDropDown} className={dropdown ? 'flex justify-center items-center text-center sm:hidden mt-8 transition-all duration-300' : 'flex justify-center items-center text-center sm:hidden transition-all duration-300'}>
+            <div title={dropdown ? "Close Navigation Menu" : "Open Navigation Menu"} onClick={handleDropDown} className={dropdown ? 'flex justify-center items-center text-center sm:hidden mt-8 transition-all duration-300' : 'flex justify-center items-center text-center sm:hidden transition-all duration-300'}>
                 {!dropdown && <Menu/>}
                 {dropdown && <ChevronUp/>}
             </div>

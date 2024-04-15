@@ -26,8 +26,8 @@ export default function CheckNote({ noteId, noteChecked }: CheckNoteProps) {
     }
 
     return (
-        <div className="mt-0.5">
-            <input id="checked" type="checkbox" onChange={handleChecked} checked={checked} className="hover:cursor-pointer absolute peer shrink-0 appearance-none w-6 h-6 bg-black/40 rounded-2xl checked:opacity-0 transition-all ease-in-out duration-1000"/>
+        <div>
+            <input id="checked" type="checkbox" onChange={handleChecked} checked={checked} className="focus:cursor-pointer hover:cursor-pointer absolute peer shrink-0 appearance-none w-6 h-6 bg-black/40 rounded-2xl checked:opacity-0 transition-all ease-in-out duration-1000"/>
             {checked ? <Check /> : <X/>}
         </div>
     )
