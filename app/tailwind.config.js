@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        flash: 'flash 3s ease-in-out',
+      },
+      keyframes: {
+        flash: {
+          '50%': { backgroundColor: '#ffffff10' },
+        },
+      },
+    },
     colors: {
       'white': '#F1EFEF',
       'light': '#5ebbe6',

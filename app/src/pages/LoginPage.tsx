@@ -8,10 +8,10 @@ export default function LoginPage() {
 
   return (
     <div className='flex flex-col m-10'>
-      <h1 className="text-3xl mb-5">Log In</h1>
+      <h1 className="text-3xl mb-5">{isLogin ? "Log In" : "Sign Up"}</h1>
       {isLogin ? <LoginForm /> : <SignupForm />}
       <p className='hover:text-light hover:cursor-pointer my-4' onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? "No account yet? Sign Up here!" : "Go back to Log In here!"}
+        {isLogin ? "Click here to Sign Up!" : "Click here to Log In!"}
       </p>
     </div>
   )

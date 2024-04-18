@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { auth } from '../config/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 type AuthStore = {
     userid: string | null;
     loggedIn: boolean;
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
+    signup: (email: string, password: string) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthStore>((set) => {
@@ -33,6 +34,14 @@ export const useAuthStore = create<AuthStore>((set) => {
                 await signOut(auth);
             } catch (error) {
                 console.error(error);
+            }
+        },
+
+        signup: async (email, password) => {
+            try {
+              await createUserWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+              console.error(error);
             }
         },
 

@@ -7,7 +7,7 @@ import { formatDate } from "../../utils/dateUtil";
 import DeleteNote from "./DeleteNote";
 import { Save } from "../../assets/Save";
 import { Cancel } from "../../assets/Cancel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type UpdateNoteProps = {
   noteId: string;
@@ -22,6 +22,7 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
     const [newNoteDeadlineDate, setNewNoteDeadlineDate] = useState<Value>(new Date());
     const [noteChecked, setNoteChecked] = useState(false)
     const { updateNote, getNote, note, loading } = useNotesStore((state) => ({ updateNote: state.updateNote, getNote: state.getNote, note: state.note, loading: state.loading }));
+    const navigate = useNavigate()
 
     useEffect(() => {
       getNote(noteId)
@@ -37,18 +38,13 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
       }
     }, [note])
     
-    const handleUpdateNote = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateNote = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        try {
-          const confirmUpdate = window.confirm("Do you wish to apply these changes permanently?")
-          if(confirmUpdate) {
-            const formattedDeadlineDate = formatDate(newNoteDeadlineDate as Date);
-            await updateNote(noteId, newNoteTitle, newNoteDescription, formattedDeadlineDate);
-            window.location.reload()
-          }
-          window.alert("Update successful.")
-        } catch (error) {
-          console.error(error)
+        const confirmUpdate = window.confirm("Do you wish to apply these changes permanently?")
+        if(confirmUpdate) {
+          const formattedDeadlineDate = formatDate(newNoteDeadlineDate as Date);
+          updateNote(noteId, newNoteTitle, newNoteDescription, formattedDeadlineDate);
+          navigate("/");
         }
     }
 
@@ -62,8 +58,8 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
         <label htmlFor="description" className="text-xl">New Description</label>
         <textarea rows={3} maxLength={200} value={newNoteDescription} onChange={(e) => setNewNoteDescription(e.target.value)} className="p-2 rounded-sm shadow-sm shadow-dark bg-dark focus:border-black" placeholder='Write a description for note...' required/>
       </div>
-      <div className="flex flex-col gap-2">
-        <label title="Pick a deadline date for note."  htmlFor="deadline" className="text-xl">New Deadline Date</label>
+      <div title="Pick a deadline date for note." className="flex flex-col gap-2">
+        <label htmlFor="deadline" className="text-xl">New Deadline Date</label>
         <Calendar onChange={setNewNoteDeadlineDate} value={newNoteDeadlineDate} minDate={new Date()}/>
       </div>
       <div title="Set Checked" className="flex flex-row gap-2 items-center">

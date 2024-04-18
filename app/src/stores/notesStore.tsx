@@ -6,6 +6,7 @@ import { db } from "../config/firebase";
 type NotesStore = {
   notes: Note[];
   note: Note | null;
+  newNote: string | null;
   loading: boolean;
   getNotes: () => Promise<void>;
   getNote: (id: string) => Promise<void>;
@@ -22,6 +23,8 @@ export const useNotesStore = create<NotesStore>()((set) => ({
 
     loading: false,
 
+    newNote: null,
+
     getNotes: async () => {
         set({ loading: true })
         const notesRef = collection(db, "notes")
@@ -35,7 +38,7 @@ export const useNotesStore = create<NotesStore>()((set) => ({
         } catch (error) {
             console.error(error)
         }
-        set({ loading: false })
+        set({ loading: false, newNote: null })
     },
 
     getNote: async (id) => {
@@ -52,7 +55,9 @@ export const useNotesStore = create<NotesStore>()((set) => ({
     },
 
     createNote: async (title, description, creationDate, deadlineDate) => {
+        set({loading: true})
         const notesRef = collection(db, "notes")
+        set({ newNote: null })
         
         try {
             const docRef: DocumentReference = await addDoc(notesRef, {
@@ -74,14 +79,13 @@ export const useNotesStore = create<NotesStore>()((set) => ({
                     checked: docSnapshot.data().checked,
                 }
 
-                const { notes } = useNotesStore.getState()
-
-                set({ notes: [...notes, newNote] })
+                set({ newNote: newNote.id })
             }
 
         } catch (error) {
             console.error(error)
         }
+        set({loading: false})
     },
 
     deleteNote: async (id) => {
@@ -96,6 +100,8 @@ export const useNotesStore = create<NotesStore>()((set) => ({
     },
 
     updateNote: async (id, title, description, deadlineDate) => {
+        set({loading: true})
+        set({ newNote: null })
         const noteDoc = doc(db, "notes", id)
         try {
             await updateDoc(noteDoc, {
@@ -103,9 +109,11 @@ export const useNotesStore = create<NotesStore>()((set) => ({
                 description,
                 deadlineDate
             })
+            set({ newNote: id })
         } catch (error) {
             console.error(error)
         }
+        set({loading: false})
     },
 
     checkNote: async (id, checked) => {

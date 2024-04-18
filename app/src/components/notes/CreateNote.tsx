@@ -5,6 +5,7 @@ import { formatDate } from "../../utils/dateUtil";
 import './CalendarStyle.css'
 import { Link } from "react-router-dom";
 import { Cancel } from "../../assets/Cancel";
+import { useNavigate } from 'react-router-dom';
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -16,6 +17,7 @@ export default function CreateNote() {
     const [noteDeadlineDate, setNoteDeadlineDate] = useState<Value>(new Date());
     const createNote = useNotesStore((state) => state.createNote);
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         inputRef.current?.focus()
@@ -27,6 +29,7 @@ export default function CreateNote() {
         e.preventDefault()
         const formattedDeadlineDate = formatDate(noteDeadlineDate as Date);
         createNote(noteTitle, noteDescription, creationDate, formattedDeadlineDate);
+        navigate("/");
     }
 
     return (
