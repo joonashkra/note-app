@@ -34,11 +34,11 @@ export const useNotesStore = create<NotesStore>()((set) => ({
             ...(doc.data() as Note),
             id: doc.id
             }))
-            set({ notes: filteredData  })
+            set({ notes: filteredData })
         } catch (error) {
             console.error(error)
         }
-        set({ loading: false, newNote: null })
+        set({ loading: false })
     },
 
     getNote: async (id) => {
@@ -55,7 +55,7 @@ export const useNotesStore = create<NotesStore>()((set) => ({
     },
 
     createNote: async (title, description, creationDate, deadlineDate) => {
-        set({loading: true})
+        set({ loading: true })
         const notesRef = collection(db, "notes")
         set({ newNote: null })
         
@@ -79,13 +79,27 @@ export const useNotesStore = create<NotesStore>()((set) => ({
                     checked: docSnapshot.data().checked,
                 }
 
-                set({ newNote: newNote.id })
+                set({ newNote: newNote.id });
+
+                //Handle animation
+                let animationCompleted = false;
+                const onAnimationEnd = () => {
+                    if (!animationCompleted) {
+                        set({ newNote: null });
+                        animationCompleted = true;
+                    }
+                };
+                const animatedElement = document.getElementById(newNote.id);
+                if (animatedElement) {
+                    animatedElement.addEventListener("animationend", onAnimationEnd);
+                }
             }
 
         } catch (error) {
             console.error(error)
         }
         set({loading: false})
+
     },
 
     deleteNote: async (id) => {
@@ -93,32 +107,45 @@ export const useNotesStore = create<NotesStore>()((set) => ({
         const { notes } = useNotesStore.getState()
         try {
             await deleteDoc(noteDoc)
-            set({ notes: notes.filter(note => note.id !== id) })
+            set({ notes: notes.filter(note => note.id !== id), newNote: null })
         } catch (error) {
             console.log(error)
         }
     },
 
     updateNote: async (id, title, description, deadlineDate) => {
-        set({loading: true})
-        set({ newNote: null })
-        const noteDoc = doc(db, "notes", id)
+        set({ loading: true })
         try {
-            await updateDoc(noteDoc, {
+            const noteRef = doc(db, "notes", id);
+            await updateDoc(noteRef, {
                 title,
                 description,
-                deadlineDate
-            })
-            set({ newNote: id })
+                deadlineDate,
+            });
+
+            set({ newNote: id });
+
+            //Handle animation
+            let animationCompleted = false;
+            const onAnimationEnd = () => {
+                if (!animationCompleted) {
+                    set({ newNote: null });
+                    animationCompleted = true;
+                }
+            };
+            const animatedElement = document.getElementById(id);
+            if (animatedElement) {
+                animatedElement.addEventListener("animationend", onAnimationEnd);
+            }
+            
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-        set({loading: false})
+        set({ loading: false });
     },
 
     checkNote: async (id, checked) => {
         const noteDoc = doc(db, "notes", id)
-
         try {
             await updateDoc(noteDoc, {
                 checked

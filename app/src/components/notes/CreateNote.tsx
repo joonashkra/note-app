@@ -21,6 +21,7 @@ export default function CreateNote() {
 
     useEffect(() => {
         inputRef.current?.focus()
+        useNotesStore.setState({ newNote: null })
     }, [])
 
     const creationDate = formatDate(new Date())

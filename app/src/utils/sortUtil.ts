@@ -18,5 +18,13 @@ export const sortNotes = (notes: Note[], sortOption: string) => {
         });
     }
 
+    if (sortOption === "recent") {
+        notes.sort((a, b) => {
+            const dateA = Date.parse(a.creationDate);
+            const dateB = Date.parse(b.creationDate);
+            return dateB - dateA;
+        });
+    }
+
     return notes;
 }

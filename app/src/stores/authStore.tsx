@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { auth } from '../config/firebase';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { useNotesStore } from './notesStore';
 
 type AuthStore = {
     userid: string | null;
@@ -32,6 +33,7 @@ export const useAuthStore = create<AuthStore>((set) => {
         logout: async () => {
             try {
                 await signOut(auth);
+                useNotesStore.setState({ newNote: null })
             } catch (error) {
                 console.error(error);
             }

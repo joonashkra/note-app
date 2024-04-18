@@ -26,6 +26,7 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
 
     useEffect(() => {
       getNote(noteId)
+      useNotesStore.setState({ newNote: null })
     }, [getNote, noteId])
 
     useEffect(() => {
@@ -38,13 +39,13 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
       }
     }, [note])
     
-    const handleUpdateNote = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateNote = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const confirmUpdate = window.confirm("Do you wish to apply these changes permanently?")
         if(confirmUpdate) {
           const formattedDeadlineDate = formatDate(newNoteDeadlineDate as Date);
-          updateNote(noteId, newNoteTitle, newNoteDescription, formattedDeadlineDate);
-          navigate("/");
+          await updateNote(noteId, newNoteTitle, newNoteDescription, formattedDeadlineDate);
+          navigate("/")
         }
     }
 
