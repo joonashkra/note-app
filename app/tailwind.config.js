@@ -14,6 +14,9 @@ export default {
           '50%': { backgroundColor: '#ffffff10' },
         },
       },
+      fontFamily: {
+        Manrope: ["Manrope", "sans-serif"]
+      },
     },
     colors: {
       'white': '#F1EFEF',
