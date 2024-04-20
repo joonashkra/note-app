@@ -15,7 +15,7 @@ export default {
         },
       },
       fontFamily: {
-        Manrope: ["Manrope", "sans-serif"]
+        pjs: ["Plus Jakarta Sans", "sans-serif"]
       },
     },
     colors: {

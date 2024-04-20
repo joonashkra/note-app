@@ -4,7 +4,6 @@ import { useNotesStore } from "../../stores/notesStore";
 import { formatDate } from "../../utils/dateUtil";
 import './CalendarStyle.css'
 import { Link } from "react-router-dom";
-import { Cancel } from "../../assets/Cancel";
 import { useNavigate } from 'react-router-dom';
 
 type ValuePiece = Date | null;
@@ -46,8 +45,8 @@ export default function CreateNote() {
                 <Calendar onChange={setNoteDeadlineDate} value={noteDeadlineDate} minDate={new Date()}/>
             </div>
             <div className="flex flex-row justify-between items-center">
-                <button title="Create Note" className="hover:border-light focus:border-light bg-dark rounded-md" type="submit">Create</button>
-                <Link to="/"><button title="Cancel" className="hover:border-light focus:border-light bg-dark rounded-md" type="button"><Cancel/></button></Link>
+                <button title="Create Note" className="hover:border-light hover:text-light bg-dark rounded-md" type="submit">Create</button>
+                <Link to="/" className="hover:text-white text-white"><button title="Cancel" className="hover:border-red hover:text-red focus:border-light bg-dark rounded-md" type="button">Cancel</button></Link>
             </div>
         </form>
     );

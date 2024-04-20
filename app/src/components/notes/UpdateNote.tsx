@@ -68,10 +68,10 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
         <CheckNote noteId={noteId} noteChecked={noteChecked}/>
       </div>
       <div className="flex flex-row justify-between items-center">
-        <button title="Save Changes" className="hover:border-light focus:border-light bg-dark rounded-md w-max" type="submit"><Save/></button>
+        <button title="Save Changes" className="hover:border-light focus:border-light bg-dark rounded-md w-max flex gap-2" type="submit"><Save/></button>
         <div className="flex flex-row gap-2">
-          <button title="Delete Note" className="hover:border-light focus:border-light bg-dark rounded-md w-max" type="button"><DeleteNote noteId={noteId}/></button>
-          <Link to="/"><button title="Cancel" className="hover:border-light focus:border-light bg-dark rounded-md" type="button"><Cancel/></button></Link>
+          <DeleteNote noteId={noteId}/>
+          <Link to="/"><button title="Cancel" className="hover:border-red focus:border-red bg-dark rounded-md" type="button"><Cancel/></button></Link>
         </div>
       </div>
     </form>

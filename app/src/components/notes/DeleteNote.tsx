@@ -22,11 +22,13 @@ export default function DeleteNote({ noteId }: DeleteNoteProps) {
             }, 2000);
         }
     }
-}
+  }
+
+  if (location.pathname === '/') {
+    return <div onClick={handleDeleteNote} className="hover:cursor-pointer"><Trash/></div>
+  }
 
   return (
-    <div onClick={handleDeleteNote} className="hover:cursor-pointer focus:cursor-pointer ">
-        <Trash/>
-    </div>
+    <button title="Delete Note" onClick={handleDeleteNote} className="hover:border-red focus:border-light bg-dark rounded-md w-max" type="button"><Trash/></button>
   )
 }

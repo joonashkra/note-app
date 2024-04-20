@@ -36,7 +36,7 @@ export default function Notes({ showCompleted, sortOption}: NotesProps) {
     if(loading) return <div>Loading...</div>
 
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 sm:grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
             {notes.length < 1 && <div><p>No notes yet.</p><Link to="/create" className="hover:text-light/80">Click here to start adding notes!</Link></div>}
             {sortNotes(filteredNotes, sortOption).map(note => (
                 <div className={`p-3 bg-dark rounded-sm ${newNote && newNote === note.id ? "animate-flash" : ""}`} key={note.id} id={note.id}>

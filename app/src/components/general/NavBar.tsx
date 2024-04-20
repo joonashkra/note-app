@@ -42,10 +42,10 @@ export default function NavBar() {
                 <ul className="flex sm:flex-row flex-col sm:gap-8 md:gap-12 lg:gap-14 gap-4 text-xl font-normal" onClick={handleDropDown}>
                     <NavLink title='Navigate to Homepage' to="/" className={({ isActive }) => isActive ? "text-light hover:text-light/80" : "hover:text-light text-white"}>Home</NavLink>
                     <NavLink title='Navigate to Create a Note' to="/create" className={({ isActive }) => isActive ? "text-light hover:text-light/80" : "hover:text-light text-white"}>Create Note</NavLink>
-                    {loggedIn === true ? <NavLink title='Click to Log Out' to="/login" onClick={handleLogOut} className="text-white hover:text-light">Log Out</NavLink> : <NavLink title='Navigate to Login' to="/login" className={({ isActive }) => isActive ? "text-light hover:text-light/80" : "hover:text-light text-white"}>Log In</NavLink>}
+                    {loggedIn === true ? <NavLink title='Click to Log Out' to="/login" onClick={handleLogOut} className="text-white hover:text-red">Log Out</NavLink> : <NavLink title='Navigate to Login' to="/login" className={({ isActive }) => isActive ? "text-light hover:text-light/80" : "hover:text-light text-white"}>Log In</NavLink>}
                 </ul>
             </nav>
-            <div title={dropdown ? "Close Navigation Menu" : "Open Navigation Menu"} onClick={handleDropDown} className={dropdown ? 'flex justify-center items-center text-center sm:hidden mt-8 transition-all duration-300' : 'flex justify-center items-center text-center sm:hidden transition-all duration-300'}>
+            <div title={dropdown ? "Close Navigation Menu" : "Open Navigation Menu"} onClick={handleDropDown} className={dropdown ? 'flex justify-center items-center text-center sm:hidden mt-8 transition-all duration-300 hover:cursor-pointer' : 'flex justify-center items-center text-center sm:hidden transition-all duration-300 hover:cursor-pointer'}>
                 {!dropdown && <Menu/>}
                 {dropdown && <ChevronUp/>}
             </div>
