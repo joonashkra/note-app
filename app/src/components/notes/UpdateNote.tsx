@@ -5,8 +5,6 @@ import { useNotesStore } from "../../stores/notesStore";
 import CheckNote from "./CheckNote";
 import { formatDate } from "../../utils/dateUtil";
 import DeleteNote from "./DeleteNote";
-import { Save } from "../../assets/Save";
-import { Cancel } from "../../assets/Cancel";
 import { Link, useNavigate } from "react-router-dom";
 
 type UpdateNoteProps = {
@@ -52,26 +50,27 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
     if(loading) return <div>Loading...</div>
 
   return (
-    <form onSubmit={handleUpdateNote} className='flex flex-col gap-6'>
-      <div className="flex flex-col gap-2">
+    <form onSubmit={handleUpdateNote} className='flex flex-col gap-6 w-full sm:items-center'>
+      <div className="flex flex-col gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
+        <h1 className="text-3xl mb-3">Edit Note</h1>
         <label htmlFor="title" className="text-xl">New Title</label>
-        <input maxLength={21} value={newNoteTitle} onChange={(e) => setNewNoteTitle(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder='Write a title for note...' required/>
+        <input maxLength={20} value={newNoteTitle} onChange={(e) => setNewNoteTitle(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder='Write a title for note...' required/>
         <label htmlFor="description" className="text-xl">New Description</label>
-        <textarea rows={3} maxLength={200} value={newNoteDescription} onChange={(e) => setNewNoteDescription(e.target.value)} className="p-2 rounded-sm shadow-sm shadow-dark bg-dark focus:border-black" placeholder='Write a description for note...' required/>
+        <textarea rows={4} maxLength={250} value={newNoteDescription} onChange={(e) => setNewNoteDescription(e.target.value)} className="p-2 rounded-sm shadow-sm shadow-dark bg-dark focus:border-black" placeholder='Write a description for note...' required/>
       </div>
-      <div title="Pick a deadline date for note." className="flex flex-col gap-2">
+      <div title="Pick a deadline date for note." className="flex flex-col gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
         <label htmlFor="deadline" className="text-xl">New Deadline Date</label>
         <Calendar onChange={setNewNoteDeadlineDate} value={newNoteDeadlineDate} minDate={new Date()}/>
       </div>
-      <div title="Set Checked" className="flex flex-row gap-2 items-center">
-        <p>Done:</p>
+      <div title="Set Checked" className="flex flex-row justify-between sm:justify-start items-center gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
+        <p>Mark as Done:</p>
         <CheckNote noteId={noteId} noteChecked={noteChecked}/>
       </div>
-      <div className="flex flex-row justify-between items-center">
-        <button title="Save Changes" className="hover:border-light focus:border-light bg-dark rounded-md w-max flex gap-2" type="submit"><Save/></button>
+      <div className="flex flex-row justify-between items-center lg:w-1/3 md:w-1/2 sm:w-full">
+        <button title="Save Changes" className="hover:text-light hover:border-light focus:border-light bg-dark rounded-md w-max flex gap-2" type="submit">Save</button>
         <div className="flex flex-row gap-2">
           <DeleteNote noteId={noteId}/>
-          <Link to="/"><button title="Cancel" className="hover:border-red focus:border-red bg-dark rounded-md" type="button"><Cancel/></button></Link>
+          <Link to="/"><button title="Cancel" className="text-white hover:text-red hover:border-red focus:border-red bg-dark rounded-md" type="button">Cancel</button></Link>
         </div>
       </div>
     </form>

@@ -33,18 +33,19 @@ export default function CreateNote() {
     }
 
     return (
-        <form onSubmit={handleCreateNote} className='flex flex-col gap-5'>
-            <div className="flex flex-col gap-2">
+        <form onSubmit={handleCreateNote} className='flex flex-col gap-6 w-full sm:items-center'>
+            <div className="flex flex-col gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
+                <h1 className="text-3xl mb-4">Create a new note</h1>
                 <label htmlFor="title" className="text-xl">Title</label>
-                <input maxLength={21} ref={inputRef} name="title" onChange={(e) => setNoteTitle(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder='Write a title for note...' required/>
+                <input maxLength={20} ref={inputRef} name="title" onChange={(e) => setNoteTitle(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder='Write a title for note...' required/>
                 <label htmlFor="description" className="text-xl">Description</label>
-                <textarea maxLength={200} name="description" onChange={(e) => setNoteDescription(e.target.value)} rows={4} className="p-2 rounded-sm shadow-sm shadow-dark bg-dark focus:border-black" placeholder='Write a description for note...' required/>
+                <textarea maxLength={250} name="description" onChange={(e) => setNoteDescription(e.target.value)} rows={4} className="p-2 rounded-sm shadow-sm shadow-dark bg-dark focus:border-black" placeholder='Write a description for note...' required/>
             </div>
-            <div title="Pick a deadline date for note." className="flex flex-col gap-2">
+            <div title="Pick a deadline date for note." className="flex flex-col gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
                 <label htmlFor="deadline" className="text-xl">Deadline date</label>
                 <Calendar onChange={setNoteDeadlineDate} value={noteDeadlineDate} minDate={new Date()}/>
             </div>
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-between items-center lg:w-1/3 md:w-1/2 sm:w-full">
                 <button title="Create Note" className="hover:border-light hover:text-light bg-dark rounded-md" type="submit">Create</button>
                 <Link to="/" className="hover:text-white text-white"><button title="Cancel" className="hover:border-red hover:text-red focus:border-light bg-dark rounded-md" type="button">Cancel</button></Link>
             </div>

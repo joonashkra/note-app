@@ -6,7 +6,6 @@ export default function NotePage() {
 
   return (
     <div className='flex flex-col m-5'>
-        <h1 className="text-3xl mb-5">Update Note</h1>
         <UpdateNote noteId={id as string}/>
     </div>
   )

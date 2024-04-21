@@ -23,7 +23,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className='flex flex-col m-5 gap-6'>
+    <div className='flex flex-col m-5 sm:gap-6 gap-4'>
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-3xl">Home</h1>
         <button className="hover:border-light focus:border-light bg-dark rounded-md sm:hidden" onClick={() => setdisplayFilterOptions(!displayFilterOptions)}><Filter/></button>
@@ -32,7 +32,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className="flex flex-col gap-5">
-        <div className="sm:hidden">
+        <div className="sm:hidden flex">
           <FilterNotes displayFilterOptions={displayFilterOptions} sortOption={sortOption} handleSortOption={handleSortOption} showCompleted={showCompleted} handleShowCompleted={handleShowCompleted}/>
         </div>
         <Notes showCompleted={showCompleted} sortOption={sortOption} />
