@@ -7,7 +7,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate()
-  const { login, loggedIn } = useAuthStore((state) => ({ login: state.login, loggedIn: state.loggedIn, logout: state.logout }))
+  const { login, loggedIn } = useAuthStore((state) => ({ login: state.login, loggedIn: state.loggedIn }))
   const [showError, setShowError] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -28,7 +28,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className='flex flex-col gap-5' onSubmit={handleLogin}>
+    <form className='flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2' onSubmit={handleLogin}>
         <input ref={inputRef} type="email" onChange={(e) => setEmail(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder="Email..." required/>
         <input type="password" onChange={(e) => setPassword(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder="Password..." required/>
         <button title='Log In' className="hover:border-light focus:border-light bg-dark rounded-md" type='submit'>Log In</button> 

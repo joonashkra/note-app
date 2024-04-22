@@ -62,7 +62,7 @@ export default function UpdateNote({ noteId }: UpdateNoteProps) {
         <label htmlFor="deadline" className="text-xl">New Deadline Date</label>
         <Calendar onChange={setNewNoteDeadlineDate} value={newNoteDeadlineDate} minDate={new Date()}/>
       </div>
-      <div title="Set Checked" className="flex flex-row justify-between sm:justify-start items-center gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
+      <div title="Set Checked" className="flex flex-row items-center gap-2 lg:w-1/3 md:w-1/2 sm:w-full">
         <p>Mark as Done:</p>
         <CheckNote noteId={noteId} noteChecked={noteChecked}/>
       </div>
