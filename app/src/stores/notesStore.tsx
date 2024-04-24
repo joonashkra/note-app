@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import { Note } from '../types/Note'
-import { getDocs, collection, addDoc, DocumentReference, getDoc, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, deleteDoc, doc, updateDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { useAuthStore } from './authStore';
 
 type NotesStore = {
   notes: Note[];
@@ -26,19 +27,21 @@ export const useNotesStore = create<NotesStore>()((set) => ({
     newNote: null,
 
     getNotes: async () => {
-        set({ loading: true })
-        const notesRef = collection(db, "notes")
+        set({ loading: true });
+        const userid = useAuthStore.getState().userid;
+        const notesRef = collection(db, "notes");
         try {
-            const data = await getDocs(notesRef)
-            const filteredData: Note[] = data.docs.map((doc) => ({
-            ...(doc.data() as Note),
-            id: doc.id
-            }))
-            set({ notes: filteredData })
+            const userQuery = query(notesRef, where("userid", "==", userid))
+            const docSnap = await getDocs(userQuery);
+            const notesData: Note[] = docSnap.docs.map((doc) => ({
+                ...(doc.data() as Note),
+                id: doc.id
+            }));
+            set({ notes: notesData });
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
-        set({ loading: false })
+        set({ loading: false });
     },
 
     getNote: async (id) => {
@@ -57,10 +60,12 @@ export const useNotesStore = create<NotesStore>()((set) => ({
     createNote: async (title, description, creationDate, deadlineDate) => {
         set({ loading: true })
         const notesRef = collection(db, "notes")
+        const userid = useAuthStore.getState().userid
         set({ newNote: null })
         
         try {
-            const docRef: DocumentReference = await addDoc(notesRef, {
+            const docRef = await addDoc(notesRef, {
+                userid,
                 title,
                 description,
                 creationDate,
@@ -70,7 +75,8 @@ export const useNotesStore = create<NotesStore>()((set) => ({
 
             const docSnapshot = await getDoc(docRef);
             if (docSnapshot.exists()) {
-                const newNote: Note = { 
+                const newNote: Note = {
+                    userid: docSnapshot.data().userid,
                     id: docSnapshot.id,
                     title: docSnapshot.data().title,
                     description: docSnapshot.data().description,

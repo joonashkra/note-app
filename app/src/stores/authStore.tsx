@@ -41,9 +41,9 @@ export const useAuthStore = create<AuthStore>((set) => {
 
         signup: async (email, password) => {
             try {
-              await createUserWithEmailAndPassword(auth, email, password);
+                await createUserWithEmailAndPassword(auth, email, password);
             } catch (error) {
-              console.error(error);
+                console.error(error);
             }
         },
 
