@@ -28,11 +28,11 @@ export default function LoginForm() {
   };
 
   return (
-    <form className='flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2' onSubmit={handleLogin}>
+    <form className='flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2' onSubmit={handleLogin} role='loginform'>
         <input ref={inputRef} type="email" onChange={(e) => setEmail(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder="Email..." required/>
         <input type="password" onChange={(e) => setPassword(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder="Password..." required/>
-        <button title='Log In' className="hover:border-light focus:border-light bg-dark rounded-md" type='submit'>Log In</button> 
-        {showError && <p className='text-red'>Wrong email or password.</p>}
+        <button title='Log In' className="hover:border-light focus:border-light bg-dark rounded-md" type='submit' role="loginbtn">Log In</button> 
+        {showError && <p className='text-red' role='errormsg'>Wrong email or password.</p>}
     </form>
   )
 }
