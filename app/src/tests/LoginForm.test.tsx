@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import LoginForm from '../../components/auth/LoginForm'
+import LoginForm from '../components/auth/LoginForm'
 import '@testing-library/jest-dom/vitest'
 import { deleteUser, User, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { auth } from '../config/firebase';
 
 const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
