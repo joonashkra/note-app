@@ -21,3 +21,7 @@ npm run dev
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Demo
+
+https://github.com/joonashkra/note-app/assets/157034065/69227e32-bfee-46d7-b3f0-04407d6c69b6
