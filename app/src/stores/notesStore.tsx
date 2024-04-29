@@ -159,6 +159,7 @@ export const useNotesStore = create<NotesStore>()((set) => ({
         } catch (error) {
             console.error(error)
         }
+        set({ newNote: null })
     }
 
 }))

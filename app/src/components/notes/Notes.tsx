@@ -11,8 +11,7 @@ type NotesProps = {
     sortOption: string;
 }
 
-
-export default function Notes({ showCompleted, sortOption}: NotesProps) {
+export default function Notes({ showCompleted, sortOption }: NotesProps) {
 
     const { notes, loading, newNote, getNotes } = useNotesStore((state) => ({ notes: state.notes, getNotes: state.getNotes, loading: state.loading, newNote: state.newNote}))
 

@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import LoginForm from '../../components/auth/LoginForm'
 import '@testing-library/jest-dom/vitest'
-import { User, createUserWithEmailAndPassword, deleteUser, signOut } from 'firebase/auth';
+import { deleteUser, User, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 
 const mockedUseNavigate = vi.fn();
@@ -16,10 +16,10 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-describe('Auth', async () => {
+describe('Login Test', async () => {
 
-    const email = "auth-test@testemail.com"
-    const password = "testPassword123"
+    const testEmail = Math.round(Math.random()*100000)+"@email.com"
+    const testPassword = Math.random().toString(36).slice(-8)
 
     afterEach(async () => {
         vi.restoreAllMocks()
@@ -31,7 +31,7 @@ describe('Auth', async () => {
         }
     })
 
-    await createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, testEmail, testPassword)
     await signOut(auth)
 
     it('should show error with wrong credentials', async () => {
@@ -67,14 +67,16 @@ describe('Auth', async () => {
         const passwordField = screen.getByPlaceholderText("Password...")
         const loginBtn = screen.getByRole("loginBtn")
 
-        fireEvent.change(emailField, {target: {value: email}})
-        fireEvent.change(passwordField, {target: {value: password}})
+        fireEvent.change(emailField, {target: {value: testEmail}})
+        fireEvent.change(passwordField, {target: {value: testPassword}})
         fireEvent.click(loginBtn)
 
         await waitFor(() => {
             expect(mockedUseNavigate).toHaveBeenCalledWith("/")
             expect(auth.currentUser).not.toBeNull()
         })
+
+        
     })
 
 })
