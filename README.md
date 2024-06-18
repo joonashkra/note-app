@@ -1,6 +1,6 @@
 # NoteVault
 
-Simple and modern note-taking web application with features such as CRUD, authorization and fully responsive UI.
+Simple and modern to-do web application with features such as CRUD, authorization and fully responsive UI.
 
 ## Technologies used:
     - React (Vite)
