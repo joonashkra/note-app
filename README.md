@@ -1,6 +1,7 @@
 # NoteVault
 
 Simple and modern to-do web application with features such as CRUD, authorization and fully responsive UI.
+Working on NodeJS / Express backend + improving frontend.
 
 ## Technologies used:
     - React (Vite)
