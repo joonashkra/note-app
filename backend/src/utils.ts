@@ -3,5 +3,5 @@ import { z } from "zod";
 export const NewNoteSchema = z.object({
     title: z.string(),
     description: z.string(),
-    deadlineDate: z.string().date()
+    deadlineDate: z.coerce.date()
 });
