@@ -5,3 +5,8 @@ export const NewNoteSchema = z.object({
     description: z.string(),
     deadlineDate: z.coerce.date()
 });
+
+export const NewUserSchema = z.object({
+    username: z.string(),
+    password: z.string().min(5),
+});

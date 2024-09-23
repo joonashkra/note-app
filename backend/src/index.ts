@@ -5,6 +5,7 @@ import middleware from "./utils/middleware";
 import express from 'express';
 import "express-async-errors";
 import noteRouter from './routes/notes';
+import userRouter from './routes/users';
 
 const app = express();
 app.use(express.json());
@@ -20,6 +21,7 @@ if(url) mongoose.connect(url)
     .catch(error => console.log('error connecting to MongoDB:', error));
 
 app.use('/api/notes', noteRouter);
+app.use('/api/users', userRouter);
 
 app.use(middleware.errorHandler);
 

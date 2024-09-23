@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { NewNoteSchema } from "../utils/noteSchema";
+import { NewNoteSchema, NewUserSchema } from "./schemas";
 import { z } from "zod";
 import { MongooseError } from 'mongoose';
 
@@ -13,8 +13,23 @@ const newNoteParser = (req: Request, _res: Response, next: NextFunction) => {
     }
 };
 
-const errorHandler = (error: unknown, _req: Request, res: Response, _next: NextFunction) => { 
+const newUserParser = (req: Request, _res: Response, next: NextFunction) => {
+    try {
+        NewUserSchema.parse(req.body);
+        console.log(req.body);
+        next();
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+
+const errorHandler = (error: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    
+    console.log(error);
+
+
     if (error instanceof z.ZodError) return res.status(400).send({ error: error.issues });
+
     
     if(error instanceof MongooseError) {
         switch (error.message) {
@@ -33,5 +48,6 @@ const errorHandler = (error: unknown, _req: Request, res: Response, _next: NextF
 
 export default {
     newNoteParser,
+    newUserParser,
     errorHandler
 };
