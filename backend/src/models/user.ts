@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { NonSensitiveUser, User } from "../types";
 
 const userSchema = new mongoose.Schema<User>({
-    username: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     passwordHash: { type: String, required: true },
     notes: [
         { 

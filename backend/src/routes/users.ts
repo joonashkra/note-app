@@ -11,4 +11,9 @@ router.post('/', middleware.newUserParser, async (req: Request<unknown, unknown,
     res.status(201).json(newUser);
 });
 
+router.get('/', async (_req, res) => {
+    const users = await userService.getEntries();
+    res.send(users);
+});
+
 export default router;

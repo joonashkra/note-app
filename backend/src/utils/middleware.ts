@@ -24,12 +24,8 @@ const newUserParser = (req: Request, _res: Response, next: NextFunction) => {
 };
 
 const errorHandler = (error: unknown, _req: Request, res: Response, _next: NextFunction) => {
-    
-    console.log(error);
-
 
     if (error instanceof z.ZodError) return res.status(400).send({ error: error.issues });
-
     
     if(error instanceof MongooseError) {
         switch (error.message) {
@@ -37,10 +33,16 @@ const errorHandler = (error: unknown, _req: Request, res: Response, _next: NextF
                 return res.status(404).send({ error: 'Note not found.' });
             case 'CastError':
                 return res.status(400).send({ error: 'Malformatted note id.' });
+            case 'ValidationError':
+                return res.status(400).send({ error: error.message });
             default:
                 console.log(error);
-                return res.status(500).json({ error: error.message });
+                return res.status(400).json({ error: error.message });
         }
+    }
+
+    if (error instanceof Error && 'code' in error && error.code === 11000) {
+        return res.status(400).send({ error: 'Expected username to be unique.' });
     }
 
     return res.status(500).json({ error: 'Something went wrong.' });
