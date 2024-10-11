@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Note, PrettierNote } from "../types";
+import { Note, PrettierNote } from "../types/notes";
 
 const noteSchema = new mongoose.Schema<Note>({
     title: { type: String, required: true },

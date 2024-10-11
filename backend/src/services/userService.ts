@@ -1,5 +1,5 @@
 import UserModel from "../models/user";
-import { NewUser, User } from "../types";
+import { NewUser, User } from "../types/users";
 import bcrypt from 'bcrypt';
 
 const addEntry = async (userObject: NewUser): Promise<User> => {

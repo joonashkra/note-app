@@ -1,7 +1,7 @@
 
 import { MongooseError } from "mongoose";
 import NoteModel from "../models/note";
-import { NewNote, Note } from "../types";
+import { NewNote, Note } from "../types/notes";
 import UserModel from "../models/user";
 
 const getEntries = async (): Promise<Note[]> => {
