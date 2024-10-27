@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { NewNote, Note } from '../types';
+import { NewNote, Note } from '../types/notes';
 import noteService from '../services/noteService';
 import middleware from '../utils/middleware';
 

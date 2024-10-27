@@ -1,3 +1,4 @@
+
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
@@ -6,6 +7,7 @@ import express from 'express';
 import "express-async-errors";
 import noteRouter from './routes/notes';
 import userRouter from './routes/users';
+import loginRouter from './routes/login';
 
 const app = express();
 app.use(express.json());
@@ -20,8 +22,13 @@ if(url) mongoose.connect(url)
     .then(_result => console.log('Connected to MongoDB'))
     .catch(error => console.log('error connecting to MongoDB:', error));
 
-app.use('/api/notes', noteRouter);
+app.use('/api/login', loginRouter);
 app.use('/api/users', userRouter);
+
+app.use(middleware.checkAuth);
+
+app.use('/api/notes', noteRouter);
+
 
 app.use(middleware.errorHandler);
 

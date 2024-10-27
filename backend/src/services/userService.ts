@@ -1,5 +1,6 @@
+import { MongooseError } from "mongoose";
 import UserModel from "../models/user";
-import { NewUser, User } from "../types";
+import { NewUser, User } from "../types/users";
 import bcrypt from 'bcrypt';
 
 const addEntry = async (userObject: NewUser): Promise<User> => {
@@ -22,7 +23,14 @@ const getEntries = async (): Promise<User[]> => {
     return users;
 };
 
+const deleteEntry = async (id: string) => {
+    const user = await UserModel.findById(id);
+    if(!user) throw new MongooseError('DocumentNotFoundError');
+    await UserModel.findByIdAndDelete(id);
+};
+
 export default {
     addEntry,
-    getEntries
+    getEntries,
+    deleteEntry
 };

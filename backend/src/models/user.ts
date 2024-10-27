@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { NonSensitiveUser, User } from "../types";
+import { NonSensitiveUser, User } from "../types/users";
 
 const userSchema = new mongoose.Schema<User>({
     username: { type: String, required: true, unique: true },

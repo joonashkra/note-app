@@ -7,7 +7,7 @@ export const NewNoteSchema = z.object({
     user: z.string()
 });
 
-export const NewUserSchema = z.object({
+export const UserSchema = z.object({
     username: z.string(),
     password: z.string().min(5)
 });
