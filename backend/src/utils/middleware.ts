@@ -72,7 +72,7 @@ const checkAuth = async (req: Request, _res: Response, next: NextFunction) => {
     const user = await UserModel.findById(decodedToken.id);
     if(!user) throw new MongooseError('LoginError');
 
-    req.user = user; // Problem
+    req.user = user;
 
     next();
 };
