@@ -1,3 +1,4 @@
+
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
@@ -22,11 +23,12 @@ if(url) mongoose.connect(url)
     .catch(error => console.log('error connecting to MongoDB:', error));
 
 app.use('/api/login', loginRouter);
+app.use('/api/users', userRouter);
 
 app.use(middleware.checkAuth);
 
 app.use('/api/notes', noteRouter);
-app.use('/api/users', userRouter);
+
 
 app.use(middleware.errorHandler);
 

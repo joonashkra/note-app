@@ -11,9 +11,14 @@ router.post('/', middleware.userParser, async (req: Request<unknown, unknown, Ne
     res.status(201).json(newUser);
 });
 
-router.get('/', async (_req, res) => {
+router.get('/', middleware.checkAuth, async (_req, res) => {
     const users = await userService.getEntries();
     res.send(users);
+});
+
+router.delete('/:id', middleware.checkAuth, async (req, res) => {
+    await userService.deleteEntry(req.params.id);
+    res.sendStatus(204);
 });
 
 export default router;
