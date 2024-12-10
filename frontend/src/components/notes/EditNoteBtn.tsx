@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom'
-import { Note } from '../../types/Note'
+import { Note } from '../../types/notes'
 import { Edit } from '../../assets/Edit';
 
 type EditNoteBtnProps = {

@@ -8,3 +8,5 @@ export type Note = {
     deadlineDate: string; 
     checked: boolean;
 }
+
+export type NewNote = Omit<Note, 'id'|'checked'|'creationDate'>;

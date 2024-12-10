@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Note } from '../types/Note'
+import { Note } from '../types/notes'
 import { collection, addDoc, getDoc, deleteDoc, doc, updateDoc, query, where, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { useAuthStore } from './authStore';

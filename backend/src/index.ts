@@ -5,12 +5,15 @@ import mongoose from "mongoose";
 import middleware from "./utils/middleware";
 import express from 'express';
 import "express-async-errors";
+import cors from 'cors';
 import noteRouter from './routes/notes';
 import userRouter from './routes/users';
 import loginRouter from './routes/login';
 
 const app = express();
 app.use(express.json());
+
+app.use(cors());
 
 mongoose.set('strictQuery', false);
 
@@ -28,7 +31,6 @@ app.use('/api/users', userRouter);
 app.use(middleware.checkAuth);
 
 app.use('/api/notes', noteRouter);
-
 
 app.use(middleware.errorHandler);
 
