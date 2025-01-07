@@ -17,7 +17,8 @@ const login = async (loginAttempt: NewUser) => {
 
     const userForToken = {
         username: user.username,
-        id: user._id
+        id: user._id,
+        notes: user.notes
     };
 
     const secret = process.env.SECRET;
@@ -28,7 +29,7 @@ const login = async (loginAttempt: NewUser) => {
     const token = jwt.sign(userForToken, secret, { expiresIn: '1d' });
     
     return {
-        username: user.username,
+        user: userForToken,
         token
     };
 };
