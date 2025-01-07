@@ -1,15 +1,16 @@
 import axios from 'axios'
 import { Note, NewNote } from '../types/notes.ts'
 
-const baseUrl = 'http://localhost:3001/api/notes'
+const baseUrl = '/api/notes'
 
 let authToken: string
 
-export const setToken = (newToken: string) => {
+const setToken = (newToken: string) => {
+    console.log("newToken: ", newToken)
   authToken = `Bearer ${newToken}`
 }
 
-export const getAllNotes = async () => {
+const getAll = async () => {
     const config = {
         headers: { Authorization: authToken }
     }
@@ -18,7 +19,9 @@ export const getAllNotes = async () => {
     return response.data
 }
 
-export const createNote = async (note: NewNote) => {
+const create = async (note: NewNote) => {
     const response = await axios.post<Note[]>(baseUrl, note)
     return response.data
 }
+
+export default { setToken, getAll, create }

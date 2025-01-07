@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { NewUser, TokenResponse } from '../types/users.ts'
+import { NewUser, AuthResponse } from '../types/users.ts'
 
 
-const baseUrl = 'http://localhost:3001/api/login'
+const baseUrl = '/api/login';
 
 export const login = async (credentials: NewUser) => {
-    const response = await axios.post<TokenResponse>(baseUrl, credentials)
-    return response.data.token
+    const response = await axios.post<AuthResponse>(baseUrl, credentials);
+    return response.data.auth;
 }
