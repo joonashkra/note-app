@@ -1,0 +1,60 @@
+.notesList {
+  display: inline-grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5rem;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.notesList > div {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.noteCard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--white);
+  background-color: var(--black);
+}
+
+.noteCard:hover {
+  border: 1px solid var(--pink);
+  opacity: 1;
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #131313 0,
+    #131313 0.7000000000000001px,
+    #000000 0,
+    #000000 50%
+  );
+  cursor: pointer;
+}
+
+.createNoteForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.createNoteForm input,
+textarea {
+  padding: 0.5rem;
+  background-color: var(--dark);
+  border: 1px solid var(--pink);
+  color: var(--white);
+  font-size: 1rem;
+  resize: none;
+}
+
+#dateInput {
+  width: max-content;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}

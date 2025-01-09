@@ -1,0 +1,41 @@
+.dashboardPage {
+  display: flex;
+}
+
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: light) {
+  .dashboardPage {
+    background-color: var(--white);
+    color: var(--black);
+  }
+}
+
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.settingsPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+#GoBackBtn {
+  top: 4rem;
+  left: 4rem;
+  position: sticky;
+  margin-left: 2rem;
+}
+
+.createNotePage {
+  margin: 1rem 8rem;
+}

@@ -1,0 +1,32 @@
+.collectionList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  width: 100%;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0rem;
+}
+
+.collectionCard {
+  border: 1px solid var(--white);
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.collectionCard:hover {
+  border: 1px solid var(--pink);
+  opacity: 1;
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #131313 0,
+    #131313 0.7000000000000001px,
+    #000000 0,
+    #000000 50%
+  );
+  cursor: pointer;
+}

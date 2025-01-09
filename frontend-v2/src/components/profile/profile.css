@@ -1,0 +1,17 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.profileContent {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+  border: 1px solid lightgray;
+  padding: 2rem;
+  background-color: var(--black);
+  text-align: start;
+}

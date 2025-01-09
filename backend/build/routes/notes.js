@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const router = (0, express_1.Router)();
-router.get('/' /* , (_req, res) => {
+router.get(
+  "/" /* , (_req, res) => {
 
-} */);
+} */,
+);
 exports.default = router;
