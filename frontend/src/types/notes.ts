@@ -8,4 +8,4 @@ export type Note = {
   checked: boolean;
 };
 
-export type NewNote = Omit<Note, "id" | "checked" | "creationDate">;
+export type NewNote = Omit<Note, "id" | "checked" | "creationDate" | "userid">;

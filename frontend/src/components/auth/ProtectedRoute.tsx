@@ -1,31 +1,14 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../../config/firebase";
-import firebase from "firebase/compat/app";
+import { PropsWithChildren } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 type ProtectedRouteProps = PropsWithChildren;
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const [user, setUser] = useState<firebase.User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const { token } = useAuth();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user as firebase.User);
-      setLoading(false);
-    });
+  if (token === undefined) return <div>Loading...</div>;
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  if (token === null) return <div>Restricted</div>;
 
-  useEffect(() => {
-    if (!loading && user === null) {
-      navigate("/login", { replace: true });
-    }
-  }, [navigate, loading, user]);
-
-  return !loading && user !== null ? children : null;
+  return children;
 }

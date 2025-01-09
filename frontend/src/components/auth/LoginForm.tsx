@@ -1,47 +1,45 @@
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../stores/authStore";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const { login, loggedIn } = useAuthStore((state) => ({
-    login: state.login,
-    loggedIn: state.loggedIn,
-  }));
-  const [showError, setShowError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const { handleLogin } = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    if (loggedIn === true) {
-      navigate("/");
-    }
-  }, [loggedIn, navigate]);
-
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setShowError(false);
-    await login(email, password);
-    setShowError(true);
+    const authStatus = await handleLogin({ username, password });
+
+    if (authStatus === 200) {
+      navigate("/");
+    } else if (authStatus === 401) {
+      setErrorMsg("Invalid credentials");
+    } else {
+      setErrorMsg("Unexpected error occured.");
+    }
   };
 
   return (
     <form
       className="flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2"
-      onSubmit={handleLogin}
+      onSubmit={login}
       role="loginform"
     >
       <input
         ref={inputRef}
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
+        type="username"
+        onChange={(e) => setUsername(e.target.value)}
         className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark"
-        placeholder="Email..."
+        placeholder="Username..."
         required
       />
       <input
@@ -59,11 +57,7 @@ export default function LoginForm() {
       >
         Log In
       </button>
-      {showError && (
-        <p className="text-red" role="errorMsg">
-          Wrong email or password.
-        </p>
-      )}
+      {errorMsg && <p>{errorMsg}</p>}
     </form>
   );
 }

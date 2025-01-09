@@ -12,8 +12,15 @@ export interface NewUser {
   password: string;
 }
 
-export type TokenUser = { username: string; token: string };
+export type AuthUser = {
+  username: string;
+  id: string;
+  notes: Note[];
+};
 
-export interface TokenResponse {
-  token: TokenUser;
+export interface AuthResponse {
+  auth: {
+    user: AuthUser;
+    token: string;
+  };
 }
