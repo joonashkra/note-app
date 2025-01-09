@@ -1,69 +1,72 @@
 .menuBar {
-    display: flex;
-    flex-direction: column;
-    height: 100dvh;
-    background-color: var(--black);
-    justify-content: center;
-    align-items: center;
-    border-right: 1px solid var(--pink);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    position: sticky;
-    top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background-color: var(--black);
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid var(--pink);
+  position: sticky;
+  top: 0;
 }
 
 .menuActions {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    justify-content: space-evenly;
-    height: 40%;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  justify-content: space-evenly;
+  height: 40%;
+  align-items: center;
 }
 
 #toggleMenuBtn {
-    display: none;
+  display: none;
 }
 
 .menuBarBtn {
-    transition: transform 0.2s ease-in-out, fill 0.2s ease-in-out;
-    fill: var(--white);
+  transition:
+    transform 0.2s ease-in-out,
+    fill 0.2s ease-in-out;
+  fill: var(--white);
 }
 
 .menuBarBtn:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-    fill: var(--pink);
+  transform: scale(1.1);
+  cursor: pointer;
+  fill: var(--pink);
 }
 
 .menuActions div {
-    position: relative;
+  position: relative;
 }
 
 .menuBarBtnPopUp {
-    display: block;
-    position: absolute;
-    left: 250%;
-    top: 0%;
-    transform: translateY(-50%);
-    background-color: var(--pink);
-    color: var(--white);
-    padding: 1rem;
-    opacity: 0;
-    visibility: hidden;
-    color: var(--white);
-    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-    white-space: nowrap;
-    z-index: 1000;
+  display: block;
+  position: absolute;
+  left: 250%;
+  top: 0%;
+  transform: translateY(-50%);
+  background-color: var(--pink);
+  color: var(--white);
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  color: var(--white);
+  transition:
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out;
+  white-space: nowrap;
+  z-index: 1000;
 }
 
 .menuBarBtn:hover + .menuBarBtnPopUp {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 426px) {
-    #toggleMenuBtn {
-        display: block;
-    }
+  #toggleMenuBtn {
+    display: block;
+  }
 }

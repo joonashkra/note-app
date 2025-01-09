@@ -1,50 +1,51 @@
-@import url('./pages/pages.css');
-@import url('./components/dashboard/menu/menu.css');
-@import url('./components/dashboard/authbar/authbar.css');
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
-@import url('./components/navbar/navbar.css');
-@import url('./components/dashboard/dashboard.css');
-@import url('./components/profile/profile.css');
-@import url('./components/settings/settings.css');
+@import url("./pages/pages.css");
+@import url("./components/dashboard/menu/menu.css");
+@import url("./components/dashboard/authbar/authbar.css");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("./components/navbar/navbar.css");
+@import url("./components/dashboard/dashboard.css");
+@import url("./components/profile/profile.css");
+@import url("./components/settings/settings.css");
+@import url("./components/notes/notes.css");
 
 :root {
-    --white: #fafafa;
-    --pink: #b500bf;
-    --blue: #21294C;
-    --purple: #15002b;
-    --dark: #080808;
-    --black: #000000;
+  --white: #fafafa;
+  --pink: #c741bc;
+  --blue: #21294c;
+  --purple: #15002b;
+  --dark: #080808;
+  --black: #000000;
 }
 
 * {
-    font-family: "Instrument Sans", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings: "wdth" 100;
+  font-family: "Instrument Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
 
 body {
-    margin: 0;
-    background-color: var(--black);
-    color: white;
+  margin: 0;
+  background-color: var(--black);
+  color: white;
 }
 
 @media (prefers-color-scheme: light) {
-    .body {
-      background-color: var(--white);
-      color: var(--black);
-    }
+  .body {
+    background-color: var(--white);
+    color: var(--black);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-    .body {
-      background-color: var(--black);
-      color: var(--white);
-    }
+  .body {
+    background-color: var(--black);
+    color: var(--white);
+  }
 }
 
 ::selection {
-    color: var(--black);
-    background: var(--pink);
+  color: var(--black);
+  background: var(--pink);
 }

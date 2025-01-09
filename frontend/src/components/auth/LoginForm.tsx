@@ -1,19 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../stores/authStore';
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function LoginForm() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
-  const { login, loggedIn } = useAuthStore((state) => ({ login: state.login, loggedIn: state.loggedIn }))
-  const [showError, setShowError] = useState(false)
+  const navigate = useNavigate();
+  const { login, loggedIn } = useAuthStore((state) => ({
+    login: state.login,
+    loggedIn: state.loggedIn,
+  }));
+  const [showError, setShowError] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    inputRef.current?.focus()
-  }, [])
+    inputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (loggedIn === true) {
@@ -25,15 +27,43 @@ export default function LoginForm() {
     e.preventDefault();
     setShowError(false);
     await login(email, password);
-    setShowError(true)
+    setShowError(true);
   };
 
   return (
-    <form className='flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2' onSubmit={handleLogin} role='loginform'>
-        <input ref={inputRef} type="email" onChange={(e) => setEmail(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder="Email..." required/>
-        <input type="password" onChange={(e) => setPassword(e.target.value)} className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark" placeholder="Password..." required/>
-        <button title='Log In' className="hover:border-light focus:border-light bg-dark rounded-md" type='submit' role="loginBtn">Log In</button> 
-        {showError && <p className='text-red' role='errorMsg'>Wrong email or password.</p>}
+    <form
+      className="flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2"
+      onSubmit={handleLogin}
+      role="loginform"
+    >
+      <input
+        ref={inputRef}
+        type="email"
+        onChange={(e) => setEmail(e.target.value)}
+        className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark"
+        placeholder="Email..."
+        required
+      />
+      <input
+        type="password"
+        onChange={(e) => setPassword(e.target.value)}
+        className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark"
+        placeholder="Password..."
+        required
+      />
+      <button
+        title="Log In"
+        className="hover:border-light focus:border-light bg-dark rounded-md"
+        type="submit"
+        role="loginBtn"
+      >
+        Log In
+      </button>
+      {showError && (
+        <p className="text-red" role="errorMsg">
+          Wrong email or password.
+        </p>
+      )}
     </form>
-  )
+  );
 }

@@ -1,33 +1,33 @@
 .navBar {
-    display: flex;
-    background-color: var(--black);
-    justify-content: space-around;
-    align-items: center;
-    padding: 0.5rem;
-    border-radius: 0;
-    color: var(--white);
-    border-bottom: 1px solid var(--pink);
+  display: flex;
+  background-color: var(--black);
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0;
+  color: var(--white);
+  border-bottom: 1px solid var(--pink);
 }
 
 .navBar h1 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .navLinks {
-    display: flex;
-    gap: 4rem;
-    justify-content: center;
-    height: 100%;
+  display: flex;
+  gap: 4rem;
+  justify-content: center;
+  height: 100%;
 }
 
 .navLinks a {
-    text-decoration: none;
-    color: var(--white);
-    transition: color 0.3s ease-in-out;
-    font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--white);
+  transition: color 0.3s ease-in-out;
+  font-size: 1.2rem;
 }
-  
+
 .navLinks a:hover {
-    cursor: pointer;
-    color: var(--pink);
+  cursor: pointer;
+  color: var(--pink);
 }

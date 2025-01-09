@@ -1,15 +1,15 @@
 import { Note } from "./notes";
 
 export interface User {
-    id: string;
-    username: string;
-    passwordHash: string;
-    notes: Note[];
+  id: string;
+  username: string;
+  passwordHash: string;
+  notes: Note[];
 }
 
 export interface NewUser {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
 export type AuthUser = {

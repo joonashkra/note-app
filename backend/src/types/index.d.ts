@@ -1,6 +1,5 @@
-
-import { User } from '../types/users';
-import 'express';
+import { User } from "../types/users";
+import "express";
 
 declare global {
   namespace Express {

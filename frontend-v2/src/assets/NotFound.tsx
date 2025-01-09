@@ -1,7 +1,7 @@
 import { SvgProps } from "../types/props";
 
 const NotFound = ({ size, color }: SvgProps) => (
-    <svg
+  <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="-20 0 190 190"
     width={size}
@@ -14,5 +14,5 @@ const NotFound = ({ size, color }: SvgProps) => (
       clipRule="evenodd"
     />
   </svg>
-)
+);
 export default NotFound;

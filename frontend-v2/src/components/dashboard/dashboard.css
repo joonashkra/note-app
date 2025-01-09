@@ -1,73 +1,85 @@
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    margin: 1rem 8rem;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 8rem;
 }
 
-
 .dashboardContent {
-    display: flex;
-    flex-direction: column;
-    background-color: transparent;
-    color: var(--white);
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  color: var(--white);
+  gap: 1rem;
 }
 
 .dashboardContentSection {
-    display: flex;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    rgba(0, 0, 0, 0.12) 0px 1px 3px,
+    rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 .dashboardContentSectionData {
-    display: flex;
-    border: 1px solid lightgray;
-    padding: 1rem;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--black);
+  display: flex;
+  border: 1px solid lightgray;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
 }
 
 .dashboardContentSectionData:hover {
-    border: 1px solid var(--pink);
-    opacity: 1;
-    background-size: 7px 7px;
-    background-image: repeating-linear-gradient(45deg, #131313 0, #131313 0.7000000000000001px, #000000 0, #000000 50%);
+  border: 1px solid var(--pink);
+  opacity: 1;
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #131313 0,
+    #131313 0.7000000000000001px,
+    #000000 0,
+    #000000 50%
+  );
 }
 
 .dashboardContentSectionData svg {
-    fill: black;
-    stroke: black;
+  fill: black;
+  stroke: black;
 }
 
 .goBackBtn {
-    background-color: var(--white);
-    color: black;
-    width: max-content;
-    padding: 0.8rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    border: none;
-    height: max-content;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border 0.2s ease-in-out;
+  background-color: var(--white);
+  color: black;
+  width: max-content;
+  padding: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  height: max-content;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border 0.2s ease-in-out;
 }
 
 .goBackBtn svg {
-    fill: var(--black);
-    transition: background-color 0.2s ease-in-out, fill 0.2s ease-in-out;
-    background-color: var(--white);
+  fill: var(--black);
+  transition:
+    background-color 0.2s ease-in-out,
+    fill 0.2s ease-in-out;
+  background-color: var(--white);
 }
 
 .goBackBtn:hover {
-    background-color: var(--pink);
-    color: var(--white);
+  background-color: var(--pink);
+  color: var(--white);
 }
 
 .goBackBtn:hover svg {
-    background-color: var(--pink);
-    fill: var(--white);
+  background-color: var(--pink);
+  fill: var(--white);
 }

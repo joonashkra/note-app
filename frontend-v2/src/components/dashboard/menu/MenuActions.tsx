@@ -6,26 +6,36 @@ import CreateNoteButton from "./CreateNoteButton";
 import HomeButton from "./HomeButton";
 
 export default function MenuActions() {
-
   const buttonSize = 26;
   const buttonColor = COLORS.black;
   const navigate = useNavigate();
 
   return (
-    <nav className='menuActions'>
-        <div>
-          <CreateNoteButton size={buttonSize} color={buttonColor} navigate={navigate} />
-          <p className="menuBarBtnPopUp">Create new note</p>
-        </div>
-        <div>
-          <CreateCollectionButton size={buttonSize} color={buttonColor} navigate={navigate} />
-          <p className="menuBarBtnPopUp">Create new collection</p>
-        </div>
-        <div>
-          <ConnectButton size={buttonSize} color={buttonColor} navigate={navigate} />
-          <p className="menuBarBtnPopUp">Connect with people</p>
-        </div>
-
+    <nav className="menuActions">
+      <div>
+        <CreateNoteButton
+          size={buttonSize}
+          color={buttonColor}
+          navigate={navigate}
+        />
+        <p className="menuBarBtnPopUp">Create new note</p>
+      </div>
+      <div>
+        <CreateCollectionButton
+          size={buttonSize}
+          color={buttonColor}
+          navigate={navigate}
+        />
+        <p className="menuBarBtnPopUp">Create new collection</p>
+      </div>
+      <div>
+        <ConnectButton
+          size={buttonSize}
+          color={buttonColor}
+          navigate={navigate}
+        />
+        <p className="menuBarBtnPopUp">Connect with people</p>
+      </div>
     </nav>
   );
 }

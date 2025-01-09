@@ -1,16 +1,15 @@
-
-import { Link } from 'react-router-dom'
-import { Note } from '../../types/notes'
-import { Edit } from '../../assets/Edit';
+import { Link } from "react-router-dom";
+import { Note } from "../../types/notes";
+import { Edit } from "../../assets/Edit";
 
 type EditNoteBtnProps = {
-    note: Note;
-}
+  note: Note;
+};
 
 export default function EditNoteBtn({ note }: EditNoteBtnProps) {
   return (
-    <Link to={`/note/${note.id}`} className='m-1' title="Edit Note">
-        <Edit/>
+    <Link to={`/note/${note.id}`} className="m-1" title="Edit Note">
+      <Edit />
     </Link>
-  )
+  );
 }
