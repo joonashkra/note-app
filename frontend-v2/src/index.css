@@ -7,10 +7,11 @@
 @import url("./components/profile/profile.css");
 @import url("./components/settings/settings.css");
 @import url("./components/notes/notes.css");
+@import url("./components/collections/collections.css");
 
 :root {
   --white: #fafafa;
-  --pink: #c741bc;
+  --pink: #e04343;
   --blue: #21294c;
   --purple: #15002b;
   --dark: #080808;

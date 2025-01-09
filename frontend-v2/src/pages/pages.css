@@ -30,8 +30,12 @@
 }
 
 #GoBackBtn {
-  top: 2rem;
-  left: 2rem;
+  top: 4rem;
+  left: 4rem;
   position: sticky;
-  margin: 2rem;
+  margin-left: 2rem;
+}
+
+.createNotePage {
+  margin: 1rem 8rem;
 }

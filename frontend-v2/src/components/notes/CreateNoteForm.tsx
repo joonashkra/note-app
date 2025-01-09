@@ -36,7 +36,7 @@ export default function CreateNoteForm() {
         required
         type="text"
         name="title"
-        maxLength={30}
+        maxLength={25}
         id="titleInput"
         placeholder="Title for note..."
       ></input>

@@ -1,22 +1,38 @@
 .notesList {
-  display: flex;
+  display: inline-grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5rem;
   list-style: none;
-  gap: 2rem;
   width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.notesList > div {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .noteCard {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid transparent;
+  border: 1px solid var(--white);
+  background-color: var(--black);
 }
 
 .noteCard:hover {
   border: 1px solid var(--pink);
-  background-color: var(--dark);
+  opacity: 1;
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #131313 0,
+    #131313 0.7000000000000001px,
+    #000000 0,
+    #000000 50%
+  );
+  cursor: pointer;
 }
 
 .createNoteForm {

@@ -12,7 +12,7 @@ export default function Dashboard() {
       <MenuBar />
       <div className="dashboardContainer">
         <AuthBar />
-        <div className="dashboard">
+        <div>
           <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
             {!isDashboardRoot && <GoBackButton />}
           </div>

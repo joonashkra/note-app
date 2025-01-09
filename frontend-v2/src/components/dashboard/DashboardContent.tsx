@@ -3,6 +3,8 @@ import noteService from "../../services/noteService";
 import { Note } from "../../types/notes";
 import NoDataCard from "../NoDataCard";
 import NotesList from "../notes/NotesList";
+import dummyCollections from "../../dummyData";
+import CollectionsList from "../collections/CollectionsList";
 
 export default function DashboardContent() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -21,18 +23,26 @@ export default function DashboardContent() {
   }, []);
 
   return (
-    <div className="dashboardContent">
+    <div className="dashboard">
       <h1>Dashboard</h1>
-      <div className="dashboardContentSection">
-        <h2>Collections</h2>
-        <div className="dashboardContentSectionData">
-          <NoDataCard error={false} />
+      <div className="dashboardContent">
+        <div className="dashboardContentSection">
+          <h2>Notes</h2>
+          <div className="dashboardContentSectionData">
+            <NotesList notes={notes} />
+          </div>
+        </div>
+        <div className="dashboardContentSection">
+          <h2>Collections</h2>
+          <div className="dashboardContentSectionData">
+            <CollectionsList collections={dummyCollections} />
+          </div>
         </div>
       </div>
       <div className="dashboardContentSection">
-        <h2>Notes</h2>
+        <h2>Connections</h2>
         <div className="dashboardContentSectionData">
-          <NotesList notes={notes} />
+          <NoDataCard error={false} />
         </div>
       </div>
     </div>
