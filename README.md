@@ -1,21 +1,24 @@
 # Note / To-Do App
 
-Web application with features such as CRUD, authorization and responsive UI.
-Working on NodeJS / Express backend + refactoring frontend.
+Fullstack web application
+
+Currently rebuilding frontend, app is still in progress.
 
 ## Technologies used:
 
     - React (Vite)
+    - Express
     - TypeScript
-    - Tailwind CSS
+    - Zod
     - React Router
-    - Zustand
-    - Firebase (temporary)
 
 ## Usage
 
 ```bash
 cd frontend
+npm install
+npm run dev
+cd backend
 npm install
 npm run dev
 ```
