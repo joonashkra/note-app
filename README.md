@@ -5,14 +5,17 @@ Full stack web application that originally started as a university course projec
 ## Languages, frameworks and libraries used:
 
 Backend: 
-    - TypeScript 
+
+    - TypeScript
     - Express
     - MongoDB (Mongoose) 
     - JWT
     - Bcrypt 
     - Zod
 
+
 Frontend: 
+
     - TypeScript 
     - React (Vite) 
     - Axios 
@@ -26,6 +29,7 @@ Frontend:
 cd frontend
 npm install
 npm run dev
+
 cd backend
 npm install
 npm run dev
