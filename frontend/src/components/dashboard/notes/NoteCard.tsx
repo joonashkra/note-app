@@ -1,3 +1,4 @@
+import Check from "../../../assets/Check";
 import { Note } from "../../../types/notes";
 import { formatDate } from "../../../utils";
 
@@ -10,7 +11,10 @@ export default function NoteCard({ note, layout }: NoteCardProps) {
   if (layout === "compact")
     return (
       <div className="noteCard">
-        <p>{note.title}</p>
+        <div>
+          <p>{note.title}</p>
+          {note.checked && <Check size={24} color="#FFFFFF" />}
+        </div>
         <p>Deadline: {formatDate(note.deadlineDate)}</p>
       </div>
     );

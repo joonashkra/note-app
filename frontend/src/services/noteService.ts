@@ -37,4 +37,25 @@ const create = async (note: NewNote) => {
   return response.data;
 };
 
-export default { setToken, getAll, getOne, create };
+const remove = async (id: string) => {
+  const config = {
+    headers: { Authorization: authToken },
+  };
+
+  const response = await axios.delete(`${baseUrl}/${id}`, config);
+  return response.data;
+};
+
+const check = async (id: string) => {
+  const config = {
+    headers: { Authorization: authToken },
+  };
+
+  console.log(id);
+  console.log(config);
+
+  const response = await axios.put(`${baseUrl}/${id}`, {}, config);
+  return response.data;
+};
+
+export default { setToken, getAll, getOne, create, remove, check };

@@ -3,22 +3,26 @@ import { newNoteSchema } from "../../../types/schemas";
 import noteService from "../../../services/noteService";
 import { NewNote } from "../../../types/notes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateNoteForm() {
+  const [errorMsg, setErrorMsg] = useState("");
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { mutateAsync: addNoteMutation } = useMutation({
     mutationFn: (newNote: NewNote) => noteService.create(newNote),
-    onSuccess: () => {
+    onSuccess: (note) => {
       queryClient.invalidateQueries({
         queryKey: ["notes"],
       });
+      window.alert("Note created successfully");
+      navigate(`/dashboard/note/${note.id}`);
+    },
+    onError: () => {
+      setErrorMsg("Unexpected error when creating the note");
     },
   });
-
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const currDate = new Date();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,14 +41,10 @@ export default function CreateNoteForm() {
       deadlineDate: parseNote.data.deadlineDate.toISOString(),
     };
 
-    try {
-      await addNoteMutation(newNote);
-      window.alert("Note created successfully");
-    } catch (error) {
-      console.log(error);
-      setErrorMsg("Unexpected error when creating the note");
-    }
+    await addNoteMutation(newNote);
   };
+
+  const currDate = new Date();
 
   return (
     <form className="createNoteForm" onSubmit={handleSubmit}>

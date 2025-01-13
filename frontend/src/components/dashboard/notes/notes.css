@@ -21,6 +21,10 @@
   background-color: var(--black);
 }
 
+.noteCard svg {
+  fill: var(--white);
+}
+
 .noteCard:hover {
   border: 1px solid var(--pink);
   opacity: 1;
@@ -62,4 +66,59 @@ textarea {
 .noteCardDetailed {
   display: flex;
   flex-direction: column;
+}
+
+.noteCard div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.noteActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.noteActionBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  width: max-content;
+  padding: 0.8rem;
+  cursor: pointer;
+  gap: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border 0.2s ease-in-out;
+}
+
+.noteActionBtn:hover {
+  background-color: var(--pink);
+  color: var(--white);
+}
+
+.noteActionBtn svg {
+  fill: var(--black);
+  transition: fill 0.2s ease-in-out;
+}
+
+.noteActionBtn:hover svg {
+  fill: var(--white);
+}
+
+.checkNoteBtn:hover {
+  background-color: var(--green);
+}
+
+.checkNoteBtn svg {
+  fill: var(--black);
+  transition: fill 0.2s ease-in-out;
+}
+
+.checkNoteBtn:hover svg {
+  fill: var(--white);
 }

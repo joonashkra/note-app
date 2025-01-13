@@ -13,8 +13,10 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const note = await noteService.getOne(req.params.id);
+  if (!req.user) return res.sendStatus(401);
+  const note = await noteService.getOne(req.params.id, req.user.id);
   res.send(note);
+  return;
 });
 
 router.post(
@@ -29,13 +31,17 @@ router.post(
 );
 
 router.delete("/:id", async (req, res) => {
-  await noteService.deleteEntry(req.params.id);
+  if (!req.user) return res.sendStatus(401);
+  await noteService.deleteEntry(req.params.id, req.user.id);
   res.sendStatus(204);
+  return;
 });
 
 router.put("/:id", async (req, res) => {
-  const updatedNote = await noteService.checkEntry(req.params.id);
+  if (!req.user) return res.sendStatus(401);
+  const updatedNote = await noteService.checkEntry(req.params.id, req.user.id);
   res.send(updatedNote);
+  return;
 });
 
 export default router;

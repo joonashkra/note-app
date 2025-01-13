@@ -11,9 +11,11 @@ const getEntries = async (userId: ObjectId): Promise<Note[]> => {
   return notes;
 };
 
-const getOne = async (id: string): Promise<Note | null> => {
+const getOne = async (id: string, userId: ObjectId): Promise<Note | null> => {
   const note = await NoteModel.findById(id);
   if (!note) throw new MongooseError("DocumentNotFoundError");
+  if (note.user.toString() !== userId.toString())
+    throw new MongooseError("AuthError");
   return note;
 };
 
@@ -30,7 +32,7 @@ const addEntry = async (
     ...noteObject,
     creationDate,
     checked: false,
-    user: userId,
+    user: user.id,
   };
 
   const note = new NoteModel(newNote);
@@ -41,15 +43,22 @@ const addEntry = async (
   return createdNote;
 };
 
-const deleteEntry = async (id: string) => {
+const deleteEntry = async (id: string, userId: ObjectId) => {
   const note = await NoteModel.findById(id);
   if (!note) throw new MongooseError("DocumentNotFoundError");
+  if (note.user.toString() !== userId.toString())
+    throw new MongooseError("AuthError");
   await NoteModel.findByIdAndDelete(id);
 };
 
-const checkEntry = async (id: string): Promise<Note | null> => {
+const checkEntry = async (
+  id: string,
+  userId: ObjectId,
+): Promise<Note | null> => {
   const note = await NoteModel.findById(id);
   if (!note) throw new MongooseError("DocumentNotFoundError");
+  if (note.user.toString() !== userId.toString())
+    throw new MongooseError("AuthError");
   const updatedNote = await NoteModel.findByIdAndUpdate(
     id,
     { checked: !note.checked },

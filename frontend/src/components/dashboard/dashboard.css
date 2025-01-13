@@ -43,7 +43,6 @@
 
 .goBackBtn {
   background-color: var(--white);
-  color: black;
   width: max-content;
   padding: 0.8rem;
   cursor: pointer;

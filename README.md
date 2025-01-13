@@ -9,6 +9,7 @@ Full stack web application that originally started as a university course projec
     - TypeScript
     - Zod
     - React Router
+
 ## Features
 
 The new version of the app is under development. Backend is at a good stage, I'm adding / updating stuff there as I go. Frontend is still missing some key features at the time of writing (e.g. some forms for CRUD operations), but basic layout, routing, auth and overall app structure is implemented. In the future I'm thinking of adding features like note collections and user connections.
@@ -29,8 +30,10 @@ npm run dev
 cd backend
 npm install
 npm run dev
+
 ```
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+```
