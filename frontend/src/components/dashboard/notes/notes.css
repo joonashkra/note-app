@@ -58,3 +58,8 @@ textarea {
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+.noteCardDetailed {
+  display: flex;
+  flex-direction: column;
+}

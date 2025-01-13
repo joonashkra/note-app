@@ -39,3 +39,28 @@
 .createNotePage {
   margin: 1rem 8rem;
 }
+
+.notFoundPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--black);
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.loadingPage {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.noteDetailsPage {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 8rem;
+}

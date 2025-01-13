@@ -1,4 +1,4 @@
-import CreateNoteForm from "../components/notes/CreateNoteForm";
+import CreateNoteForm from "../components/dashboard/notes/CreateNoteForm";
 
 export default function CreateNote() {
   return (

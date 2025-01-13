@@ -19,13 +19,22 @@ const getAll = async () => {
   return response.data;
 };
 
+const getOne = async (id: string) => {
+  const config = {
+    headers: { Authorization: authToken },
+  };
+
+  const response = await axios.get<Note>(`${baseUrl}/${id}`, config);
+  return response.data;
+};
+
 const create = async (note: NewNote) => {
   const config = {
     headers: { Authorization: authToken },
   };
 
-  const response = await axios.post<Note[]>(baseUrl, note, config);
+  const response = await axios.post<Note>(baseUrl, note, config);
   return response.data;
 };
 
-export default { setToken, getAll, create };
+export default { setToken, getAll, getOne, create };

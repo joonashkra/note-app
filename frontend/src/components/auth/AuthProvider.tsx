@@ -1,12 +1,14 @@
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { createContext, PropsWithChildren } from "react";
 import { AuthUser, NewUser } from "../../types/users";
-import { login } from "../../services/loginService";
+import loginService from "../../services/loginService";
 import noteService from "../../services/noteService";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Loading from "../../pages/Loading";
 
 interface AuthContext {
   token?: string | null;
   user?: AuthUser | null;
-  handleLogin: (credentials: NewUser) => Promise<number>;
+  handleLogin: (credentials: NewUser) => Promise<void>;
   handleLogout: () => Promise<void>;
 }
 
@@ -15,59 +17,73 @@ const AuthContext = createContext<AuthContext | undefined>(undefined);
 type AuthProviderProps = PropsWithChildren;
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [token, setToken] = useState<string | null>(
-    () => localStorage.getItem("authToken") || null,
-  );
-  const [user, setUser] = useState<AuthUser | null>(() => {
-    const user = localStorage.getItem("authUser");
-    return user ? JSON.parse(user) : null;
+  const queryClient = useQueryClient();
+
+  const { data: auth, isLoading } = useQuery({
+    queryKey: ["auth"],
+    queryFn: async () => {
+      const token = localStorage.getItem("authToken");
+      const user = localStorage.getItem("authUser");
+
+      if (token && user) {
+        noteService.setToken(token);
+        return {
+          token,
+          user: JSON.parse(user),
+        };
+      }
+
+      return {
+        token: null,
+        user: null,
+      };
+    },
+    refetchOnWindowFocus: false,
   });
 
-  const [isLoading, setIsLoading] = useState(true);
+  const { mutateAsync: loginMutation } = useMutation({
+    mutationFn: (credentials: NewUser) => loginService.login(credentials),
+    onSuccess: (auth) => {
+      localStorage.setItem("authToken", auth.token);
+      localStorage.setItem("authUser", JSON.stringify(auth.user));
+      noteService.setToken(auth.token);
+      queryClient.setQueryData(["auth"], {
+        token: auth.token,
+        user: auth.user,
+      });
+    },
+  });
 
-  useEffect(() => {
-    setIsLoading(true);
-    if (token) {
-      localStorage.setItem("authToken", token);
-      noteService.setToken(token);
-    } else {
+  const { mutateAsync: logoutMutation } = useMutation({
+    mutationFn: async () => {
       localStorage.removeItem("authToken");
-    }
-
-    if (user) {
-      localStorage.setItem("authUser", JSON.stringify(user));
-    } else {
       localStorage.removeItem("authUser");
-    }
-    setIsLoading(false);
-  }, [token, user]);
+      queryClient.setQueryData(["auth"], {
+        token: null,
+        user: null,
+      });
+    },
+  });
 
   const handleLogin = async (credentials: NewUser) => {
-    try {
-      const response = await login(credentials);
-      setToken(response.token);
-      setUser(response.user);
-      noteService.setToken(response.token);
-      return 200;
-    } catch (error) {
-      console.error(error);
-      setToken(null);
-      setUser(null);
-      return 401;
-    }
+    await loginMutation(credentials);
   };
 
   const handleLogout = async () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("authUser");
+    logoutMutation();
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
-    <AuthContext.Provider value={{ token, user, handleLogin, handleLogout }}>
+    <AuthContext.Provider
+      value={{
+        token: auth?.token,
+        user: auth?.user,
+        handleLogin,
+        handleLogout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,4 @@
-export type Note = {
+export interface Note {
   userid: string;
   id: string;
   title: string;
@@ -6,6 +6,6 @@ export type Note = {
   creationDate: string;
   deadlineDate: string;
   checked: boolean;
-};
+}
 
 export type NewNote = Omit<Note, "id" | "checked" | "creationDate" | "userid">;

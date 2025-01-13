@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -17,14 +18,14 @@ export default function LoginForm() {
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const authStatus = await handleLogin({ username, password });
 
-    if (authStatus === 200) {
+    try {
+      await handleLogin({ username, password });
       navigate("/");
-    } else if (authStatus === 401) {
-      setErrorMsg("Invalid credentials");
-    } else {
-      setErrorMsg("Unexpected error occured.");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 401)
+        setErrorMsg("Invalid credentials");
+      else setErrorMsg("Unexpected error occurred");
     }
   };
 

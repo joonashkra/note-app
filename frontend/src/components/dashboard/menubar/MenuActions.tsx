@@ -3,7 +3,6 @@ import { COLORS } from "../../../colors";
 import ConnectButton from "./ConnectButton";
 import CreateCollectionButton from "./CreateCollectionButton";
 import CreateNoteButton from "./CreateNoteButton";
-import HomeButton from "../authbar/HomeButton";
 
 export default function MenuActions() {
   const buttonSize = 26;

@@ -1,13 +1,14 @@
 @import url("./pages/pages.css");
-@import url("./components/dashboard/menu/menu.css");
+@import url("./components/dashboard/menubar/menu.css");
 @import url("./components/dashboard/authbar/authbar.css");
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import url("./components/navbar/navbar.css");
 @import url("./components/dashboard/dashboard.css");
 @import url("./components/profile/profile.css");
 @import url("./components/settings/settings.css");
-@import url("./components/notes/notes.css");
-@import url("./components/collections/collections.css");
+@import url("./components/dashboard/notes/notes.css");
+@import url("./components/dashboard/collections/collections.css");
+@import url("./components/general/general.css");
 
 :root {
   --white: #fafafa;

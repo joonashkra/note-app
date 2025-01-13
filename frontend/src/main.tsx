@@ -17,6 +17,9 @@ import Profile from "./pages/Profile.tsx";
 import Settings from "./pages/Settings.tsx";
 import AuthProvider from "./components/auth/AuthProvider.tsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
+import NoteDetails from "./pages/NoteDetails.tsx";
+import Fallback from "./pages/Fallback.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter(
   [
@@ -70,6 +73,10 @@ const router = createBrowserRouter(
           path: "/dashboard/connections",
           element: <Connections />,
         },
+        {
+          path: "/dashboard/note/:id",
+          element: <NoteDetails />,
+        },
       ],
     },
     {
@@ -88,6 +95,10 @@ const router = createBrowserRouter(
         </ProtectedRoute>
       ),
     },
+    {
+      path: "*",
+      element: <Fallback />,
+    },
   ],
   {
     future: {
@@ -100,10 +111,14 @@ const router = createBrowserRouter(
   },
 );
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} future={{ v7_startTransition: true }} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );

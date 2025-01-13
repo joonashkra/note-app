@@ -12,11 +12,11 @@ export interface NewUser {
   password: string;
 }
 
-export type AuthUser = {
+export interface AuthUser {
   username: string;
   id: string;
   notes: Note[];
-};
+}
 
 export interface AuthResponse {
   auth: {

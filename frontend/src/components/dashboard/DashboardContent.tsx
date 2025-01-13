@@ -1,27 +1,8 @@
-import { useEffect, useState } from "react";
-import noteService from "../../services/noteService";
-import { Note } from "../../types/notes";
-import NoDataCard from "../NoDataCard";
-import NotesList from "../notes/NotesList";
-import dummyCollections from "../../dummyData";
-import CollectionsList from "../collections/CollectionsList";
+import NotesList from "./notes/NotesList";
+import CollectionsList from "./collections/CollectionsList";
+import NotFound from "../general/NotFound";
 
 export default function DashboardContent() {
-  const [notes, setNotes] = useState<Note[]>([]);
-
-  useEffect(() => {
-    const getNotes = async () => {
-      try {
-        const notes = await noteService.getAll();
-        setNotes(notes);
-        console.log(notes);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getNotes();
-  }, []);
-
   return (
     <div className="dashboard">
       <h1>Dashboard</h1>
@@ -29,20 +10,20 @@ export default function DashboardContent() {
         <div className="dashboardContentSection">
           <h2>Notes</h2>
           <div className="dashboardContentSectionData">
-            <NotesList notes={notes} />
+            <NotesList />
           </div>
         </div>
         <div className="dashboardContentSection">
           <h2>Collections</h2>
           <div className="dashboardContentSectionData">
-            <CollectionsList collections={dummyCollections} />
+            <CollectionsList />
           </div>
         </div>
       </div>
       <div className="dashboardContentSection">
         <h2>Connections</h2>
         <div className="dashboardContentSectionData">
-          <NoDataCard error={false} />
+          <NotFound text="No connections found" color={"#FAFAFA"} size={60} />
         </div>
       </div>
     </div>
