@@ -1,32 +1,27 @@
-import { newNoteSchema } from "../../../types/schemas";
-import noteService from "../../../services/noteService";
-import { NewNote } from "../../../types/notes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { NoteActionProps } from "../../../types/props";
+import noteService from "../../../services/noteService";
+import { Note } from "../../../types/notes";
+import { newNoteSchema } from "../../../types/schemas";
 import { useNavigate } from "react-router-dom";
 import Check from "../../../assets/Check";
 import Uncheck from "../../../assets/Uncheck";
 import { useTab } from "../../../hooks/useTab";
 
-interface CreateNoteFormProps {
-  setErrorMsg: (text: string) => void;
-}
-
-export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
+export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   useTab();
 
-  const { mutateAsync: addNoteMutation } = useMutation({
-    mutationFn: (newNote: NewNote) => noteService.create(newNote),
-    onSuccess: (note) => {
-      queryClient.invalidateQueries({
-        queryKey: ["notes"],
-      });
-      window.alert("Note created successfully");
-      navigate(`/dashboard/notes/${note.id}`);
+  const { mutateAsync: updateNoteMutation } = useMutation({
+    mutationFn: (note: Note) => noteService.update(note),
+    onSuccess: (updatedNote) => {
+      queryClient.setQueryData(["note"], updatedNote);
+      window.alert("Note updated succesfully");
+      navigate(-1);
     },
     onError: () => {
-      setErrorMsg("Unexpected error when creating the note");
+      setErrorMsg("Unexpected error when updating note");
     },
   });
 
@@ -42,20 +37,20 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
       return;
     }
 
-    const newNote: NewNote = {
+    const updatedNote: Note = {
       ...parseNote.data,
+      id: note.id,
+      userid: note.userid,
+      creationDate: note.creationDate,
       deadlineDate: parseNote.data.deadlineDate.toISOString(),
+      checked: note.checked,
     };
 
-    await addNoteMutation(newNote);
+    await updateNoteMutation(updatedNote);
   };
 
-  const now = new Date();
-  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-  const currDate = now.toISOString().slice(0, 16);
-
-  const cancelCreate = () => {
-    if (window.confirm("Cancel? All changes will be lost.")) {
+  const cancelUpdate = () => {
+    if (window.confirm("Cancel update? All changes will be lost.")) {
       navigate(-1);
     }
   };
@@ -69,6 +64,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
         maxLength={25}
         id="titleInput"
         placeholder="Title for note..."
+        defaultValue={note.title}
       ></input>
       <textarea
         required
@@ -77,6 +73,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
         maxLength={2500}
         rows={12}
         placeholder="Description and details for note..."
+        defaultValue={note.description}
       ></textarea>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         <label>Deadline date:</label>
@@ -85,15 +82,15 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
           name="deadlineDate"
           id="dateInput"
           type="datetime-local"
-          min={currDate}
-          defaultValue={currDate}
+          min={note.creationDate.slice(0, 16)}
+          defaultValue={note.deadlineDate.slice(0, 16)}
         ></input>
       </div>
       <div className="noteActionButtons">
         <button className="noteActionBtn" type="submit">
-          Create <Check size={20} color="#000000" />
+          Update <Check size={20} color="#000000" />
         </button>
-        <button className="noteActionBtn" type="button" onClick={cancelCreate}>
+        <button className="noteActionBtn" type="button" onClick={cancelUpdate}>
           Cancel <Uncheck size={18} color="#000000" />
         </button>
       </div>

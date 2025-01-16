@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+.dashboardOutlet {
+  margin: 2rem 8rem;
+}
+
 @media (prefers-color-scheme: light) {
   .dashboardPage {
     background-color: var(--white);
@@ -37,7 +41,7 @@
 }
 
 .createNotePage {
-  margin: 1rem 8rem;
+  margin: 2rem 0rem;
 }
 
 .notFoundPage {
@@ -62,6 +66,67 @@
 .noteDetailsPage {
   display: flex;
   flex-direction: column;
-  margin: 1rem 8rem;
+  margin: 2rem 0rem;
+  gap: 1rem;
+}
+
+.updateNotePage {
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
+  margin: 2rem 0rem;
+}
+
+.authPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80dvh;
+  width: 100%;
+  justify-self: center;
+  gap: 1rem;
+}
+
+.connectionsPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0rem;
+}
+
+.overviewPage {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.createCollectionPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0rem;
+}
+
+.homePage {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.landingPage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.overviewImages {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.overviewImages img {
+  border: 1px solid var(--pink);
+  max-width: 100%;
+}
+
+.overviewPageContent {
+  margin: 4rem 8rem;
 }

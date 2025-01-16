@@ -9,6 +9,7 @@
 @import url("./components/dashboard/notes/notes.css");
 @import url("./components/dashboard/collections/collections.css");
 @import url("./components/general/general.css");
+@import url("./components/auth/auth.css");
 
 :root {
   --white: #fafafa;
@@ -51,4 +52,19 @@ body {
 ::selection {
   color: var(--black);
   background: var(--pink);
+}
+
+input:focus {
+  background-color: var(--dark);
+  outline: 1px solid var(--pink);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+input[data-autocompleted] {
+  background-color: transparent !important;
 }

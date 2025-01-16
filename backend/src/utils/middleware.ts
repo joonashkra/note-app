@@ -58,6 +58,10 @@ const errorHandler = (
 };
 
 const checkAuth = async (req: Request, _res: Response, next: NextFunction) => {
+  if (req.path === "/api/readme") {
+    return next(); // Skip authentication for the README route
+  }
+
   const auth = extractToken(req);
 
   if (!auth) throw new MongooseError("AuthError");

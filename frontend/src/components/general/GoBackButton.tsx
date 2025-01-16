@@ -18,6 +18,7 @@ export default function GoBackButton({ text, route }: GoBackButtonProps) {
         }
       }}
       className="goBackBtn"
+      type="button"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

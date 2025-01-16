@@ -8,7 +8,6 @@ import DashboardContent from "./components/dashboard/DashboardContent.tsx";
 import Landing from "./pages/Landing.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
-import LandingContent from "./components/landing/LandingContent.tsx";
 import About from "./pages/About.tsx";
 import Overview from "./pages/Overview.tsx";
 import CreateCollection from "./pages/CreateCollection.tsx";
@@ -20,6 +19,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
 import NoteDetails from "./pages/NoteDetails.tsx";
 import Fallback from "./pages/Fallback.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UpdateNote from "./pages/UpdateNote.tsx";
+import Home from "./pages/Home.tsx";
 
 const router = createBrowserRouter(
   [
@@ -29,7 +30,7 @@ const router = createBrowserRouter(
       children: [
         {
           path: "/",
-          element: <LandingContent />,
+          element: <Home />,
         },
         {
           path: "/login",
@@ -62,11 +63,11 @@ const router = createBrowserRouter(
           element: <DashboardContent />,
         },
         {
-          path: "/dashboard/createnote",
+          path: "/dashboard/notes/new",
           element: <CreateNote />,
         },
         {
-          path: "/dashboard/createcollection",
+          path: "/dashboard/collections/new",
           element: <CreateCollection />,
         },
         {
@@ -74,8 +75,12 @@ const router = createBrowserRouter(
           element: <Connections />,
         },
         {
-          path: "/dashboard/note/:id",
+          path: "/dashboard/notes/:id",
           element: <NoteDetails />,
+        },
+        {
+          path: "/dashboard/notes/:id/update",
+          element: <UpdateNote />,
         },
       ],
     },

@@ -8,7 +8,7 @@ const CreateCollectionButton = ({ size, color, navigate }: SvgButtonProps) => (
     width={size}
     height={size}
     fill={color}
-    onClick={() => navigate("createcollection")}
+    onClick={() => navigate("collections/new")}
   >
     <path
       fillRule="evenodd"

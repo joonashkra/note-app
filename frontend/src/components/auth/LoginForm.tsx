@@ -1,64 +1,69 @@
-import { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { newUserSchema } from "../../types/schemas";
+import { NewUser } from "../../types/users";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { AxiosError } from "axios";
+import { useAuth } from "../../hooks/useAuth";
 
-export default function LoginForm() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const inputRef = useRef<HTMLInputElement | null>(null);
+interface LoginFormProps {
+  setErrorMsg: (text: string) => void;
+}
+
+export default function LoginForm({ setErrorMsg }: LoginFormProps) {
   const { handleLogin } = useAuth();
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      await handleLogin({ username, password });
-      navigate("/");
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response?.status === 401)
+  const { mutateAsync: loginMutation } = useMutation({
+    mutationFn: (credentials: NewUser) => handleLogin(credentials),
+    onSuccess: () => {
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError && error.status === 400) {
         setErrorMsg("Invalid credentials");
-      else setErrorMsg("Unexpected error occurred");
+      } else setErrorMsg("Unexpected error on log in");
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formValues = Object.fromEntries(formData);
+    const parsedCredentials = newUserSchema.safeParse(formValues);
+
+    if (!parsedCredentials.success) {
+      setErrorMsg(`Error: ${parsedCredentials.error.issues[0].message}`);
+      return;
     }
+
+    await loginMutation(parsedCredentials.data);
   };
 
   return (
-    <form
-      className="flex flex-col gap-5 w-full xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2"
-      onSubmit={login}
-      role="loginform"
-    >
-      <input
-        ref={inputRef}
-        type="username"
-        onChange={(e) => setUsername(e.target.value)}
-        className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark"
-        placeholder="Username..."
-        required
-      />
-      <input
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        className="p-2 mb-1 rounded-sm shadow-sm shadow-dark bg-dark"
-        placeholder="Password..."
-        required
-      />
-      <button
-        title="Log In"
-        className="hover:border-light focus:border-light bg-dark rounded-md"
-        type="submit"
-        role="loginBtn"
-      >
+    <form className="authForm" onSubmit={handleSubmit}>
+      <div className="authFormInput">
+        <label>Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Type your username..."
+          required
+        />
+      </div>
+      <div className="authFormInput">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Type your password..."
+          required
+          minLength={5}
+        />
+      </div>
+      <button type="submit" className="authBtn">
         Log In
       </button>
-      {errorMsg && <p>{errorMsg}</p>}
     </form>
   );
 }

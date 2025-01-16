@@ -51,19 +51,18 @@ const deleteEntry = async (id: string, userId: ObjectId) => {
   await NoteModel.findByIdAndDelete(id);
 };
 
-const checkEntry = async (
+const updateEntry = async (
   id: string,
   userId: ObjectId,
+  note: Note,
 ): Promise<Note | null> => {
-  const note = await NoteModel.findById(id);
-  if (!note) throw new MongooseError("DocumentNotFoundError");
-  if (note.user.toString() !== userId.toString())
+  const noteToUpdate = await NoteModel.findById(id);
+  if (!noteToUpdate) throw new MongooseError("DocumentNotFoundError");
+  if (noteToUpdate.user.toString() !== userId.toString())
     throw new MongooseError("AuthError");
-  const updatedNote = await NoteModel.findByIdAndUpdate(
-    id,
-    { checked: !note.checked },
-    { new: true },
-  );
+  const updatedNote = await NoteModel.findByIdAndUpdate(id, note, {
+    new: true,
+  });
   return updatedNote;
 };
 
@@ -72,5 +71,5 @@ export default {
   getOne,
   addEntry,
   deleteEntry,
-  checkEntry,
+  updateEntry,
 };

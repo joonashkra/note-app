@@ -39,7 +39,22 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   if (!req.user) return res.sendStatus(401);
-  const updatedNote = await noteService.checkEntry(req.params.id, req.user.id);
+  const { id, title, description, creationDate, deadlineDate, checked, user } =
+    req.body;
+  const note: Note = {
+    id,
+    title,
+    description,
+    creationDate,
+    deadlineDate,
+    checked,
+    user,
+  };
+  const updatedNote = await noteService.updateEntry(
+    req.params.id,
+    req.user.id,
+    note,
+  );
   res.send(updatedNote);
   return;
 });

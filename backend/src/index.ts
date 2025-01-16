@@ -8,6 +8,7 @@ import cors from "cors";
 import noteRouter from "./routes/notes";
 import userRouter from "./routes/users";
 import loginRouter from "./routes/login";
+import readmeRouter from "./routes/readme";
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,8 @@ if (url)
     .connect(url)
     .then((_result) => console.log("Connected to MongoDB"))
     .catch((error) => console.log("error connecting to MongoDB:", error));
+
+app.use("/api/readme", readmeRouter);
 
 app.use("/api/login", loginRouter);
 app.use("/api/users", userRouter);

@@ -7,6 +7,8 @@
   border-radius: 0;
   color: var(--white);
   border-bottom: 1px solid var(--pink);
+  position: sticky;
+  top: 0;
 }
 
 .navBar h1 {
@@ -17,7 +19,6 @@
   display: flex;
   gap: 4rem;
   justify-content: center;
-  height: 100%;
 }
 
 .navLinks a {

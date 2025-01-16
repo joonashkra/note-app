@@ -16,7 +16,7 @@ export default function NotesList() {
   if (isLoading) return <Loading />;
 
   if (notes && notes.length < 1)
-    return <NotFound text="No notes yet" size={24} color="#FFFFFF" />;
+    return <NotFound text="No notes yet" size={50} color="#FFFFFF" />;
   if (notes === undefined)
     return (
       <NotFound
@@ -29,7 +29,7 @@ export default function NotesList() {
   return (
     <ul className="notesList">
       {notes.map((note) => (
-        <li key={note.id} onClick={() => navigate(`note/${note.id}`)}>
+        <li key={note.id} onClick={() => navigate(`notes/${note.id}`)}>
           <NoteCard note={note} layout="compact" />
         </li>
       ))}

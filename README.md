@@ -1,26 +1,27 @@
-# Note / To-Do App
+# Note / To-Do Web Application
 
-Full stack web application that originally started as a university course project. At that time the app was e.g. using Firebase so there was no backend implementation, and the frontend was ok but not great. Later on I started working on this again as a personal project, building my own backend with NodeJS and rebuilding the frontend with more effort and care.
+## Description
+
+This originally started as some frontend-course project. At that time the app was e.g. using Firebase so there was no backend implementation, and also the frontend itself was not that great. Later on I started working on this again as a personal project, building my own backend and rebuilding the frontend with more effort and care. App is currently under development, but the basic features have been implemented for notes, authorization, etc.
 
 ## Languages, frameworks and libraries used:
 
-Backend: 
+Backend:
 
     - TypeScript
     - Express
-    - MongoDB (Mongoose) 
+    - MongoDB (Mongoose)
     - JWT
-    - Bcrypt 
+    - Bcrypt
     - Zod
 
+Frontend:
 
-Frontend: 
-
-    - TypeScript 
-    - React (Vite) 
-    - Axios 
-    - React Router V6 
-    - React Query (Tanstack) 
+    - TypeScript
+    - React (Vite)
+    - Axios
+    - React Router V6
+    - React Query (Tanstack)
     - Zod
 
 ## Usage

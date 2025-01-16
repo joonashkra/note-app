@@ -2,16 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import noteService from "../../../services/noteService";
 import { useNavigate } from "react-router-dom";
 import Trash from "../../../assets/Trash";
-
-interface DeleteNoteButtonProps {
-  noteId: string;
-  setErrorMsg: (text: string) => void;
-}
+import { NoteActionProps } from "../../../types/props";
 
 export default function DeleteNoteButton({
-  noteId,
+  note,
   setErrorMsg,
-}: DeleteNoteButtonProps) {
+}: NoteActionProps) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -21,7 +17,6 @@ export default function DeleteNoteButton({
       queryClient.invalidateQueries({
         queryKey: ["notes"],
       });
-      window.alert("Note deleted succesfully");
       navigate("/dashboard");
     },
     onError: () => {
@@ -34,10 +29,10 @@ export default function DeleteNoteButton({
       className="noteActionBtn"
       onClick={() => {
         if (window.confirm("Delete note permanently?"))
-          deleteNoteMutation(noteId);
+          deleteNoteMutation(note.id);
       }}
     >
-      Delete <Trash size={20} color="#000000" />
+      Delete <Trash size={18} color="#000000" />
     </button>
   );
 }

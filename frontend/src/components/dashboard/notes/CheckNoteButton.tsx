@@ -3,20 +3,17 @@ import noteService from "../../../services/noteService";
 import Check from "../../../assets/Check";
 import { Note } from "../../../types/notes";
 import Uncheck from "../../../assets/Uncheck";
-
-interface CheckNoteButtonProps {
-  note: Note;
-  setErrorMsg: (text: string) => void;
-}
+import { NoteActionProps } from "../../../types/props";
 
 export default function CheckNoteButton({
   note,
   setErrorMsg,
-}: CheckNoteButtonProps) {
+}: NoteActionProps) {
   const queryClient = useQueryClient();
 
   const { mutateAsync: checkNoteMutation } = useMutation({
-    mutationFn: (id: string) => noteService.check(id),
+    mutationFn: (note: Note) =>
+      noteService.update({ ...note, checked: !note.checked }),
     onSuccess: (updatedNote) => {
       queryClient.setQueryData(
         ["note"],
@@ -30,10 +27,7 @@ export default function CheckNoteButton({
   });
 
   return (
-    <button
-      className="noteActionBtn checkNoteBtn"
-      onClick={() => checkNoteMutation(note.id)}
-    >
+    <button className="noteActionBtn" onClick={() => checkNoteMutation(note)}>
       {!note.checked ? (
         <>
           Check as done <Check size={22} color="#000000" />

@@ -20,7 +20,6 @@ export default function NoteCard({ note, layout }: NoteCardProps) {
     );
   return (
     <div className="noteCardDetailed">
-      <h2>Title: {note.title}</h2>
       <p>Description: {note.description}</p>
       <p>Creation date: {formatDate(note.creationDate)}</p>
       <p>Deadline date: {formatDate(note.deadlineDate)}</p>

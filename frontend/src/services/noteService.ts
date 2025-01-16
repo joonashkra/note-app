@@ -6,7 +6,6 @@ const baseUrl = "/api/notes";
 let authToken: string;
 
 const setToken = (newToken: string) => {
-  console.log(`Bearer ${newToken}`);
   authToken = `Bearer ${newToken}`;
 };
 
@@ -46,16 +45,13 @@ const remove = async (id: string) => {
   return response.data;
 };
 
-const check = async (id: string) => {
+const update = async (note: Note) => {
   const config = {
     headers: { Authorization: authToken },
   };
 
-  console.log(id);
-  console.log(config);
-
-  const response = await axios.put(`${baseUrl}/${id}`, {}, config);
+  const response = await axios.put(`${baseUrl}/${note.id}`, note, config);
   return response.data;
 };
 
-export default { setToken, getAll, getOne, create, remove, check };
+export default { setToken, getAll, getOne, create, remove, update };

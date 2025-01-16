@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token === null) navigate("/");
+    if (token === null) navigate("/login");
   }, [token, navigate]);
 
   if (token === undefined) return <Loading />;

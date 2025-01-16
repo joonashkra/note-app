@@ -39,13 +39,13 @@
   cursor: pointer;
 }
 
-.createNoteForm {
+.noteForm {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.createNoteForm input,
+.noteForm input,
 textarea {
   padding: 0.5rem;
   background-color: var(--dark);
@@ -74,7 +74,13 @@ textarea {
   gap: 1rem;
 }
 
-.noteActions {
+.noteButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.noteActionButtons {
   display: flex;
   gap: 1rem;
 }

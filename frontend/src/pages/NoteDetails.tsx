@@ -7,6 +7,8 @@ import Loading from "./Loading";
 import DeleteNoteButton from "../components/dashboard/notes/DeleteNoteButton";
 import { useState } from "react";
 import CheckNoteButton from "../components/dashboard/notes/CheckNoteButton";
+import ToggleUpdateButton from "../components/dashboard/notes/ToggleUpdateButton";
+import Check from "../assets/Check";
 
 export default function NoteDetails() {
   const { id = "" } = useParams();
@@ -24,13 +26,19 @@ export default function NoteDetails() {
 
   return (
     <div className="noteDetailsPage">
-      <h1>Note {id}</h1>
-      <NoteCard note={note} layout="detailed" />
-      <div className="noteActions">
-        <CheckNoteButton note={note} setErrorMsg={setErrorMsg} />
-        <DeleteNoteButton noteId={note.id} setErrorMsg={setErrorMsg} />
+      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        <h1>{note.title}</h1>
+        {note.checked && <Check size={30} color="#FFFFFF" />}
       </div>
-      {errorMsg && <p>{errorMsg}</p>}
+      <NoteCard note={note} layout="detailed" />
+      <div className="noteButtons">
+        <CheckNoteButton note={note} setErrorMsg={setErrorMsg} />
+        <div className="noteActionButtons">
+          <ToggleUpdateButton note={note} />
+          <DeleteNoteButton note={note} setErrorMsg={setErrorMsg} />
+        </div>
+      </div>
+      {errorMsg && <p className="errorMsg">{errorMsg}</p>}
     </div>
   );
 }
