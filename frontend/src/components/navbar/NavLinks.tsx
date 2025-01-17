@@ -24,11 +24,9 @@ export default function NavLinks() {
       </NavLink>
       {token ? (
         <>
-          <div className="dashboardLink">
-            <NavLink to="/dashboard" style={linkStyle}>
-              Dashboard
-            </NavLink>
-          </div>
+          <NavLink to="/dashboard" style={linkStyle}>
+            Dashboard
+          </NavLink>
           <a onClick={handleLogout}>Log Out</a>
         </>
       ) : (

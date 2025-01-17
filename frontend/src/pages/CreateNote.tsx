@@ -5,10 +5,10 @@ export default function CreateNote() {
   const [errorMsg, setErrorMsg] = useState("");
 
   return (
-    <div className="createNotePage">
+    <main className="createNotePage">
       <h1>Create New Note</h1>
       <CreateNoteForm setErrorMsg={setErrorMsg} />
       {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-    </div>
+    </main>
   );
 }

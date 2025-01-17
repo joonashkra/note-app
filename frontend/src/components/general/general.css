@@ -5,7 +5,9 @@
 }
 
 .goBackBtn {
-  background-color: var(--white);
+  background-color: var(--dark);
+  color: var(--white);
+  border: 1px solid var(--pink);
   width: max-content;
   padding: 0.8rem;
   cursor: pointer;
@@ -14,7 +16,6 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
-  border: none;
   height: max-content;
   transition:
     background-color 0.2s ease-in-out,
@@ -23,11 +24,11 @@
 }
 
 .goBackBtn svg {
-  fill: var(--black);
+  fill: var(--white);
   transition:
     background-color 0.2s ease-in-out,
     fill 0.2s ease-in-out;
-  background-color: var(--white);
+  background-color: var(--dark);
 }
 
 .goBackBtn:hover {

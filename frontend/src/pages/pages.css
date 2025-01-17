@@ -8,7 +8,7 @@
   width: 100%;
 }
 
-.dashboardOutlet {
+.dashboardMain {
   margin: 2rem 8rem;
 }
 
@@ -97,6 +97,7 @@
 .overviewPage {
   flex-grow: 1;
   overflow-y: auto;
+  padding: 2rem 8rem;
 }
 
 .createCollectionPage {
@@ -125,8 +126,4 @@
 .overviewImages img {
   border: 1px solid var(--pink);
   max-width: 100%;
-}
-
-.overviewPageContent {
-  margin: 4rem 8rem;
 }

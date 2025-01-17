@@ -5,10 +5,10 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
 
   return (
-    <div className="authPage">
+    <main className="authPage">
       <h1>Log in to NoteApp</h1>
       <LoginForm setErrorMsg={setErrorMsg} />
       {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-    </div>
+    </main>
   );
 }

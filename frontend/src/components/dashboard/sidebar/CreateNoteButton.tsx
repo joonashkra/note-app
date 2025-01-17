@@ -7,7 +7,7 @@ export default function CreateNoteButton({
 }: SvgButtonProps) {
   return (
     <svg
-      className="menuBarBtn"
+      className="sideBarBtn"
       xmlns="http://www.w3.org/2000/svg"
       fill={color}
       viewBox="0 0 32 32"

@@ -1,4 +1,4 @@
-.authBar {
+.topBar {
   display: flex;
   background-color: var(--black);
   justify-content: space-between;
@@ -6,29 +6,29 @@
   align-items: center;
   border-radius: 0;
   color: var(--white);
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid var(--pink);
   position: sticky;
   top: 0;
 }
 
-.authBar h1 {
+.topBar h1 {
   font-size: 1.5rem;
   margin: 0;
 }
 
-.authBarActions {
+.topBarActions {
   display: flex;
   gap: 2rem;
   justify-content: center;
 }
 
-.authBarBtn {
+.topBarBtn {
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
 }
 
-.authBarBtn:hover {
+.topBarBtn:hover {
   transform: scale(1.1);
   cursor: pointer;
   fill: var(--pink);

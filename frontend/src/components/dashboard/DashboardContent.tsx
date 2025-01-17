@@ -3,16 +3,16 @@ import NotFound from "../general/NotFound";
 
 export default function DashboardContent() {
   return (
-    <div className="dashboard">
+    <div className="dashboardOutlet">
       <h1>Dashboard</h1>
       <div className="dashboardContent">
-        <div className="dashboardContentSection">
+        <section className="dashboardContentSection">
           <h2>Notes</h2>
           <div className="dashboardContentSectionData">
             <NotesList />
           </div>
-        </div>
-        <div className="dashboardContentSection">
+        </section>
+        <section className="dashboardContentSection">
           <h2>Collections</h2>
           <div className="dashboardContentSectionData">
             <NotFound
@@ -21,14 +21,14 @@ export default function DashboardContent() {
               size={50}
             />
           </div>
-        </div>
+        </section>
       </div>
-      <div className="dashboardContentSection">
+      <section className="dashboardContentSection">
         <h2>Connections</h2>
         <div className="dashboardContentSectionData">
           <NotFound text="No connections found." color={"#FAFAFA"} size={50} />
         </div>
-      </div>
+      </section>
     </div>
   );
 }

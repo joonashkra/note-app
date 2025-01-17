@@ -5,15 +5,15 @@ import ProfileButton from "./ProfileButton";
 import SettingsButton from "./SettingsButton";
 import HomeButton from "./HomeButton";
 
-export default function AuthBar() {
+export default function TopBar() {
   const buttonSize = 26;
   const buttonColor = COLORS.white;
   const navigate = useNavigate();
 
   return (
-    <nav className="authBar">
+    <section className="topBar">
       <h1>NoteApp</h1>
-      <div className="authBarActions">
+      <nav className="topBarActions">
         <NavLink to="/">
           <HomeButton
             size={buttonSize}
@@ -36,7 +36,7 @@ export default function AuthBar() {
           color={buttonColor}
           navigate={navigate}
         />
-      </div>
-    </nav>
+      </nav>
+    </section>
   );
 }

@@ -2,7 +2,7 @@ import { SvgButtonProps } from "../../../types/props";
 
 const CreateCollectionButton = ({ size, color, navigate }: SvgButtonProps) => (
   <svg
-    className="menuBarBtn"
+    className="sideBarBtn"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1920 1920"
     width={size}

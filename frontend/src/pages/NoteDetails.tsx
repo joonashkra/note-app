@@ -25,7 +25,7 @@ export default function NoteDetails() {
     return <NotFound text="Note not found." size={50} color="#FFFFFF" />;
 
   return (
-    <div className="noteDetailsPage">
+    <main className="noteDetailsPage">
       <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
         <h1>{note.title}</h1>
         {note.checked && <Check size={30} color="#FFFFFF" />}
@@ -39,6 +39,6 @@ export default function NoteDetails() {
         </div>
       </div>
       {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-    </div>
+    </main>
   );
 }

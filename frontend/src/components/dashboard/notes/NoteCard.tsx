@@ -19,10 +19,10 @@ export default function NoteCard({ note, layout }: NoteCardProps) {
       </div>
     );
   return (
-    <div className="noteCardDetailed">
+    <section className="noteCardDetailed">
       <p>Description: {note.description}</p>
       <p>Creation date: {formatDate(note.creationDate)}</p>
       <p>Deadline date: {formatDate(note.deadlineDate)}</p>
-    </div>
+    </section>
   );
 }

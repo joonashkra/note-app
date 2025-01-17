@@ -1,6 +1,6 @@
 @import url("./pages/pages.css");
-@import url("./components/dashboard/menubar/menu.css");
-@import url("./components/dashboard/authbar/authbar.css");
+@import url("./components/dashboard/sidebar/sidebar.css");
+@import url("./components/dashboard/topbar/topbar.css");
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import url("./components/navbar/navbar.css");
 @import url("./components/dashboard/dashboard.css");

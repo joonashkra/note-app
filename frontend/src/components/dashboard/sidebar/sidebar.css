@@ -1,16 +1,16 @@
-.menuBar {
+.sideBar {
   display: flex;
   flex-direction: column;
   height: 100dvh;
   background-color: var(--black);
   justify-content: center;
   align-items: center;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid var(--pink);
   position: sticky;
   top: 0;
 }
 
-.menuActions {
+.sideBarActions {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -20,28 +20,28 @@
   align-items: center;
 }
 
-#toggleMenuBtn {
+#toggleSideBarBtn {
   display: none;
 }
 
-.menuBarBtn {
+.sideBarBtn {
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
   fill: var(--white);
 }
 
-.menuBarBtn:hover {
+.sideBarBtn:hover {
   transform: scale(1.1);
   cursor: pointer;
   fill: var(--pink);
 }
 
-.menuActions div {
+.sideBarActions div {
   position: relative;
 }
 
-.menuBarBtnPopUp {
+.sideBarBtnPopUp {
   display: block;
   position: absolute;
   left: 240%;
@@ -60,13 +60,13 @@
   z-index: 1000;
 }
 
-.menuBarBtn:hover + .menuBarBtnPopUp {
+.sideBarBtn:hover + .sideBarBtnPopUp {
   opacity: 1;
   visibility: visible;
 }
 
 @media (max-width: 426px) {
-  #toggleMenuBtn {
+  #toggleSideBarBtn {
     display: block;
   }
 }

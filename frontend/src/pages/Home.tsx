@@ -26,8 +26,8 @@ export default function Home() {
   };
 
   return (
-    <div className="homePage">
+    <main className="homePage">
       <MarkdownPreview source={readMe} style={styles} />
-    </div>
+    </main>
   );
 }

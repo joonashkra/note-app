@@ -14,15 +14,17 @@ export default function Overview() {
   ];
 
   return (
-    <div className="overviewPage">
-      <div className="overviewPageContent">
+    <main className="overviewPage">
+      <section>
         <h1>Overview</h1>
         <p>
           Here are listed the current (ready) features of the app and what's to
           come in the future. Also some screenshots of the app are included if
           creating an account seems like too much trouble.
         </p>
-        <div className="overviewFeatures">
+      </section>
+      <section className="overviewFeatures">
+        <div>
           <h2>Current features and development phases</h2>
           <ul>
             {currFeatures.map((feature, index) => (
@@ -30,7 +32,7 @@ export default function Overview() {
             ))}
           </ul>
         </div>
-        <div className="overviewFeatures">
+        <div>
           <h2>Future features</h2>
           <ul>
             {futureFeatures.map((feature, index) => (
@@ -38,13 +40,15 @@ export default function Overview() {
             ))}
           </ul>
         </div>
+      </section>
+      <section>
         <h2>Screenshots</h2>
         <div className="overviewImages">
           <img src="./public/dashboard.png" />
           <img src="./public/createnote.png" />
           <img src="./public/notedetails.png" />
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

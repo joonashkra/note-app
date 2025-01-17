@@ -1,7 +1,6 @@
-.dashboard {
+.dashboardOutlet {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
 
 .dashboard h1 {
@@ -9,11 +8,13 @@
 }
 
 .dashboardContent {
+  margin-top: 0;
   display: flex;
   background-color: transparent;
   justify-content: space-between;
   color: var(--white);
   gap: 4rem;
+  margin-bottom: 1rem;
 }
 
 .dashboardContentSection {

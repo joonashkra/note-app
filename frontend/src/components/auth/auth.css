@@ -24,7 +24,8 @@
 }
 
 .authBtn {
-  background-color: var(--white);
+  background-color: var(--dark);
+  color: var(--white);
   padding: 0.8rem;
   cursor: pointer;
   display: flex;
@@ -32,7 +33,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
-  border: none;
+  border: 1px solid var(--pink);
   transition:
     background-color 0.2s ease-in-out,
     color 0.2s ease-in-out,

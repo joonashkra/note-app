@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
-import AuthBar from "../components/dashboard/authbar/AuthBar";
-import MenuBar from "../components/dashboard/menubar/MenuBar";
+import SideBar from "../components/dashboard/sidebar/SideBar";
 import GoBackButton from "../components/general/GoBackButton";
+import TopBar from "../components/dashboard/topbar/TopBar";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -9,17 +9,15 @@ export default function Dashboard() {
 
   return (
     <div className="dashboardPage">
-      <MenuBar />
+      <SideBar />
       <div className="dashboardContainer">
-        <AuthBar />
-        <div className="dashboardOutlet">
-          <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-            {!isDashboardRoot && (
-              <GoBackButton route={"/dashboard"} text="Back to Dashboard" />
-            )}
-          </div>
+        <TopBar />
+        <main className="dashboardMain">
+          {!isDashboardRoot && (
+            <GoBackButton route={"/dashboard"} text="Back to Dashboard" />
+          )}
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );

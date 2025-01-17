@@ -15,7 +15,7 @@ export default function ToggleUpdateButton({ note }: ToggleUpdateButtonProps) {
 
   return (
     <button className="noteActionBtn" onClick={toggleUpdate}>
-      Update <Edit size={18} color="#000000" />
+      Update <Edit size={16} color="#000000" />
     </button>
   );
 }

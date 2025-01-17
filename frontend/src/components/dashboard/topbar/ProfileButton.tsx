@@ -2,7 +2,7 @@ import { SvgButtonProps } from "../../../types/props";
 
 const ProfileButton = ({ size, color, navigate }: SvgButtonProps) => (
   <svg
-    className="authBarBtn"
+    className="topBarBtn"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     height={size}
