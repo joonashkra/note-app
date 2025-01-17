@@ -1,5 +1,4 @@
 import NotesList from "./notes/NotesList";
-import CollectionsList from "./collections/CollectionsList";
 import NotFound from "../general/NotFound";
 
 export default function DashboardContent() {

@@ -14,6 +14,7 @@ Backend:
     - JWT
     - Bcrypt
     - Zod
+    - Jest & Supertest
 
 Frontend:
 

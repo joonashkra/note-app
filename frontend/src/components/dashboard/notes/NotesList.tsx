@@ -26,9 +26,14 @@ export default function NotesList() {
       />
     );
 
+  const sortedNotes = [...notes].sort(
+    (a, b) =>
+      new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
+  );
+
   return (
     <ul className="notesList">
-      {notes.map((note) => (
+      {sortedNotes.map((note) => (
         <li key={note.id} onClick={() => navigate(`notes/${note.id}`)}>
           <NoteCard note={note} layout="compact" />
         </li>

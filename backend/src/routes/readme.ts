@@ -1,8 +1,9 @@
 import { Router } from "express";
 import fs from "fs";
+
 const router = Router();
 
-router.get("/", (_req, res) => {
+router.get("/", async (_req, res) => {
   const path = "../README.md";
   fs.readFile(path, "utf-8", (error, data) => {
     if (error) {

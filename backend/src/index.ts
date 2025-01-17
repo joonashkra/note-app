@@ -17,13 +17,16 @@ app.use(cors());
 
 mongoose.set("strictQuery", false);
 
-const url = process.env.MONGODB_URI;
+const MONGODB_URI =
+  process.env.NODE_ENV === "test"
+    ? process.env.TEST_MONGODB_URI
+    : process.env.MONGODB_URI;
 
-console.log("connecting to", url);
+console.log("connecting to", MONGODB_URI);
 
-if (url)
+if (MONGODB_URI)
   mongoose
-    .connect(url)
+    .connect(MONGODB_URI)
     .then((_result) => console.log("Connected to MongoDB"))
     .catch((error) => console.log("error connecting to MongoDB:", error));
 
@@ -38,8 +41,11 @@ app.use("/api/notes", noteRouter);
 
 app.use(middleware.errorHandler);
 
-const PORT = process.env.PORT;
+const PORT =
+  process.env.NODE_ENV === "test" ? process.env.TEST_PORT : process.env.PORT;
 
-app.listen(PORT, () => {
+export const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+export default app;
