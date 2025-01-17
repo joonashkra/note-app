@@ -41,8 +41,7 @@ app.use("/api/notes", noteRouter);
 
 app.use(middleware.errorHandler);
 
-const PORT =
-  process.env.NODE_ENV === "test" ? process.env.TEST_PORT : process.env.PORT;
+const PORT = process.env.PORT;
 
 export const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
