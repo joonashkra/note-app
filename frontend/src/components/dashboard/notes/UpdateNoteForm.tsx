@@ -40,7 +40,7 @@ export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
     const updatedNote: Note = {
       ...parseNote.data,
       id: note.id,
-      userid: note.userid,
+      user: note.user,
       creationDate: note.creationDate,
       deadlineDate: parseNote.data.deadlineDate.toISOString(),
       checked: note.checked,

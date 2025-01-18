@@ -22,13 +22,14 @@ const MONGODB_URI =
     ? process.env.TEST_MONGODB_URI
     : process.env.MONGODB_URI;
 
-console.log("connecting to", MONGODB_URI);
-
-if (MONGODB_URI)
+if (MONGODB_URI) {
+  const safeURI = MONGODB_URI.match(/@([^/]+\/[^?]+)/);
+  if (safeURI) console.log("connecting to", safeURI[1]);
   mongoose
     .connect(MONGODB_URI)
     .then((_result) => console.log("Connected to MongoDB"))
     .catch((error) => console.log("error connecting to MongoDB:", error));
+}
 
 app.use("/api/readme", readmeRouter);
 
@@ -41,7 +42,7 @@ app.use("/api/notes", noteRouter);
 
 app.use(middleware.errorHandler);
 
-const PORT = process.env.PORT;
+const PORT = process.env.NODE_ENV == "test" ? 0 : process.env.PORT;
 
 export const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

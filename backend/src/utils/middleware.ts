@@ -18,7 +18,6 @@ const newNoteParser = (req: Request, _res: Response, next: NextFunction) => {
 const userParser = (req: Request, _res: Response, next: NextFunction) => {
   try {
     UserSchema.parse(req.body);
-    console.log(req.body);
     next();
   } catch (error: unknown) {
     next(error);
@@ -45,7 +44,6 @@ const errorHandler = (
       case "AuthError":
         return res.status(401).send({ error: "Authorization failed." });
       default:
-        console.log(error);
         return res.status(400).json({ error: error.message });
     }
   }

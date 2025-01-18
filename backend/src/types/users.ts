@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Note } from "./notes";
 
 export interface User {
-  id: mongoose.Schema.Types.ObjectId;
+  id: mongoose.Types.ObjectId;
   username: string;
   passwordHash: string;
   notes: Note[];
@@ -19,4 +19,15 @@ export interface NonSensitiveUser {
   id?: string;
   __v?: number;
   passwordHash?: string;
+}
+
+export interface AuthUser {
+  username: string;
+  id: string;
+  notes: Note[];
+}
+
+export interface AuthResponse {
+  user: AuthUser;
+  token: string;
 }

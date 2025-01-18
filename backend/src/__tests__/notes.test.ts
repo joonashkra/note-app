@@ -6,12 +6,30 @@ import NoteModel from "../models/note";
 import UserModel from "../models/user";
 import assert from "node:assert";
 import { Note } from "../types/notes";
+import { AuthResponse } from "../types/users";
 
 const api = supertest(app);
 
+let token: string;
+let notes: Note[] = [];
 const initialNotes = mockNotes;
 
-let token: string;
+//Backend populates note.user as { username, id }, so this is just to make tests easier since the username is not needed here
+type NoteWithPopulatedUser = Omit<Note, "user"> & {
+  user: { username: string; id: string };
+};
+
+const fetchNotes = async (): Promise<Note[]> => {
+  const res = await api
+    .get("/api/notes")
+    .set("Authorization", `Bearer ${token}`)
+    .expect(200);
+
+  return res.body.map((note: NoteWithPopulatedUser) => ({
+    ...note,
+    user: note.user.id,
+  }));
+};
 
 beforeEach(async () => {
   await NoteModel.deleteMany({});
@@ -38,7 +56,7 @@ beforeEach(async () => {
   newUser.notes = newUser.notes.concat(newNote);
   await newUser.save();
 
-  const res = await api
+  const loginRes = await api
     .post("/api/login")
     .send({
       username: "TestUser",
@@ -46,34 +64,27 @@ beforeEach(async () => {
     })
     .expect(200);
 
-  token = res.body.auth.token;
+  const auth: AuthResponse = loginRes.body.auth;
+  token = auth.token;
+
+  notes = await fetchNotes();
 });
 
 describe("get notes", () => {
-  test("notes are returned as json", async () => {
+  test("all notes are returned", () => {
+    assert.strictEqual(notes.length, initialNotes.length - 1); // initialNotes.length - 1, since only 2 notes belong to logged in user atm
+  });
+
+  test("returns 404 if note doesn't exist", async () => {
+    const nonexistentNoteId = new mongoose.Types.ObjectId();
     await api
-      .get("/api/notes")
+      .get(`/api/notes/${nonexistentNoteId}`)
       .set("Authorization", `Bearer ${token}`)
-      .expect(200)
-      .expect("Content-Type", /application\/json/);
+      .expect(404);
   });
 
-  test("all notes are returned", async () => {
-    const res = await api
-      .get("/api/notes")
-      .set("Authorization", `Bearer ${token}`)
-      .expect(200);
-
-    assert.strictEqual(res.body.length, initialNotes.length);
-  });
-
-  test("returned note details are correct", async () => {
-    const res = await api
-      .get("/api/notes")
-      .set("Authorization", `Bearer ${token}`)
-      .expect(200);
-
-    const noteTitles = res.body.map((note: Note) => note.title);
+  test("returned note details are correct", () => {
+    const noteTitles = notes.map((note) => note.title);
     assert(noteTitles.includes(initialNotes[0].title));
   });
 
@@ -81,7 +92,7 @@ describe("get notes", () => {
     await api.get("/api/notes").expect(401);
   });
 
-  test("returns only notes that belog to logged in user", async () => {
+  test("returns only notes that belong to logged in user", async () => {
     const newUser = new UserModel(mockUser2);
     await newUser.save();
 
@@ -99,11 +110,11 @@ describe("get notes", () => {
       })
       .expect(200);
 
-    token = loginRes.body.auth.token;
+    const user2Token = loginRes.body.auth.token;
 
     const res = await api
       .get("/api/notes")
-      .set("Authorization", `Bearer ${token}`)
+      .set("Authorization", `Bearer ${user2Token}`)
       .expect(200);
 
     assert.strictEqual(res.body.length, 1);
@@ -118,13 +129,8 @@ describe("post note", () => {
     deadlineDate: "2025-05-30T22:00:00",
   };
 
-  test.only("works with valid token & data", async () => {
-    let getRes = await api
-      .get("/api/notes")
-      .set("Authorization", `Bearer ${token}`)
-      .expect(200);
-
-    const userInitialNotes = getRes.body.map((note: Note) => note);
+  test("works with valid token & data", async () => {
+    const initialNoteCount = notes.length;
 
     await api
       .post("/api/notes")
@@ -132,38 +138,128 @@ describe("post note", () => {
       .send(testNote)
       .expect(201);
 
-    getRes = await api
-      .get("/api/notes")
-      .set("Authorization", `Bearer ${token}`)
-      .expect(200);
-
-    const userNewNotes = getRes.body.map((note: Note) => note);
-
-    assert.strictEqual(userNewNotes.length, userInitialNotes.length + 1);
+    const updatedNotes = await fetchNotes();
+    assert.strictEqual(updatedNotes.length, initialNoteCount + 1);
   });
 
   test("returns 401 unauthorized without access token", async () => {
     await api.post("/api/notes").send(testNote).expect(401);
   });
 
-  test.only("returns 400 bad request with invalid data", async () => {
-    await api
-      .post("/api/notes")
+  test("returns 400 bad request with invalid data", async () => {
+    const invalidNotes = [
+      { ...testNote, title: null },
+      { ...testNote, description: null },
+      { ...testNote, deadlineDate: null },
+    ];
+
+    for (const invalidNote of invalidNotes) {
+      await api
+        .post("/api/notes")
+        .set("Authorization", `Bearer ${token}`)
+        .send(invalidNote)
+        .expect(400);
+    }
+  });
+});
+
+describe("update note", () => {
+  test("works with valid access token & data", async () => {
+    assert.ok(notes.length > 0);
+
+    const noteToUpdate = notes[0];
+
+    const updatedNoteData = {
+      ...noteToUpdate,
+      title: "updatedTitle",
+    };
+
+    const putRes = await api
+      .put(`/api/notes/${noteToUpdate.id}`)
       .set("Authorization", `Bearer ${token}`)
-      .send({ ...testNote, title: null })
-      .expect(400);
+      .send(updatedNoteData)
+      .expect(200);
+
+    assert.strictEqual(putRes.body.title, updatedNoteData.title);
+    assert.strictEqual(putRes.body.id, noteToUpdate.id);
+
+    const updatedNotes = await fetchNotes();
+    const updatedNote = updatedNotes.find(
+      (note: Note) => note.id === noteToUpdate.id,
+    );
+
+    assert.ok(updatedNote);
+    assert.strictEqual(updatedNote.title, updatedNoteData.title);
+  });
+
+  test("returns 401 unauthorized with no access token", async () => {
+    assert.ok(notes.length > 0);
+
+    const noteToUpdate = notes[0];
+
+    const updatedNoteData = {
+      ...noteToUpdate,
+      title: "updatedTitle",
+    };
 
     await api
-      .post("/api/notes")
-      .set("Authorization", `Bearer ${token}`)
-      .send({ ...testNote, description: null })
-      .expect(400);
+      .put(`/api/notes/${noteToUpdate.id}`)
+      .send(updatedNoteData)
+      .expect(401);
+  });
+
+  test("returns 400 bar request with invalid data", async () => {
+    assert.ok(notes.length > 0);
+
+    const noteToUpdate = notes[0];
+
+    const updatedNoteData = {
+      ...noteToUpdate,
+      title: null,
+    };
 
     await api
-      .post("/api/notes")
+      .put(`/api/notes/${noteToUpdate.id}`)
       .set("Authorization", `Bearer ${token}`)
-      .send({ ...testNote, deadlineDate: null })
+      .send(updatedNoteData)
       .expect(400);
+  });
+});
+
+describe("delete note", () => {
+  test("works with valid access token", async () => {
+    assert.ok(notes.length > 0);
+
+    const noteToDelete = notes[0];
+
+    await api
+      .delete(`/api/notes/${noteToDelete.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(204);
+
+    const newNotes = await fetchNotes();
+
+    assert.strictEqual(newNotes.length, notes.length - 1);
+  });
+
+  test("returns 401 with no access token", async () => {
+    assert.ok(notes.length > 0);
+
+    const noteToDelete = notes[0];
+
+    await api.delete(`/api/notes/${noteToDelete.id}`).expect(401);
+
+    const newNotes = await fetchNotes();
+
+    assert.strictEqual(newNotes.length, notes.length);
+  });
+
+  test("returns 404 if note doesn't exist", async () => {
+    const nonexistentNoteId = new mongoose.Types.ObjectId();
+    await api
+      .delete(`/api/notes/${nonexistentNoteId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(404);
   });
 });
 

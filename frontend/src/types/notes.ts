@@ -1,5 +1,5 @@
 export interface Note {
-  userid: string;
+  user: string;
   id: string;
   title: string;
   description: string;
@@ -8,4 +8,4 @@ export interface Note {
   checked: boolean;
 }
 
-export type NewNote = Omit<Note, "id" | "checked" | "creationDate" | "userid">;
+export type NewNote = Omit<Note, "id" | "checked" | "creationDate" | "user">;

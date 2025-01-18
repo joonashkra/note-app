@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
 export interface Note {
-  id: mongoose.Schema.Types.ObjectId;
+  id: mongoose.Types.ObjectId;
   title: string;
   description: string;
   creationDate: Date;
   deadlineDate: Date;
   checked: boolean;
-  user: mongoose.Schema.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
 }
 
 export type NewNote = Omit<Note, "id" | "checked" | "creationDate">;
