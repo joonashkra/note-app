@@ -24,6 +24,7 @@ Frontend:
     - React Router V6
     - React Query (Tanstack)
     - Zod
+    - Playwright
 
 ## Usage
 
