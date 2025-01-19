@@ -4,6 +4,7 @@ import loginService from "../../services/loginService";
 import noteService from "../../services/noteService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../../pages/Loading";
+import userService from "../../services/userService";
 
 interface AuthContext {
   token?: string | null;
@@ -27,6 +28,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
       if (token && user) {
         noteService.setToken(token);
+        userService.setToken(token);
         return {
           token,
           user: JSON.parse(user),

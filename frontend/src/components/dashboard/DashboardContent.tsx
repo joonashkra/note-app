@@ -3,7 +3,7 @@ import NotFound from "../general/NotFound";
 
 export default function DashboardContent() {
   return (
-    <div className="dashboardOutlet">
+    <div className="dashboardOutlet" data-testid="dashboardOutlet">
       <h1>Dashboard</h1>
       <div className="dashboardContent">
         <section className="dashboardContentSection">

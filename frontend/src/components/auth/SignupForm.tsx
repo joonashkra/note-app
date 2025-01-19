@@ -13,7 +13,7 @@ export default function SignupForm({ setErrorMsg }: SignupFormProps) {
   const navigate = useNavigate();
 
   const { mutateAsync: signUpMutation } = useMutation({
-    mutationFn: (credentials: NewUser) => userService.createUser(credentials),
+    mutationFn: (credentials: NewUser) => userService.create(credentials),
     onSuccess: () => {
       window.alert("Account created succesfully. Log in to continue!");
       navigate("/login");
