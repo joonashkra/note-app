@@ -9,6 +9,7 @@ import noteRouter from "./routes/notes";
 import userRouter from "./routes/users";
 import loginRouter from "./routes/login";
 import readmeRouter from "./routes/readme";
+import testingRouter from "./routes/testing";
 
 const app = express();
 app.use(express.json());
@@ -31,6 +32,10 @@ if (MONGODB_URI) {
     .catch((error) => console.log("error connecting to MongoDB:", error));
 }
 
+if (process.env.NODE_ENV === "test") {
+  app.use("/api/testing", testingRouter);
+}
+
 app.use("/api/readme", readmeRouter);
 
 app.use("/api/login", loginRouter);
@@ -42,7 +47,7 @@ app.use("/api/notes", noteRouter);
 
 app.use(middleware.errorHandler);
 
-const PORT = process.env.NODE_ENV == "test" ? 0 : process.env.PORT;
+const PORT = process.env.PORT || 3001;
 
 export const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

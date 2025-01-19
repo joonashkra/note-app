@@ -19,11 +19,12 @@
     "typescript-eslint": "^8.4.0"
   },
   "scripts": {
-    "tsc": "tsc",
+    "build": "rd /s /q build && tsc -p tsconfig.build.json",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
     "lint": "eslint .",
-    "start": "cross-env NODE_ENV=production node build/src/index.js",
-    "test": "cross-env NODE_ENV=test jest"
+    "start": "cross-env NODE_ENV=production node build/index.js",
+    "test": "cross-env NODE_ENV=test PORT=0 jest",
+    "start:test": "cross-env NODE_ENV=test PORT=3001 node build/index.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",
