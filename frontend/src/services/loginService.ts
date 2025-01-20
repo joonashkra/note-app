@@ -5,7 +5,8 @@ const baseUrl = "/api/login";
 
 const login = async (credentials: NewUser) => {
   const response = await axios.post<AuthResponse>(baseUrl, credentials);
-  return response.data.auth;
+  console.log(response.data);
+  return response.data;
 };
 
 export default { login };

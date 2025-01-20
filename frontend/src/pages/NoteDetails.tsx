@@ -25,8 +25,11 @@ export default function NoteDetails() {
     return <NotFound text="Note not found." size={50} color="#FFFFFF" />;
 
   return (
-    <main className="noteDetailsPage">
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+    <main className="noteDetailsPage" data-testid="noteDetailsPage">
+      <div
+        style={{ display: "flex", gap: "1rem", alignItems: "center" }}
+        data-testid="noteTitleDiv"
+      >
         <h1>{note.title}</h1>
         {note.checked && <Check size={30} color="#FFFFFF" />}
       </div>

@@ -28,9 +28,9 @@ export default function DeleteNoteButton({
     <button
       className="noteActionBtn"
       onClick={() => {
-        if (window.confirm("Delete note permanently?"))
-          deleteNoteMutation(note.id);
+        deleteNoteMutation(note.id);
       }}
+      data-testid="deleteNoteBtn"
     >
       Delete <Trash size={18} color="#000000" />
     </button>

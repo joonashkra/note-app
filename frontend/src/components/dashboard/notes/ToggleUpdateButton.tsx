@@ -14,7 +14,11 @@ export default function ToggleUpdateButton({ note }: ToggleUpdateButtonProps) {
   };
 
   return (
-    <button className="noteActionBtn" onClick={toggleUpdate}>
+    <button
+      className="noteActionBtn"
+      onClick={toggleUpdate}
+      data-testid="toggleUpdateBtn"
+    >
       Update <Edit size={16} color="#000000" />
     </button>
   );

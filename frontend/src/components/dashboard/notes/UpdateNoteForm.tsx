@@ -17,7 +17,6 @@ export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
     mutationFn: (note: Note) => noteService.update(note),
     onSuccess: (updatedNote) => {
       queryClient.setQueryData(["note"], updatedNote);
-      window.alert("Note updated succesfully");
       navigate(-1);
     },
     onError: () => {
@@ -84,10 +83,15 @@ export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
           type="datetime-local"
           min={note.creationDate.slice(0, 16)}
           defaultValue={note.deadlineDate.slice(0, 16)}
+          data-testid="dateTimeInput"
         ></input>
       </div>
       <div className="noteActionButtons">
-        <button className="noteActionBtn" type="submit">
+        <button
+          className="noteActionBtn"
+          type="submit"
+          data-testid="updateNoteBtn"
+        >
           Update <Check size={20} color="#000000" />
         </button>
         <button className="noteActionBtn" type="button" onClick={cancelUpdate}>

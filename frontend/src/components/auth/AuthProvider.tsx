@@ -1,19 +1,11 @@
-import { createContext, PropsWithChildren } from "react";
-import { AuthUser, NewUser } from "../../types/users";
+import { PropsWithChildren } from "react";
+import { NewUser } from "../../types/users";
 import loginService from "../../services/loginService";
 import noteService from "../../services/noteService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../../pages/Loading";
 import userService from "../../services/userService";
-
-interface AuthContext {
-  token?: string | null;
-  user?: AuthUser | null;
-  handleLogin: (credentials: NewUser) => Promise<void>;
-  handleLogout: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContext | undefined>(undefined);
+import AuthContext from "./AuthContext";
 
 type AuthProviderProps = PropsWithChildren;
 
@@ -46,6 +38,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const { mutateAsync: loginMutation } = useMutation({
     mutationFn: (credentials: NewUser) => loginService.login(credentials),
     onSuccess: (auth) => {
+      console.log(auth);
       localStorage.setItem("authToken", auth.token);
       localStorage.setItem("authUser", JSON.stringify(auth.user));
       noteService.setToken(auth.token);

@@ -44,9 +44,9 @@ export default function Overview() {
       <section>
         <h2>Screenshots</h2>
         <div className="overviewImages">
-          <img src="./public/dashboard.png" />
-          <img src="./public/createnote.png" />
-          <img src="./public/notedetails.png" />
+          <img src="./public/dashboardimg.png" />
+          <img src="./public/createnoteimg.png" />
+          <img src="./public/notedetailsimg.png" />
         </div>
       </section>
     </main>

@@ -27,7 +27,11 @@ export default function CheckNoteButton({
   });
 
   return (
-    <button className="noteActionBtn" onClick={() => checkNoteMutation(note)}>
+    <button
+      className="noteActionBtn"
+      onClick={() => checkNoteMutation(note)}
+      data-testid="checkNoteBtn"
+    >
       {!note.checked ? (
         <>
           Check as done <Check size={22} color="#000000" />

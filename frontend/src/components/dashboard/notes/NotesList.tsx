@@ -34,7 +34,11 @@ export default function NotesList() {
   return (
     <ul className="notesList">
       {sortedNotes.map((note) => (
-        <li key={note.id} onClick={() => navigate(`notes/${note.id}`)}>
+        <li
+          key={note.id}
+          onClick={() => navigate(`notes/${note.id}`)}
+          data-testid="notesListItem"
+        >
           <NoteCard note={note} layout="compact" />
         </li>
       ))}

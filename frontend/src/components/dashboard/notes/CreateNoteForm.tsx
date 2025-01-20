@@ -22,7 +22,6 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
       queryClient.invalidateQueries({
         queryKey: ["notes"],
       });
-      window.alert("Note created successfully");
       navigate(`/dashboard/notes/${note.id}`);
     },
     onError: () => {
@@ -61,7 +60,11 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
   };
 
   return (
-    <form className="noteForm" onSubmit={handleSubmit}>
+    <form
+      className="noteForm"
+      onSubmit={handleSubmit}
+      data-testid="createNoteForm"
+    >
       <input
         required
         type="text"
@@ -87,6 +90,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
           type="datetime-local"
           min={currDate}
           defaultValue={currDate}
+          data-testid="datetimeInput"
         ></input>
       </div>
       <div className="noteActionButtons">
