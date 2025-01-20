@@ -23,7 +23,7 @@ export interface NonSensitiveUser {
 
 export interface AuthUser {
   username: string;
-  id: string;
+  id: mongoose.Types.ObjectId;
   notes: Note[];
 }
 

@@ -1,10 +1,10 @@
 import UserModel from "../models/user";
-import { NewUser } from "../types/users";
+import { AuthResponse, NewUser } from "../types/users";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { MongooseError } from "mongoose";
 
-const login = async (loginAttempt: NewUser) => {
+const login = async (loginAttempt: NewUser): Promise<AuthResponse> => {
   const { username, password } = loginAttempt;
   const user = await UserModel.findOne({ username });
 

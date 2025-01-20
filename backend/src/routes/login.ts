@@ -10,7 +10,7 @@ router.post(
   middleware.userParser,
   async (req: Request<unknown, unknown, NewUser>, res: Response) => {
     const auth = await loginService.login(req.body);
-    res.status(200).send({ auth });
+    res.status(200).send(auth);
   },
 );
 

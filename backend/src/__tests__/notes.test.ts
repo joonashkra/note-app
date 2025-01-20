@@ -64,7 +64,7 @@ beforeEach(async () => {
     })
     .expect(200);
 
-  const auth: AuthResponse = loginRes.body.auth;
+  const auth: AuthResponse = loginRes.body;
   token = auth.token;
 
   notes = await fetchNotes();
@@ -110,7 +110,7 @@ describe("get notes", () => {
       })
       .expect(200);
 
-    const user2Token = loginRes.body.auth.token;
+    const user2Token = loginRes.body.token;
 
     const res = await api
       .get("/api/notes")
