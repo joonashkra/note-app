@@ -1,8 +1,8 @@
-import dummyCollections from "../../../dummyData";
+import { Collection } from "../../../types/collections";
 import NotFound from "../../general/NotFound";
 
 export default function CollectionsList() {
-  const collections = dummyCollections;
+  const collections: Collection[] = [];
 
   if (collections.length < 1)
     return <NotFound text="No collections yet" size={24} color="#FFFFFF" />;

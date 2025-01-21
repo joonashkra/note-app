@@ -10,15 +10,21 @@ export default function Home() {
     return response.data;
   };
 
-  const { data: readMe, isLoading } = useQuery({
+  const {
+    data: readMe,
+    isLoading,
+    isError,
+  } = useQuery({
     queryFn: getReadMe,
     queryKey: ["readMe"],
   });
 
   if (isLoading) return <Loading />;
 
-  if (readMe === undefined)
-    return <NotFound text="README.md not found" size={24} color="#FFFFFF" />;
+  if (isError)
+    return (
+      <NotFound text="Failed to fetch README.md" size={60} color="#FFFFFF" />
+    );
 
   const styles = {
     padding: "4rem 8rem",

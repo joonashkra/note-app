@@ -1,39 +1,43 @@
-# Note / To-Do App
+# Development in container
 
-Full stack web application that originally started as a university course project. At that time the app was e.g. using Firebase so there was no backend implementation, and the frontend was ok but not great. Later on I started working on this again as a personal project, building my own backend with NodeJS and rebuilding the frontend with more effort and care.
+## Building and running the image with Docker Compose
 
-## Languages, frameworks and libraries used:
-
-Backend:
-
-    - TypeScript
-    - Express
-    - MongoDB (Mongoose)
-    - JWT
-    - Bcrypt
-    - Zod
-
-Frontend:
-
-    - TypeScript
-    - React (Vite)
-    - Axios
-    - React Router V6
-    - React Query (Tanstack)
-    - Zod
-
-## Usage
+Run the following command in ./frontend:
 
 ```bash
-cd frontend
-npm install
-npm run dev
-
-cd backend
-npm install
-npm run dev
+$ docker compose -f docker-compose.dev.yml up
 ```
 
-## License
+## Building and running the image without orchestration
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Here are steps with explanations to achieving a similar result to the above command that uses Docker Compose:
+
+### Build the image
+
+```bash
+$ docker build -f ./dev.Dockerfile -t note-frontend-dev .
+```
+
+### Run the container
+
+Map the current directory to the inside of the container. This gives access to the source-files outside of the container and makes development possible:
+
+```bash
+$ echo $(pwd)
+$ docker run -p 5173:5173 -v "$(pwd):/usr/src/app/" note-frontend-dev
+```
+
+If this results in error such as the one below:
+
+```bash
+Error: Cannot find module @rollup/rollup-linux-arm64-gnu
+```
+
+Start the container with bash as the command and install dependencies and try again
+
+```bash
+$ docker run -it -v "$(pwd):/usr/src/app/" note-frontend-dev bash
+root@b83e9040b91d:/usr/src/app# npm install
+root@b83e9040b91d:/usr/src/app# exit
+$ docker run -p 5173:5173 -v "$(pwd):/usr/src/app/" note-frontend-dev
+```
