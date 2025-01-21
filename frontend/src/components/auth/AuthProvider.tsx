@@ -38,7 +38,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const { mutateAsync: loginMutation } = useMutation({
     mutationFn: (credentials: NewUser) => loginService.login(credentials),
     onSuccess: (auth) => {
-      console.log(auth);
       localStorage.setItem("authToken", auth.token);
       localStorage.setItem("authUser", JSON.stringify(auth.user));
       noteService.setToken(auth.token);

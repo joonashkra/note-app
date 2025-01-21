@@ -15,18 +15,14 @@ export default function DashboardContent() {
         <section className="dashboardContentSection">
           <h2>Collections</h2>
           <div className="dashboardContentSectionData">
-            <NotFound
-              text="No collections found."
-              color={"#FAFAFA"}
-              size={50}
-            />
+            <NotFound text="No collections yet." color={"#FAFAFA"} size={50} />
           </div>
         </section>
       </div>
       <section className="dashboardContentSection">
         <h2>Connections</h2>
         <div className="dashboardContentSectionData">
-          <NotFound text="No connections found." color={"#FAFAFA"} size={50} />
+          <NotFound text="No connections yet." color={"#FAFAFA"} size={50} />
         </div>
       </section>
     </div>

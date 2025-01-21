@@ -1,0 +1,6 @@
+.dockerignore
+.gitignore
+node_modules
+Dockerfile
+requests
+src/__tests__

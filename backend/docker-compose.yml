@@ -1,0 +1,14 @@
+services:
+  backend:
+    image: note-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3001:3001
+    container_name: note-backend
+    env_file:
+      - .env
