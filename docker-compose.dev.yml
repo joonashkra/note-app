@@ -19,7 +19,7 @@ services:
     volumes:
       - ./frontend:/usr/src/app
     container_name: note-frontend-dev
-    
+
   nginx:
     image: nginx:1.20.1
     volumes:

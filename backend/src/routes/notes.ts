@@ -41,27 +41,28 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   if (!req.user) return res.sendStatus(401);
+
+  const parsedNote = NoteSchema.safeParse(req.body);
+
+  if (!parsedNote.success) return res.sendStatus(400);
+
   const { id, title, description, creationDate, deadlineDate, checked, user } =
-    req.body;
+    parsedNote.data;
 
   const note: Note = {
-    id: mongoose.Types.ObjectId.createFromHexString(id),
-    title,
+    id: new mongoose.Types.ObjectId(`${id}`),
+    title: title,
     description,
     creationDate,
     deadlineDate,
     checked,
-    user: mongoose.Types.ObjectId.createFromHexString(user),
+    user: new mongoose.Types.ObjectId(`${user}`),
   };
-
-  const parsedNote = NoteSchema.safeParse(note);
-
-  if (!parsedNote.success) return res.sendStatus(400);
 
   const updatedNote = await noteService.updateEntry(
     req.params.id,
     req.user,
-    parsedNote.data,
+    note,
   );
   res.send(updatedNote);
   return;

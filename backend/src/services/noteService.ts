@@ -30,7 +30,7 @@ const addEntry = async (noteObject: NewNote, user: User): Promise<Note> => {
     ...noteObject,
     creationDate,
     checked: false,
-    user: noteUser.id,
+    user: user.id,
   };
 
   const note = new NoteModel(newNote);
