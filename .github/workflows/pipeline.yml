@@ -62,22 +62,43 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm install
-      - name: Install backend dependencies
+
+      - name: Install Backend Dependencies
         working-directory: ./backend
         run: npm install
+
+      - name: Install Frontend Dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Build Backend
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Build Frontend
+        working-directory: ./frontend
+        run: npm run build
+
       - name: Install Playwright Browsers
         working-directory: ./frontend
         run: npx playwright install --with-deps
+
+      - name: Start Backend and Frontend
+        run: |
+          cd backend && npm run start:test & # Start backend
+          cd frontend && npm run dev & # Start frontend
+          wait
+
+      - name: Check Backend Server
+        run: curl -v http://localhost:3001 || echo "Backend not reachable"
+
+      - name: Check Frontend Server
+        run: curl -v http://localhost:5173 || echo "Frontend not reachable"
+
       - name: E2E Tests
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          PORT: ${{ secrets.PORT }}
+          PORT: 3001
           SECRET: ${{ secrets.SECRET }}
-        run: |
-          cd ./backend && npm run start:test &
-          cd ./frontend && npm run dev &
-          wait
-          cd ./frontend && npx playwright test
+          DEBUG: pw:* # Enable Playwright debug logs
+        run: cd ./frontend && npm run test
