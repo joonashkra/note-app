@@ -35,3 +35,18 @@ jobs:
         run: npm install
       - name: Lint frontend
         run: npm run lint
+
+  backend-unit-tests:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install backend dependencies
+        run: npm install
+      - name: Test backend
+        run: npm run test
