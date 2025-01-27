@@ -19,7 +19,7 @@ let token: string;
 let notes: NoteFromBackend[] = [];
 const initialNotes = mockNotes;
 
-//Backend populates note.user as { username, id }, so this is just to make tests easier since the username is not needed here
+//Backend populates note.user as { username, id }
 type NoteFromBackend = Omit<Note, "user" | "id"> & {
   user: { username: string; id: string };
   id: string;
