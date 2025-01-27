@@ -57,11 +57,6 @@ jobs:
 
   e2e-tests:
     runs-on: ubuntu-20.04
-    env:
-        DEBUG: pw:api
-        TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-        PORT: ${{ secrets.PORT }}
-        SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -90,4 +85,8 @@ jobs:
 
       - name: E2E Tests
         working-directory: ./frontend
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          PORT: ${{ secrets.PORT }}
+          SECRET: ${{ secrets.SECRET }}
         run: npm run test
