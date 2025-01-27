@@ -1,3 +1,4 @@
+import path from 'path'; // Ensure the path module is correctly imported
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
@@ -12,8 +13,10 @@ import readmeRouter from "./routes/readme";
 import testingRouter from "./routes/testing";
 
 const app = express();
-app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.use(express.json());
 app.use(cors());
 
 mongoose.set("strictQuery", false);
@@ -37,13 +40,17 @@ if (process.env.NODE_ENV === "test") {
 }
 
 app.use("/api/readme", readmeRouter);
-
 app.use("/api/login", loginRouter);
 app.use("/api/users", userRouter);
 
-app.use(middleware.checkAuth);
+app.use("/api/notes", middleware.checkAuth);
 
 app.use("/api/notes", noteRouter);
+
+// Fallback to index.html for React routes
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.use(middleware.errorHandler);
 
