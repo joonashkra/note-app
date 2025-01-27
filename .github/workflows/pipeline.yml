@@ -86,6 +86,7 @@ jobs:
       - name: E2E Tests
         working-directory: ./frontend
         env:
+          DEBUG: pw:webserver
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           PORT: ${{ secrets.PORT }}
           SECRET: ${{ secrets.SECRET }}
