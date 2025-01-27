@@ -18,7 +18,9 @@ const login_1 = __importDefault(require("./routes/login"));
 const readme_1 = __importDefault(require("./routes/readme"));
 const testing_1 = __importDefault(require("./routes/testing"));
 const app = (0, express_1.default)();
-app.use(express_1.default.static(path_1.default.join(__dirname, "dist")));
+if (process.env.NODE_ENV === "production") {
+    app.use(express_1.default.static(path_1.default.join(__dirname, "dist")));
+}
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 mongoose_1.default.set("strictQuery", false);
@@ -36,6 +38,9 @@ if (MONGODB_URI) {
 }
 if (process.env.NODE_ENV === "test") {
     app.use("/api/testing", testing_1.default);
+    app.get('/api/health', (_req, res) => {
+        res.status(200).send('OK');
+    });
 }
 app.use("/api/readme", readme_1.default);
 app.use("/api/login", login_1.default);

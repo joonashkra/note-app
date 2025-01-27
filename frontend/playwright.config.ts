@@ -82,7 +82,7 @@ export default defineConfig({
     },
     {
       command: "npm run backend:pw",
-      url: "http://localhost:3001",
+      url: "http://localhost:3001/",
       timeout: 2 * 60 * 1000,
       reuseExistingServer: !process.env.CI,
     },

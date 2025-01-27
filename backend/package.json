@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "rimraf build && tsc -p tsconfig.build.json",
-    "build:ui": "rm -rf build/dist && cd ../frontend && npm run build && cp -r dist ../backend/build && cd ../backend",
+    "build:ui": "npm run build && rm -rf build/dist && cd ../frontend && npm run build && cp -r dist ../backend/build && cd ../backend",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/index.ts",
     "lint": "eslint .",
     "start": "cross-env NODE_ENV=production node build/index.js",

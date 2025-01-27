@@ -14,7 +14,9 @@ import testingRouter from "./routes/testing";
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "dist")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "dist")));
+}
 
 app.use(express.json());
 app.use(cors());
@@ -37,7 +39,11 @@ if (MONGODB_URI) {
 
 if (process.env.NODE_ENV === "test") {
   app.use("/api/testing", testingRouter);
+  app.get('/api/health', (_req, res) => {
+    res.status(200).send('OK');
+  });
 }
+
 
 app.use("/api/readme", readmeRouter);
 app.use("/api/login", loginRouter);
