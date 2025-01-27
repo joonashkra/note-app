@@ -65,6 +65,10 @@ jobs:
 
       - name: Install Backend Dependencies
         working-directory: ./backend
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          PORT: ${{ secrets.PORT }}
+          SECRET: ${{ secrets.SECRET }}
         run: npm install
 
       - name: Install Frontend Dependencies
@@ -82,21 +86,6 @@ jobs:
       - name: Install Playwright Browsers
         working-directory: ./frontend
         run: npx playwright install --with-deps
-
-      - name: Start Backend and Frontend
-        env:
-            TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-            PORT: 3001
-            SECRET: ${{ secrets.SECRET }}
-        run: |
-          cd backend && npm run start:test & # Start backend
-          cd frontend && npm run dev & # Start frontend
-
-      - name: Check Backend Server
-        run: curl -v http://localhost:3001 || echo "Backend not reachable"
-
-      - name: Check Frontend Server
-        run: curl -v http://localhost:5173 || echo "Frontend not reachable"
 
       - name: E2E Tests
         run: cd ./frontend && npx playwright test
