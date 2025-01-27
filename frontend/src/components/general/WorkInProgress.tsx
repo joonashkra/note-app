@@ -1,5 +1,3 @@
-
-
 export default function WorkInProgress() {
   return (
     <div className="workInProgress">

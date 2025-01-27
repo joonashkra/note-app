@@ -1,4 +1,4 @@
-import path from 'path'; // Ensure the path module is correctly imported
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
@@ -39,14 +39,10 @@ if (MONGODB_URI) {
 
 if (process.env.NODE_ENV === "test") {
   app.use("/api/testing", testingRouter);
-  app.get('/', (_req, res) => {
-    res.status(200).send('OK');
+  app.get("/", (_req, res) => {
+    res.status(200).send("OK");
   });
 }
-
-app.get('/version', (_req, res) => {
-  res.send('1');
-});
 
 app.use("/api/readme", readmeRouter);
 app.use("/api/login", loginRouter);
