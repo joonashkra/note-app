@@ -30,6 +30,7 @@ jobs:
         run: npm run lint
 
   backend-tests:
+    needs: lint
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -49,6 +50,7 @@ jobs:
         run: npm run test
 
   e2e-tests:
+    needs: [lint, backend-tests]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -85,7 +87,8 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
         run: npm run test
 
-  docker:
+  docker-push:
+    needs: [lint, backend-tests, e2e-tests]
     runs-on: ubuntu-20.04
     steps:
       - name: Login to Docker Hub
@@ -103,3 +106,15 @@ jobs:
           push: true
           tags: joonashkra/note-app-prod:latest
           file: prod.Dockerfile
+
+  render-deploy:
+    needs: [lint, backend-tests, e2e-tests, docker-push]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Deploy to Render
+        uses: gh-actions-workflows/deploy-docker-render@v1.1
+        with:
+          deploy-hook: ${{ secrets.RENDER_DEPLOY_HOOK }}
+          image-url: joonashkra/note-app-prod:latest
+          render-api-key: ${{ secrets.RENDER_API_KEY }}
+          wait-for-deployment: true
