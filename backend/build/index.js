@@ -38,7 +38,7 @@ if (MONGODB_URI) {
 }
 if (process.env.NODE_ENV === "test") {
     app.use("/api/testing", testing_1.default);
-    app.get('/api/health', (_req, res) => {
+    app.get('/', (_req, res) => {
         res.status(200).send('OK');
     });
 }
