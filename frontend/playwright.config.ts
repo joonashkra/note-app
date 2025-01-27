@@ -76,13 +76,13 @@ export default defineConfig({
   webServer: [
     {
       command: "npm run dev",
-      url: "http://127.0.0.1:5173",
+      url: "http://10.1.0.6:5173",
       timeout: 2 * 60 * 1000,
       reuseExistingServer: !process.env.CI,
     },
     {
       command: "npm run backend:pw",
-      url: "http://127.0.0.1:3001",
+      url: "http://10.1.0.6:3001",
       timeout: 2 * 60 * 1000,
       reuseExistingServer: !process.env.CI,
     },
