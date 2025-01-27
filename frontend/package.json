@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "playwright test"
+    "test": "playwright test",
+    "backend:pw": "cd ../backend && npm run start:test"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
