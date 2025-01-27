@@ -44,6 +44,9 @@ if (process.env.NODE_ENV === "test") {
   });
 }
 
+app.get('/version', (_req, res) => {
+  res.send('1');
+});
 
 app.use("/api/readme", readmeRouter);
 app.use("/api/login", loginRouter);
