@@ -88,4 +88,4 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: E2E Tests
-        run: cd ./frontend && npx playwright test
+        run: cd ./frontend && npm run test
