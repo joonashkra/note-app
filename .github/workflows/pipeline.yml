@@ -57,9 +57,6 @@ jobs:
 
   frontend-e2e-tests:
     runs-on: ubuntu-20.04
-    defaults:
-      run:
-          working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -72,5 +69,5 @@ jobs:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           PORT: ${{ secrets.PORT }}
           SECRET: ${{ secrets.SECRET }}
-        run: npm run test
+        run: cd ./frontend && npm run test
 
