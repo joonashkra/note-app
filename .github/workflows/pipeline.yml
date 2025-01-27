@@ -55,17 +55,20 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
         run: npm run test
 
-  frontend-e2e-tests:
+  e2e-tests:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install dependencies
+      - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
-      - name: Test frontend
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
+      - name: E2E Tests
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           PORT: ${{ secrets.PORT }}
