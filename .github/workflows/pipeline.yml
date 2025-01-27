@@ -57,6 +57,11 @@ jobs:
 
   e2e-tests:
     runs-on: ubuntu-20.04
+    env:
+        DEBUG: pw:api
+        TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+        PORT: ${{ secrets.PORT }}
+        SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -65,10 +70,6 @@ jobs:
 
       - name: Install Backend Dependencies
         working-directory: ./backend
-        env:
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          PORT: ${{ secrets.PORT }}
-          SECRET: ${{ secrets.SECRET }}
         run: npm install
 
       - name: Install Frontend Dependencies
@@ -88,4 +89,5 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: E2E Tests
-        run: cd ./frontend && npm run test
+        working-directory: ./frontend
+        run: npm run test
