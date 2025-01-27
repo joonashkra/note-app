@@ -88,6 +88,6 @@ jobs:
         env:
           DEBUG: pw:webserver
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          PORT: ${{ secrets.PORT }}
+          PORT: 3001
           SECRET: ${{ secrets.SECRET }}
         run: npm run test
