@@ -68,10 +68,12 @@ jobs:
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
+      - name: Install Playwright Browsers
+        working-directory: ./frontend
+        run: npx playwright install --with-deps
       - name: E2E Tests
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           PORT: ${{ secrets.PORT }}
           SECRET: ${{ secrets.SECRET }}
         run: cd ./frontend && npm run test
-
