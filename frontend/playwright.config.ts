@@ -76,11 +76,13 @@ export default defineConfig({
   webServer: [
     {
       command: "cd ../backend && npm run start:test",
+      timeout: 2 * 60 * 1000,
       url: "http://localhost:3001",
       reuseExistingServer: !process.env.CI,
     },
     {
       command: "npm run dev",
+      timeout: 2 * 60 * 1000,
       url: "http://localhost:5173",
       reuseExistingServer: !process.env.CI,
     },
