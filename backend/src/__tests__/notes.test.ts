@@ -78,7 +78,7 @@ beforeEach(async () => {
     .post("/api/login")
     .send({
       username: "TestUser",
-      password: "TestUserWRONGPASSWORD", /// FIX THIS
+      password: "TestUser",
     })
     .expect(200);
 
