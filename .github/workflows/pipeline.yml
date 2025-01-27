@@ -76,4 +76,8 @@ jobs:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
           PORT: ${{ secrets.PORT }}
           SECRET: ${{ secrets.SECRET }}
-        run: cd ./frontend && npm run test
+        run: |
+          cd ./backend && npm run start:test &
+          cd ./frontend && npm run dev &
+          wait
+          cd ./frontend && npx playwright test
