@@ -84,6 +84,10 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Start Backend and Frontend
+        env:
+            TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+            PORT: 3001
+            SECRET: ${{ secrets.SECRET }}
         run: |
           cd backend && npm run start:test & # Start backend
           cd frontend && npm run dev & # Start frontend
@@ -95,9 +99,4 @@ jobs:
         run: curl -v http://localhost:5173 || echo "Frontend not reachable"
 
       - name: E2E Tests
-        env:
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          PORT: 3001
-          SECRET: ${{ secrets.SECRET }}
-          DEBUG: pw:* # Enable Playwright debug logs
-        run: cd ./frontend && npm run test
+        run: cd ./frontend && npx playwright test
