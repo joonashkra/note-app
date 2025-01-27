@@ -87,7 +87,6 @@ jobs:
         run: |
           cd backend && npm run start:test & # Start backend
           cd frontend && npm run dev & # Start frontend
-          wait
 
       - name: Check Backend Server
         run: curl -v http://localhost:3001 || echo "Backend not reachable"
