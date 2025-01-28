@@ -8,6 +8,7 @@ export interface Note {
   deadlineDate: Date;
   checked: boolean;
   user: mongoose.Types.ObjectId;
+  noteCollection?: mongoose.Types.ObjectId;
 }
 
 export type NewNote = Omit<Note, "id" | "checked" | "creationDate">;

@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
 
   const note: Note = {
     id: new mongoose.Types.ObjectId(`${id}`),
-    title: title,
+    title,
     description,
     creationDate,
     deadlineDate,

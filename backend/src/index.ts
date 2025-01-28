@@ -11,6 +11,7 @@ import userRouter from "./routes/users";
 import loginRouter from "./routes/login";
 import readmeRouter from "./routes/readme";
 import testingRouter from "./routes/testing";
+import noteCollectionRouter from "./routes/noteCollections";
 
 const app = express();
 
@@ -49,8 +50,10 @@ app.use("/api/login", loginRouter);
 app.use("/api/users", userRouter);
 
 app.use("/api/notes", middleware.checkAuth);
+app.use("/api/collections", middleware.checkAuth);
 
 app.use("/api/notes", noteRouter);
+app.use("/api/collections", noteCollectionRouter);
 
 app.get("*", (_req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));

@@ -35,7 +35,7 @@ const addEntry = async (noteObject: NewNote, user: User): Promise<Note> => {
 
   const note = new NoteModel(newNote);
   const createdNote = await note.save();
-  user.notes = user.notes.concat(createdNote);
+  user.notes = user.notes.concat(createdNote._id);
   await noteUser.save();
 
   return createdNote;

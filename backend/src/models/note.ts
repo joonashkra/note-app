@@ -11,6 +11,10 @@ const noteSchema = new mongoose.Schema<Note>({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  noteCollection: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "NoteCollection",
+  },
 });
 
 noteSchema.set("toJSON", {

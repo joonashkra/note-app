@@ -4,5 +4,6 @@ module.exports = {
   transform: {
     "^.+.tsx?$": ["ts-jest", {}],
   },
-  testPathIgnorePatterns: ["/node_modules/", "/mockData.ts"],
+  testPathIgnorePatterns: ["/node_modules/", "/mockData.ts", "/helpers.ts"],
+  maxWorkers: 1,
 };

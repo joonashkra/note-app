@@ -41,3 +41,16 @@ export const AuthResponseSchema = z.object({
   }),
   token: z.string(),
 });
+
+export const NewNoteCollectionSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+});
+
+export const NoteCollectionSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  notes: z.array(z.string()),
+  users: z.array(z.string()),
+});

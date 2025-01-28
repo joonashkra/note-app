@@ -1,4 +1,4 @@
-import supertest, { Response } from "supertest";
+import supertest from "supertest";
 import app, { server } from "../index";
 import mongoose from "mongoose";
 import { mockNotes, mockUser, mockUser2 } from "./mockData";
@@ -11,7 +11,7 @@ import {
   NoteSchema,
   NotesFromBackendSchema,
 } from "../utils/schemas";
-import { ZodSchema } from "zod";
+import helpers from "./helpers";
 
 const api = supertest(app);
 
@@ -25,20 +25,13 @@ type NoteFromBackend = Omit<Note, "user" | "id"> & {
   id: string;
 };
 
-const parseBody = <T>(res: Response, schema: ZodSchema<T>) => {
-  const parsedBody = schema.safeParse(res.body);
-  if (!parsedBody.success) throw new Error("res.body validation failed");
-  const data = parsedBody.data;
-  return data;
-};
-
 const fetchNotes = async (): Promise<NoteFromBackend[]> => {
   const res = await api
     .get("/api/notes")
     .set("Authorization", `Bearer ${token}`)
     .expect(200);
 
-  const notes = parseBody(res, NotesFromBackendSchema);
+  const notes = helpers.parseBody(res, NotesFromBackendSchema);
 
   return notes.map(
     (note: NoteFromBackend): NoteFromBackend => ({
@@ -62,7 +55,7 @@ beforeEach(async () => {
   });
   await newNote.save();
 
-  newUser.notes = newUser.notes.concat(newNote);
+  newUser.notes = newUser.notes.concat(newNote._id);
   await newUser.save();
 
   newNote = new NoteModel({
@@ -71,7 +64,7 @@ beforeEach(async () => {
   });
   await newNote.save();
 
-  newUser.notes = newUser.notes.concat(newNote);
+  newUser.notes = newUser.notes.concat(newNote._id);
   await newUser.save();
 
   const loginRes = await api
@@ -82,7 +75,7 @@ beforeEach(async () => {
     })
     .expect(200);
 
-  const auth = parseBody(loginRes, AuthResponseSchema);
+  const auth = helpers.parseBody(loginRes, AuthResponseSchema);
 
   token = auth.token;
 
@@ -129,7 +122,7 @@ describe("get notes", () => {
       })
       .expect(200);
 
-    const auth = parseBody(loginRes, AuthResponseSchema);
+    const auth = helpers.parseBody(loginRes, AuthResponseSchema);
 
     const token = auth.token;
 
@@ -138,7 +131,7 @@ describe("get notes", () => {
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
 
-    const notes = parseBody(res, NotesFromBackendSchema);
+    const notes = helpers.parseBody(res, NotesFromBackendSchema);
 
     assert.strictEqual(notes.length, 1);
     assert.strictEqual(notes[0].user.id, newUser._id.toString());
@@ -204,7 +197,7 @@ describe("update note", () => {
       .send(updatedNoteData)
       .expect(200);
 
-    const note = parseBody(putRes, NoteSchema);
+    const note = helpers.parseBody(putRes, NoteSchema);
 
     assert.strictEqual(note.title, updatedNoteData.title);
     assert.strictEqual(note.id, noteToUpdate.id);

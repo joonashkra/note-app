@@ -6,29 +6,31 @@ var __importDefault =
   };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const userSchema = new mongoose_1.default.Schema({
-  username: { type: String, required: true, unique: true },
-  passwordHash: { type: String, required: true },
+const noteCollectionSchema = new mongoose_1.default.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: false },
   notes: [
     {
       type: mongoose_1.default.Schema.Types.ObjectId,
       ref: "Note",
     },
   ],
-  noteCollections: [
+  users: [
     {
       type: mongoose_1.default.Schema.Types.ObjectId,
-      ref: "NoteCollection",
+      ref: "User",
     },
   ],
 });
-userSchema.set("toJSON", {
+noteCollectionSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
     if (returnedObject._id) returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
-    delete returnedObject.passwordHash;
   },
 });
-const UserModel = mongoose_1.default.model("User", userSchema);
-exports.default = UserModel;
+const NoteCollectionModel = mongoose_1.default.model(
+  "NoteCollection",
+  noteCollectionSchema,
+);
+exports.default = NoteCollectionModel;
