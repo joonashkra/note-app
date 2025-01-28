@@ -101,6 +101,7 @@ describe("post note collection", () => {
   const testCollection = {
     title: "Test Collection",
     description: "Test description for collection",
+    notes: [],
   };
 
   test("works with valid token & data", async () => {

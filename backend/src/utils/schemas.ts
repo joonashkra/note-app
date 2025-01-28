@@ -45,6 +45,7 @@ export const AuthResponseSchema = z.object({
 export const NewNoteCollectionSchema = z.object({
   title: z.string(),
   description: z.string(),
+  notes: z.array(z.string()),
 });
 
 export const NoteCollectionSchema = z.object({

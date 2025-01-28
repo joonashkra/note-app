@@ -8,7 +8,7 @@ export interface NoteCollection {
   users: mongoose.Types.ObjectId[];
 }
 
-export type NewNoteCollection = Omit<NoteCollection, "id" | "notes" | "users">;
+export type NewNoteCollection = Omit<NoteCollection, "id" | "users">;
 
 export interface PrettierNoteCollection {
   _id?: mongoose.Types.ObjectId;

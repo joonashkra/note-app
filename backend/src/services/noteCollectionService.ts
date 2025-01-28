@@ -32,8 +32,7 @@ const addEntry = async (
 
   const newCollection = {
     ...collectionObject,
-    users: [collectionUser.id],
-    notes: [],
+    users: [user.id],
   };
 
   const collection = new NoteCollectionModel(newCollection);
