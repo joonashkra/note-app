@@ -1,3 +1,4 @@
+import { Collection } from "./collections";
 import { Note } from "./notes";
 
 export interface User {
@@ -5,6 +6,7 @@ export interface User {
   username: string;
   passwordHash: string;
   notes: Note[];
+  collections: Collection[];
 }
 
 export interface NewUser {

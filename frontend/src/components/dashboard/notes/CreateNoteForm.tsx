@@ -34,10 +34,15 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
 
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData);
-    const parseNote = newNoteSchema.safeParse(formValues);
+
+    const parseNote = newNoteSchema.safeParse({
+      ...formValues,
+      noteCollection: null,
+    });
 
     if (!parseNote.success) {
-      setErrorMsg(`Error: ${parseNote.error.issues[0].message}`);
+      console.error(parseNote.error);
+      setErrorMsg(`Error: Some fields are missing or of the wrong type.`);
       return;
     }
 

@@ -6,6 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../../pages/Loading";
 import userService from "../../services/userService";
 import AuthContext from "./AuthContext";
+import collectionService from "../../services/collectionService";
 
 type AuthProviderProps = PropsWithChildren;
 
@@ -21,6 +22,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       if (token && user) {
         noteService.setToken(token);
         userService.setToken(token);
+        collectionService.setToken(token);
         return {
           token,
           user: JSON.parse(user),
@@ -41,6 +43,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       localStorage.setItem("authToken", auth.token);
       localStorage.setItem("authUser", JSON.stringify(auth.user));
       noteService.setToken(auth.token);
+      collectionService.setToken(auth.token);
       queryClient.setQueryData(["auth"], {
         token: auth.token,
         user: auth.user,

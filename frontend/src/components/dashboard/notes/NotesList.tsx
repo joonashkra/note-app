@@ -5,7 +5,11 @@ import noteService from "../../../services/noteService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../pages/Loading";
 
-export default function NotesList() {
+interface NotesListProps {
+  layout: "grid" | "compact";
+}
+
+export default function NotesList({ layout }: NotesListProps) {
   const navigate = useNavigate();
 
   const { data: notes, isLoading } = useQuery({
@@ -31,6 +35,21 @@ export default function NotesList() {
       new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
   );
 
+  if (layout === "compact")
+    return (
+      <ul className="notesListCompact">
+        {sortedNotes.map((note) => (
+          <li
+            key={note.id}
+            onClick={() => navigate(`notes/${note.id}`)}
+            data-testid="notesListItem"
+          >
+            <NoteCard note={note} layout="compact" />
+          </li>
+        ))}
+      </ul>
+    );
+
   return (
     <ul className="notesList">
       {sortedNotes.map((note) => (
@@ -39,7 +58,7 @@ export default function NotesList() {
           onClick={() => navigate(`notes/${note.id}`)}
           data-testid="notesListItem"
         >
-          <NoteCard note={note} layout="compact" />
+          <NoteCard note={note} layout="detailed" />
         </li>
       ))}
     </ul>

@@ -129,3 +129,28 @@ textarea {
 .checkNoteBtn:hover svg {
   fill: var(--white);
 }
+
+.noteCardCompact {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  gap: 1rem;
+}
+
+.notesListCompact {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-inline-start: 0;
+  width: max-content;
+  overflow-y: scroll;
+}
+
+.notesListCompact li {
+  border: 1px solid var(--pink);
+  border-bottom: none;
+}
+
+.notesListCompact li:last-child {
+  border-bottom: 1px solid var(--pink);
+}

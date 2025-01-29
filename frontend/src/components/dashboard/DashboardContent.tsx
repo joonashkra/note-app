@@ -1,5 +1,6 @@
 import NotesList from "./notes/NotesList";
 import NotFound from "../general/NotFound";
+import CollectionsList from "./collections/CollectionsList";
 
 export default function DashboardContent() {
   return (
@@ -9,13 +10,13 @@ export default function DashboardContent() {
         <section className="dashboardContentSection">
           <h2>Notes</h2>
           <div className="dashboardContentSectionData">
-            <NotesList />
+            <NotesList layout="grid" />
           </div>
         </section>
         <section className="dashboardContentSection">
           <h2>Collections</h2>
           <div className="dashboardContentSectionData">
-            <NotFound text="No collections yet." color={"#FAFAFA"} size={50} />
+            <CollectionsList />
           </div>
         </section>
       </div>

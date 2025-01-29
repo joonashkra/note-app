@@ -8,7 +8,6 @@ import DashboardContent from "./components/dashboard/DashboardContent.tsx";
 import Landing from "./pages/Landing.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
-import About from "./pages/About.tsx";
 import Overview from "./pages/Overview.tsx";
 import CreateCollection from "./pages/CreateCollection.tsx";
 import Connections from "./pages/Connections.tsx";
@@ -21,6 +20,7 @@ import Fallback from "./pages/Fallback.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UpdateNote from "./pages/UpdateNote.tsx";
 import Home from "./pages/Home.tsx";
+import CollectionDetails from "./pages/CollectionDetails.tsx";
 
 const router = createBrowserRouter(
   [
@@ -39,10 +39,6 @@ const router = createBrowserRouter(
         {
           path: "/signup",
           element: <Signup />,
-        },
-        {
-          path: "/about",
-          element: <About />,
         },
         {
           path: "/overview",
@@ -81,6 +77,10 @@ const router = createBrowserRouter(
         {
           path: "/dashboard/notes/:id/update",
           element: <UpdateNote />,
+        },
+        {
+          path: "/dashboard/collections/:id",
+          element: <CollectionDetails />,
         },
       ],
     },
