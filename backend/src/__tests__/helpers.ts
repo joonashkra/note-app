@@ -9,7 +9,10 @@ export type NoteFromBackend = Omit<Note, "user" | "id"> & {
 
 const parseBody = <T>(res: Response, schema: ZodSchema<T>) => {
   const parsedBody = schema.safeParse(res.body);
-  if (!parsedBody.success) throw new Error("res.body validation failed");
+  if (!parsedBody.success) {
+    console.log(parsedBody.error);
+    throw new Error("res.body validation failed");
+  }
   const data = parsedBody.data;
   return data;
 };

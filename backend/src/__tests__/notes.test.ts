@@ -20,9 +20,10 @@ let notes: NoteFromBackend[] = [];
 const initialNotes = mockNotes;
 
 //Backend populates note.user as { username, id }
-type NoteFromBackend = Omit<Note, "user" | "id"> & {
+type NoteFromBackend = Omit<Note, "user" | "id" | "noteCollection"> & {
   user: { username: string; id: string };
   id: string;
+  noteCollection: string | null;
 };
 
 const fetchNotes = async (): Promise<NoteFromBackend[]> => {
@@ -32,6 +33,8 @@ const fetchNotes = async (): Promise<NoteFromBackend[]> => {
     .expect(200);
 
   const notes = helpers.parseBody(res, NotesFromBackendSchema);
+
+  console.log("Parsed notes succesfully");
 
   return notes.map(
     (note: NoteFromBackend): NoteFromBackend => ({
@@ -143,6 +146,7 @@ describe("post note", () => {
     title: "testNote",
     description: "testNote",
     deadlineDate: "2025-05-30T22:00:00",
+    noteCollection: null,
   };
 
   test("works with valid token & data", async () => {
@@ -184,6 +188,8 @@ describe("update note", () => {
     assert.ok(notes.length > 0);
 
     const noteToUpdate = notes[0];
+
+    console.log(noteToUpdate);
 
     const updatedNoteData = {
       ...noteToUpdate,

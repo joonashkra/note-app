@@ -46,8 +46,16 @@ router.put("/:id", async (req, res) => {
 
   if (!parsedNote.success) return res.sendStatus(400);
 
-  const { id, title, description, creationDate, deadlineDate, checked, user } =
-    parsedNote.data;
+  const {
+    id,
+    title,
+    description,
+    creationDate,
+    deadlineDate,
+    checked,
+    user,
+    noteCollection,
+  } = parsedNote.data;
 
   const note: Note = {
     id: new mongoose.Types.ObjectId(`${id}`),
@@ -56,6 +64,10 @@ router.put("/:id", async (req, res) => {
     creationDate,
     deadlineDate,
     checked,
+    noteCollection:
+      noteCollection === null
+        ? null
+        : new mongoose.Types.ObjectId(`${noteCollection}`),
     user: new mongoose.Types.ObjectId(`${user}`),
   };
 

@@ -4,6 +4,7 @@ export const NewNoteSchema = z.object({
   title: z.string(),
   description: z.string(),
   deadlineDate: z.coerce.date(),
+  noteCollection: z.string().nullable(),
 });
 
 export const UserSchema = z.object({
@@ -19,6 +20,7 @@ export const NoteSchema = z.object({
   deadlineDate: z.coerce.date(),
   user: z.string(),
   checked: z.boolean(),
+  noteCollection: z.string().nullable(),
 });
 
 export const NoteFromBackendSchema = z.object({
@@ -29,6 +31,7 @@ export const NoteFromBackendSchema = z.object({
   deadlineDate: z.coerce.date(),
   user: z.object({ username: z.string(), id: z.string() }),
   checked: z.boolean(),
+  noteCollection: z.string().nullable(),
 });
 
 export const NotesFromBackendSchema = z.array(NoteFromBackendSchema);

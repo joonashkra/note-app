@@ -6,14 +6,22 @@ import { User } from "../types/users";
 
 const getEntries = async (user: User): Promise<Note[]> => {
   if (!user) return [];
-  const notes = await NoteModel.find({ user: user.id }).populate("user", {
-    username: 1,
-  });
+  const notes = await NoteModel.find({ user: user.id })
+    .populate("user", { username: 1 })
+    .populate({
+      path: "noteCollection",
+      select: "title",
+      match: { _id: { $ne: null } },
+    });
   return notes;
 };
 
 const getOne = async (id: string, user: User): Promise<Note | null> => {
-  const note = await NoteModel.findById(id);
+  const note = await NoteModel.findById(id).populate({
+    path: "noteCollection",
+    select: "title",
+    match: { _id: { $ne: null } },
+  });
   if (!note) throw new MongooseError("DocumentNotFoundError");
   if (note.user.toString() !== user.id.toString())
     throw new MongooseError("AuthError");
