@@ -1,40 +1,23 @@
 import { Request, Response, NextFunction } from "express";
-import { NewNoteCollectionSchema, NewNoteSchema, UserSchema } from "./schemas";
-import { z } from "zod";
+import { z, ZodSchema } from "zod";
 import { MongooseError } from "mongoose";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { extractToken } from "./helpers";
 import UserModel from "../models/user";
 
-const newNoteParser = (req: Request, _res: Response, next: NextFunction) => {
-  try {
-    NewNoteSchema.parse(req.body);
+const parseBody = <T>(schema: ZodSchema<T>) => {
+  return (
+    req: Request<{ id: string }, unknown, T>,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const parsedBody = schema.safeParse(req.body);
+    if (!parsedBody.success) {
+      return next(parsedBody.error);
+    }
+    req.body = parsedBody.data;
     next();
-  } catch (error: unknown) {
-    next(error);
-  }
-};
-
-const userParser = (req: Request, _res: Response, next: NextFunction) => {
-  try {
-    UserSchema.parse(req.body);
-    next();
-  } catch (error: unknown) {
-    next(error);
-  }
-};
-
-const newNoteCollectionParser = (
-  req: Request,
-  _res: Response,
-  next: NextFunction,
-) => {
-  try {
-    NewNoteCollectionSchema.parse(req.body);
-    next();
-  } catch (error: unknown) {
-    next(error);
-  }
+  };
 };
 
 const errorHandler = (
@@ -96,9 +79,7 @@ const checkAuth = async (req: Request, _res: Response, next: NextFunction) => {
 };
 
 export default {
-  newNoteParser,
-  userParser,
-  newNoteCollectionParser,
   errorHandler,
   checkAuth,
+  parseBody,
 };

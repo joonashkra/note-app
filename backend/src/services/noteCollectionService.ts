@@ -16,14 +16,16 @@ const getOne = async (
   id: string,
   user: User,
 ): Promise<NoteCollection | null> => {
-  const noteCollection = await NoteCollectionModel.findById(id)
-    .populate("users", { username: 1 })
-    .populate("notes", { title: 1 });
+  const noteCollection = await NoteCollectionModel.findById(id);
   if (!noteCollection) throw new MongooseError("DocumentNotFoundError");
-  if (!noteCollection.users.some((u) => u._id.equals(user.id))) {
+
+  if (!noteCollection.users.includes(user.id))
     throw new MongooseError("AuthError");
-  }
-  return noteCollection;
+
+  return noteCollection.populate([
+    { path: "users", select: "username" },
+    { path: "notes", select: "title", match: { _id: { $ne: null } } },
+  ]);
 };
 
 const addEntry = async (
@@ -76,34 +78,46 @@ const updateEntry = async (
     throw new MongooseError("AuthError");
 
   if (!notesMatch(collection.notes, noteCollectionToUpdate.notes)) {
-    const notesToMove = await NoteModel.find({
-      _id: { $in: collection.notes },
-    });
+    if (collection.notes.length < noteCollectionToUpdate.notes.length) {
+      const removedNoteIds = noteCollectionToUpdate.notes.filter(
+        (note) =>
+          !collection.notes.some((collectionNote) =>
+            collectionNote.equals(note),
+          ),
+      );
 
-    const previousCollectionIds = notesToMove
-      .filter(
-        (note) => note.noteCollection && note.noteCollection.toString() !== id,
-      )
-      .map((note) => note.noteCollection);
+      await NoteModel.updateMany(
+        { _id: { $in: removedNoteIds } },
+        { noteCollection: null },
+      );
+    }
 
-    await NoteCollectionModel.updateMany(
-      { _id: { $in: previousCollectionIds } },
-      { $pull: { notes: { $in: collection.notes } } },
-    );
+    if (collection.notes.length > noteCollectionToUpdate.notes.length) {
+      const addedNoteIds = collection.notes.filter(
+        (note) =>
+          !noteCollectionToUpdate.notes.some((existingNote) =>
+            existingNote.equals(note),
+          ),
+      );
 
-    await NoteModel.updateMany(
-      { _id: { $in: collection.notes } },
-      { noteCollection: collection.id },
-    );
+      await NoteModel.updateMany(
+        { _id: { $in: addedNoteIds } },
+        { noteCollection: collection.id },
+      );
+    }
   }
 
-  const updatedNoteCollection = await NoteCollectionModel.findByIdAndUpdate(
-    id,
+  const updatedNote = await NoteCollectionModel.findByIdAndUpdate(
+    noteCollectionToUpdate.id,
     collection,
     { new: true },
   );
+  if (!updatedNote) throw new MongooseError("DocumentNotFoundError");
 
-  return updatedNoteCollection;
+  return updatedNote.populate([
+    { path: "users", select: "username" },
+    { path: "notes", select: "title", match: { _id: { $ne: null } } },
+  ]);
 };
 
 const deleteEntry = async (id: string, user: User) => {

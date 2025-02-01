@@ -11,7 +11,7 @@ export interface Note {
   noteCollection: mongoose.Types.ObjectId | null;
 }
 
-export type NewNote = Omit<Note, "id" | "checked" | "creationDate">;
+export type NewNote = Omit<Note, "id" | "checked" | "creationDate" | "user">;
 
 //For transformed mongoDb document without _id etc.
 export interface PrettierNote {

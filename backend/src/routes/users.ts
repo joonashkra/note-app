@@ -1,14 +1,15 @@
-import { Router, Request, Response } from "express";
+import { Router, Response } from "express";
 import middleware from "../utils/middleware";
-import { NewUser, User } from "../types/users";
+import { User } from "../types/users";
 import userService from "../services/userService";
+import { UserSchema } from "../schemas/userSchema";
 
 const router = Router();
 
 router.post(
   "/",
-  middleware.userParser,
-  async (req: Request<unknown, unknown, NewUser>, res: Response<User>) => {
+  middleware.parseBody(UserSchema),
+  async (req, res: Response<User>) => {
     const newUser = await userService.addEntry(req.body);
     res.status(201).json(newUser);
   },

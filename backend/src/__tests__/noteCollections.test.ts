@@ -5,35 +5,29 @@ import { mockNotes, mockUser } from "./mockData";
 import UserModel from "../models/user";
 import NoteCollectionModel from "../models/noteCollection";
 import assert from "node:assert";
-import { NoteCollection } from "../types/noteCollections";
-import { AuthResponseSchema, NoteCollectionSchema } from "../utils/schemas";
-import helpers from "./helpers";
+import helpers, { NoteCollectionFromBackend, NoteFromBackend } from "./helpers";
 import { z } from "zod";
 import NoteModel from "../models/note";
+import {
+  NoteCollectionSchema,
+  PopulatedNoteCollectionSchema,
+} from "../schemas/noteCollectionSchema";
+import { NoteSchema, PopulatedNoteSchema } from "../schemas/noteSchema";
+import { AuthResponseSchema } from "../schemas/userSchema";
 
 const api = supertest(app);
-
-const NoteCollectionsArraySchema = z.array(NoteCollectionSchema);
 
 let token: string;
 let user: {
   id: string;
   username: string;
-  notes: string[];
 };
 let noteCollections: NoteCollectionFromBackend[] = [];
 const initialCollections = [
   { title: "Collection 1", description: "Test collection 1" },
 ];
-
-type NoteCollectionFromBackend = Omit<
-  NoteCollection,
-  "users" | "notes" | "id"
-> & {
-  users: string[];
-  notes: string[];
-  id: string;
-};
+const initialNotes = mockNotes;
+let notes: NoteFromBackend[] = [];
 
 const fetchNoteCollections = async (): Promise<NoteCollectionFromBackend[]> => {
   const res = await api
@@ -41,9 +35,19 @@ const fetchNoteCollections = async (): Promise<NoteCollectionFromBackend[]> => {
     .set("Authorization", `Bearer ${token}`)
     .expect(200);
 
-  const collections = helpers.parseBody(res, NoteCollectionsArraySchema);
+  const collections = helpers.parseBody(res, z.array(NoteCollectionSchema));
 
   return collections;
+};
+
+const fetchNotes = async (): Promise<NoteFromBackend[]> => {
+  const res = await api
+    .get("/api/notes")
+    .set("Authorization", `Bearer ${token}`)
+    .expect(200);
+
+  const notes = helpers.parseBody(res, z.array(NoteSchema));
+  return notes;
 };
 
 beforeEach(async () => {
@@ -54,9 +58,28 @@ beforeEach(async () => {
   const newUser = new UserModel(mockUser);
   await newUser.save();
 
+  let newNote = new NoteModel({
+    ...initialNotes[0],
+    user: newUser._id,
+  });
+  await newNote.save();
+
+  newUser.notes = newUser.notes.concat(newNote._id);
+  await newUser.save();
+
+  newNote = new NoteModel({
+    ...initialNotes[1],
+    user: newUser._id,
+  });
+  await newNote.save();
+
+  newUser.notes = newUser.notes.concat(newNote._id);
+  await newUser.save();
+
   const newCollection = new NoteCollectionModel({
     ...initialCollections[0],
     users: [newUser._id],
+    notes: [newNote._id],
   });
   await newCollection.save();
 
@@ -77,11 +100,23 @@ beforeEach(async () => {
   user = auth.user;
 
   noteCollections = await fetchNoteCollections();
+  notes = await fetchNotes();
 });
 
-describe("get note collections", () => {
-  test("all collections are returned", () => {
+describe("get collections", () => {
+  test("all collections are returned with correct data", () => {
     assert.strictEqual(noteCollections.length, initialCollections.length);
+    assert.strictEqual(noteCollections[0].title, initialCollections[0].title);
+  });
+
+  test("returns single note with correct data", async () => {
+    const res = await api
+      .get(`/api/collections/${noteCollections[0].id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const collection = helpers.parseBody(res, PopulatedNoteCollectionSchema);
+    assert.strictEqual(collection.title, noteCollections[0].title);
   });
 
   test("returns 404 if collection doesn't exist", async () => {
@@ -97,7 +132,7 @@ describe("get note collections", () => {
   });
 });
 
-describe("post note collection", () => {
+describe("post collection", () => {
   const testCollection = {
     title: "Test Collection",
     description: "Test description for collection",
@@ -137,8 +172,8 @@ describe("post note collection", () => {
   });
 });
 
-describe("update note collection", () => {
-  test("title and description update works with valid access token & data", async () => {
+describe("update collection", () => {
+  test("works with valid access token & data", async () => {
     assert.ok(noteCollections.length > 0);
 
     const collectionToUpdate = noteCollections[0];
@@ -155,40 +190,101 @@ describe("update note collection", () => {
       .send(updatedCollectionData)
       .expect(200);
 
-    const collection = helpers.parseBody(putRes, NoteCollectionSchema);
+    const collection = helpers.parseBody(putRes, PopulatedNoteCollectionSchema);
 
     assert.strictEqual(collection.title, updatedCollectionData.title);
-    assert.strictEqual(collection.id, collectionToUpdate.id);
+    assert.strictEqual(collection.id, updatedCollectionData.id);
   });
 
-  test("adding and removing notes and users in collection works", async () => {
+  test("adding new notes to collection works and sets note's collection property", async () => {
     assert.ok(noteCollections.length > 0);
+    assert.ok(notes.length > 0);
 
     const collectionToUpdate = noteCollections[0];
+    const newNoteToCollection = notes[0];
 
-    const newNotesToCollection = [
-      new mongoose.Types.ObjectId().toString(),
-      new mongoose.Types.ObjectId().toString(),
-    ];
+    const newNotes = collectionToUpdate.notes.concat(notes[0].id);
 
-    const newUserToCollection = new mongoose.Types.ObjectId().toString();
-
-    const updatedCollectionData = {
+    const newCollectionData = {
       ...collectionToUpdate,
-      notes: collectionToUpdate.notes.concat(newNotesToCollection),
-      users: collectionToUpdate.users.concat(newUserToCollection),
+      notes: newNotes,
     };
 
     const putRes = await api
       .put(`/api/collections/${collectionToUpdate.id}`)
       .set("Authorization", `Bearer ${token}`)
-      .send(updatedCollectionData)
+      .send(newCollectionData)
       .expect(200);
 
-    const collection = helpers.parseBody(putRes, NoteCollectionSchema);
+    const updatedCollection = helpers.parseBody(
+      putRes,
+      PopulatedNoteCollectionSchema,
+    );
 
-    assert.deepStrictEqual(collection.notes, updatedCollectionData.notes);
-    assert.deepStrictEqual(collection.users, updatedCollectionData.users);
+    assert.deepStrictEqual(
+      updatedCollection.notes.map((note) => note.id),
+      newCollectionData.notes,
+    );
+
+    const getRes = await api
+      .get(`/api/notes/${newNoteToCollection.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const updatedNote = helpers.parseBody(getRes, PopulatedNoteSchema);
+
+    assert.ok(updatedNote.noteCollection !== null);
+    assert.strictEqual(updatedNote.noteCollection.id, updatedCollection.id);
+  });
+
+  test("removing notes from collection works and sets note's collection property to null", async () => {
+    assert.ok(noteCollections.length > 0);
+    assert.ok(notes.length > 0);
+
+    const collectionRes = await api
+      .get(`/api/collections/${noteCollections[0].id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const collectionBefore = helpers.parseBody(
+      collectionRes,
+      PopulatedNoteCollectionSchema,
+    );
+    let collectionNoteIds = collectionBefore.notes.map((note) => note.id);
+
+    assert.ok(collectionNoteIds.includes(notes[1].id));
+
+    const newCollectionData = {
+      ...collectionBefore,
+      notes: [],
+      users: collectionBefore.users.map((user) => user.id),
+    };
+
+    const putRes = await api
+      .put(`/api/collections/${collectionBefore.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(newCollectionData)
+      .expect(200);
+
+    const collectionAfter = helpers.parseBody(
+      putRes,
+      PopulatedNoteCollectionSchema,
+    );
+    collectionNoteIds = collectionAfter.notes.map((note) => note.id);
+
+    assert.ok(!collectionNoteIds.includes(notes[1].id));
+    assert.strictEqual(
+      collectionAfter.notes.length,
+      collectionBefore.notes.length - 1,
+    );
+
+    const getRes = await api
+      .get(`/api/notes/${notes[1].id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const note = helpers.parseBody(getRes, PopulatedNoteSchema);
+    assert.ok(note.noteCollection === null);
   });
 
   test("returns 401 unauthorized with no access token", async () => {
@@ -226,20 +322,20 @@ describe("update note collection", () => {
 });
 
 describe("delete note collection", () => {
-  test("deletes a note collection and its notes", async () => {
+  test("works and deletes the notes that are in it", async () => {
     const note1 = await new NoteModel(mockNotes[0]).save();
-    const note2 = await new NoteModel(mockNotes[1]).save();
 
-    const noteCollectionToDelete: NoteCollection =
-      await new NoteCollectionModel({
-        title: "Test Collection",
-        description: "A test collection",
-        notes: [note1._id, note2._id],
-        users: [new mongoose.Types.ObjectId(user.id)],
-      }).save();
+    const noteCollectionToDelete = new NoteCollectionModel({
+      title: "Test Collection",
+      description: "A test collection",
+      notes: [note1._id],
+      users: [user.id],
+    });
+
+    await noteCollectionToDelete.save();
 
     await api
-      .delete(`/api/collections/${noteCollectionToDelete.id}`)
+      .delete(`/api/collections/${noteCollectionToDelete._id}`)
       .set("Authorization", `Bearer ${token}`)
       .expect(204);
 
@@ -248,10 +344,10 @@ describe("delete note collection", () => {
     );
     expect(deletedCollection).toBeNull();
 
-    const deletedNotes = await NoteModel.find({
-      _id: { $in: [note1._id, note2._id] },
-    });
-    expect(deletedNotes.length).toBe(0);
+    await api
+      .get(`/api/notes/${note1._id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(404);
   });
 
   test("returns 401 with no access token", async () => {

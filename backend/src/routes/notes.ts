@@ -1,9 +1,9 @@
-import { Router, Request, Response } from "express";
-import { NewNote, Note } from "../types/notes";
+import { Router, Response } from "express";
+import { Note } from "../types/notes";
 import noteService from "../services/noteService";
 import middleware from "../utils/middleware";
-import { NoteSchema } from "../utils/schemas";
-import mongoose from "mongoose";
+import { NewNoteSchema, NoteSchema } from "../schemas/noteSchema";
+import { toObjectId } from "../utils/helpers";
 
 const router = Router();
 
@@ -23,10 +23,16 @@ router.get("/:id", async (req, res) => {
 
 router.post(
   "/",
-  middleware.newNoteParser,
-  async (req: Request<unknown, unknown, NewNote>, res: Response<Note>) => {
+  middleware.parseBody(NewNoteSchema),
+  async (req, res: Response<Note>) => {
     if (!req.user) return res.sendStatus(401);
-    const newNote = await noteService.addEntry(req.body, req.user);
+    const { noteCollection } = req.body;
+    const data = {
+      ...req.body,
+      noteCollection:
+        noteCollection === null ? null : toObjectId(noteCollection),
+    };
+    const newNote = await noteService.addEntry(data, req.user);
     res.status(201).json(newNote);
     return;
   },
@@ -39,42 +45,22 @@ router.delete("/:id", async (req, res) => {
   return;
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", middleware.parseBody(NoteSchema), async (req, res) => {
   if (!req.user) return res.sendStatus(401);
 
-  const parsedNote = NoteSchema.safeParse(req.body);
+  const { id, user, noteCollection } = req.body;
 
-  if (!parsedNote.success) return res.sendStatus(400);
-
-  const {
-    id,
-    title,
-    description,
-    creationDate,
-    deadlineDate,
-    checked,
-    user,
-    noteCollection,
-  } = parsedNote.data;
-
-  const note: Note = {
-    id: new mongoose.Types.ObjectId(`${id}`),
-    title,
-    description,
-    creationDate,
-    deadlineDate,
-    checked,
-    noteCollection:
-      noteCollection === null
-        ? null
-        : new mongoose.Types.ObjectId(`${noteCollection}`),
-    user: new mongoose.Types.ObjectId(`${user}`),
+  const data = {
+    ...req.body,
+    id: toObjectId(id),
+    user: toObjectId(user),
+    noteCollection: noteCollection === null ? null : toObjectId(noteCollection),
   };
 
   const updatedNote = await noteService.updateEntry(
     req.params.id,
     req.user,
-    note,
+    data,
   );
   res.send(updatedNote);
   return;
