@@ -1,17 +1,13 @@
 export default function Overview() {
   const currFeatures = [
-    "CRUDs for notes (minimum viable product)",
-    "Authorization",
-    "Routes",
-    "App layout/structure",
+    "CRUDs for notes",
+    "CRUDs for collections",
+    "Handling actions between notes and collections",
+    "User authentication and authorization",
+    "Overall app layout/structure",
   ];
 
-  const futureFeatures = [
-    "User connections",
-    "Note collections",
-    "Settings page",
-    "Profile page",
-  ];
+  const futureFeatures = ["User connections", "Settings page", "Profile page"];
 
   return (
     <main className="overviewPage">
@@ -19,8 +15,7 @@ export default function Overview() {
         <h1>Overview</h1>
         <p>
           Here are listed the current (ready) features of the app and what's to
-          come in the future. Also some screenshots of the app are included if
-          creating an account seems like too much trouble.
+          come in the future.
         </p>
       </section>
       <section className="overviewFeatures">
@@ -39,14 +34,6 @@ export default function Overview() {
               <li key={index}>{feature}</li>
             ))}
           </ul>
-        </div>
-      </section>
-      <section>
-        <h2>Screenshots</h2>
-        <div className="overviewImages">
-          <img src="/dashboardimg.PNG" alt="dashboard" />
-          <img src="/createnoteimg.PNG" alt="createnote" />
-          <img src="/notedetailsimg.PNG" alt="notedetails" />
         </div>
       </section>
     </main>

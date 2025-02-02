@@ -1,5 +1,9 @@
 # Note / To-Do Web Application
 
+## Description
+
+This is a personal project aimed at gaining experience in full-stack development with modern methodologies and technologies. At the time of writing this, the frontend is missing some features and e.g. the CSS is not responsive in the slightest. The app is [deployed to Render](https://note-app-gk6d.onrender.com/) after each successful pipeline run from a push or PR to the main branch.
+
 ## Languages, frameworks and libraries
 
 ### Backend:
@@ -25,7 +29,7 @@
 ### Containerization:
 
     - Docker
-    - Nginx (reverse proxy as single point of entry to application)
+    - Nginx (reverse proxy as single point of entry)
 
 ## Usage
 
@@ -53,7 +57,7 @@ npm install
 npm run dev
 ```
 
-Runs at http://localhost:5173
+Frontend at http://localhost:5173, backend at http://localhost:3001
 
 ### Production
 
