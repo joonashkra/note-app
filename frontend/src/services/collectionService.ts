@@ -1,5 +1,9 @@
 import axios from "axios";
-import { Collection, NewCollection } from "../types/collections.ts";
+import {
+  Collection,
+  NewCollection,
+  PopulatedCollection,
+} from "../types/collections.ts";
 
 const baseUrl = "/api/collections";
 
@@ -23,7 +27,10 @@ const getOne = async (id: string) => {
     headers: { Authorization: authToken },
   };
 
-  const response = await axios.get<Collection>(`${baseUrl}/${id}`, config);
+  const response = await axios.get<PopulatedCollection>(
+    `${baseUrl}/${id}`,
+    config,
+  );
   return response.data;
 };
 
@@ -50,7 +57,7 @@ const update = async (collection: Collection) => {
     headers: { Authorization: authToken },
   };
 
-  const response = await axios.put(
+  const response = await axios.put<PopulatedCollection>(
     `${baseUrl}/${collection.id}`,
     collection,
     config,

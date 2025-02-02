@@ -1,14 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { NoteActionProps } from "../../../types/props";
 import noteService from "../../../services/noteService";
-import { Note } from "../../../types/notes";
+import { Note, PopulatedNote } from "../../../types/notes";
 import { newNoteSchema } from "../../../types/schemas";
 import { useNavigate } from "react-router-dom";
 import Check from "../../../assets/Check";
 import Uncheck from "../../../assets/Uncheck";
 import { useTab } from "../../../hooks/useTab";
 
-export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
+interface UpdateNoteFormProps {
+  note: PopulatedNote;
+  setErrorMsg: (text: string) => void;
+}
+
+export default function UpdateNoteForm({
+  note,
+  setErrorMsg,
+}: UpdateNoteFormProps) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   useTab();
@@ -29,9 +36,14 @@ export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
 
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData);
-    const parseNote = newNoteSchema.safeParse(formValues);
+    const parseNote = newNoteSchema.safeParse({
+      ...formValues,
+      noteCollection:
+        note.noteCollection === null ? null : note.noteCollection.id,
+    });
 
     if (!parseNote.success) {
+      console.error(parseNote.error);
       setErrorMsg(`Error: ${parseNote.error.issues[0].message}`);
       return;
     }
@@ -39,7 +51,7 @@ export default function UpdateNoteForm({ note, setErrorMsg }: NoteActionProps) {
     const updatedNote: Note = {
       ...parseNote.data,
       id: note.id,
-      user: note.user,
+      user: note.user.id,
       creationDate: note.creationDate,
       deadlineDate: parseNote.data.deadlineDate.toISOString(),
       checked: note.checked,

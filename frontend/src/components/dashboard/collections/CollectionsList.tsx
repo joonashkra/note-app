@@ -1,16 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
 import NotFound from "../../general/NotFound";
-import collectionService from "../../../services/collectionService";
 import Loading from "../../../pages/Loading";
 import { useNavigate } from "react-router-dom";
+import { Collection } from "../../../types/collections";
+import CollectionCard from "./CollectionCard";
 
-export default function CollectionsList() {
+interface CollectionsListProps {
+  collections: Collection[] | undefined;
+  isLoading: boolean;
+}
+
+export default function CollectionsList({
+  collections,
+  isLoading,
+}: CollectionsListProps) {
   const navigate = useNavigate();
-
-  const { data: collections, isLoading } = useQuery({
-    queryFn: () => collectionService.getAll(),
-    queryKey: ["collections"],
-  });
 
   if (isLoading) return <Loading />;
 
@@ -31,11 +34,10 @@ export default function CollectionsList() {
       {collections.map((collection, index) => (
         <li
           key={index}
-          className="collectionCard"
           onClick={() => navigate(`collections/${collection.id}`)}
+          data-testid="collectionListItem"
         >
-          <p>{collection.title}</p>
-          <p>{collection.notes.length} notes</p>
+          <CollectionCard collection={collection} layout="compact" />
         </li>
       ))}
     </ul>

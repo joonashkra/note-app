@@ -1,39 +1,45 @@
-import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Check from "../../../assets/Check";
 import Uncheck from "../../../assets/Uncheck";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { NewCollection } from "../../../types/collections";
+import { Collection, PopulatedCollection } from "../../../types/collections";
+import CollectionNotesList from "./CollectionNotesList";
+import SelectNotesToAdd from "./SelectNotesToAdd";
 import collectionService from "../../../services/collectionService";
+import { useNavigate } from "react-router-dom";
+import { useTab } from "../../../hooks/useTab";
 import { newCollectionSchema } from "../../../types/schemas";
 import { useState } from "react";
 import { Note } from "../../../types/notes";
-import SelectNotesToAdd from "./SelectNotesToAdd";
-import CollectionNotesList from "./CollectionNotesList";
 
-interface CreateCollectionFormProps {
+interface UpdateCollectionFormProps {
+  collection: PopulatedCollection;
   setErrorMsg: (text: string) => void;
   notes: Note[];
 }
 
-export default function CreateCollectionForm({
+export default function UpdateCollectionForm({
+  collection,
   setErrorMsg,
   notes,
-}: CreateCollectionFormProps) {
+}: UpdateCollectionFormProps) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
+  useTab();
 
-  const { mutateAsync: addCollectionMutation } = useMutation({
-    mutationFn: (newCollection: NewCollection) =>
-      collectionService.create(newCollection),
-    onSuccess: (createdCollection) => {
-      queryClient.invalidateQueries({
-        queryKey: ["collections"],
-      });
-      navigate(`/dashboard/collections/${createdCollection.id}`);
+  const collectionNotes = notes?.filter((note) =>
+    collection.notes.some((n) => n.id === note.id),
+  );
+
+  const [selectedNotes, setSelectedNotes] = useState<Note[]>(collectionNotes);
+
+  const { mutateAsync: updateCollectionMutation } = useMutation({
+    mutationFn: (data: Collection) => collectionService.update(data),
+    onSuccess: (updatedCollection) => {
+      queryClient.setQueryData(["collection"], updatedCollection);
+      navigate(-1);
     },
     onError: () => {
-      setErrorMsg("Unexpected error when creating the note");
+      setErrorMsg("Unexpected error when updating collection");
     },
   });
 
@@ -42,7 +48,6 @@ export default function CreateCollectionForm({
 
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData);
-
     const parseCollection = newCollectionSchema.safeParse({
       ...formValues,
       notes: selectedNotes.map((note) => note.id),
@@ -54,13 +59,17 @@ export default function CreateCollectionForm({
       return;
     }
 
-    const newCollection = parseCollection.data;
+    const updatedCollection: Collection = {
+      ...parseCollection.data,
+      id: collection.id,
+      users: collection.users.map((user) => user.id),
+    };
 
-    await addCollectionMutation(newCollection);
+    await updateCollectionMutation(updatedCollection);
   };
 
-  const cancelCreate = () => {
-    if (window.confirm("Cancel? All changes will be lost.")) {
+  const cancelUpdate = () => {
+    if (window.confirm("Cancel update? All changes will be lost.")) {
       navigate(-1);
     }
   };
@@ -80,6 +89,7 @@ export default function CreateCollectionForm({
             maxLength={25}
             id="titleInput"
             placeholder="Title for collection..."
+            defaultValue={collection.title}
           ></input>
           <textarea
             typeof="text"
@@ -87,9 +97,10 @@ export default function CreateCollectionForm({
             maxLength={2500}
             rows={12}
             placeholder="Description and details for collection..."
+            defaultValue={collection.description}
           ></textarea>
           <div className="collectionFormNotes">
-            <h2>Notes for collection</h2>
+            <h2>Notes in collection</h2>
             <CollectionNotesList
               notes={selectedNotes}
               removeNoteSelection={removeNoteSelection}
@@ -103,10 +114,14 @@ export default function CreateCollectionForm({
         />
       </div>
       <div className="noteActionButtons">
-        <button className="noteActionBtn" type="submit">
-          Create <Check size={20} color="#000000" />
+        <button
+          className="noteActionBtn"
+          type="submit"
+          data-testid="updateCollectionBtn"
+        >
+          Update <Check size={20} color="#000000" />
         </button>
-        <button className="noteActionBtn" type="button" onClick={cancelCreate}>
+        <button className="noteActionBtn" type="button" onClick={cancelUpdate}>
           Cancel <Uncheck size={18} color="#000000" />
         </button>
       </div>

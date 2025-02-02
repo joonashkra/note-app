@@ -14,9 +14,10 @@
   display: flex;
   justify-content: space-between;
   border: 1px solid var(--white);
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   width: 100%;
   box-sizing: border-box;
+  gap: 2rem;
 }
 
 .collectionCard:hover {
@@ -42,14 +43,14 @@
 .collectionFormInputFields {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .collectionFormTextFields {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 70%;
+  width: 80%;
 }
 
 .collectionFormTextFields input,
@@ -66,9 +67,7 @@
 .collectionFormAddProperties {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  flex-shrink: 0; /* Prevent this from shrinking */
-  margin-top: 1rem;
+  gap: 2rem;
 }
 
 .noteToAdd {
@@ -99,4 +98,68 @@
 
 .noteSelectionItem {
   cursor: pointer;
+}
+
+.collectionDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.collectionDetailsLists {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+  gap: 2rem;
+}
+
+.collectionDetails ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-inline-start: 0;
+  width: max-content;
+  overflow-y: scroll;
+  width: 100%;
+  max-height: 26rem;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink) var(--black);
+  gap: 0.5rem;
+}
+
+.collectionDetailsNotes li {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  gap: 1rem;
+  justify-content: space-between;
+  border: 1px solid var(--pink);
+  cursor: pointer;
+}
+
+.collectionDetailsNotes li:hover {
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #131313 0,
+    #131313 0.7000000000000001px,
+    #000000 0,
+    #000000 50%
+  );
+}
+
+.collectionDetailsUsers li {
+  padding-right: 1rem;
+}
+
+.removeNote {
+  display: flex;
+  cursor: pointer;
+  align-self: center;
+  justify-self: center;
+}
+
+.collectionDetailsData {
+  display: flex;
+  justify-content: space-between;
 }

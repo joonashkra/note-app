@@ -5,8 +5,15 @@ export interface User {
   id: string;
   username: string;
   passwordHash: string;
-  notes: Note[];
-  collections: Collection[];
+  notes: string[];
+  collections: string[];
+}
+
+export interface PopulatedUser {
+  id: string;
+  username: string;
+  notes: Pick<Note, "id" | "title">[];
+  collections: Pick<Collection, "id" | "title">[];
 }
 
 export interface NewUser {
@@ -17,7 +24,6 @@ export interface NewUser {
 export interface AuthUser {
   username: string;
   id: string;
-  notes: Note[];
 }
 
 export interface AuthResponse {

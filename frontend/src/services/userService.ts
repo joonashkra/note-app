@@ -1,5 +1,5 @@
 import axios from "axios";
-import { NewUser, User } from "../types/users.ts";
+import { NewUser, PopulatedUser, User } from "../types/users.ts";
 
 const baseUrl = "/api/users";
 
@@ -18,8 +18,17 @@ const getAll = async () => {
   return response.data;
 };
 
+const getOne = async (id: string) => {
+  const config = {
+    headers: { Authorization: authToken },
+  };
+
+  const response = await axios.get<PopulatedUser>(`${baseUrl}/${id}`, config);
+  return response.data;
+};
+
 const create = async (credentials: NewUser) => {
-  const response = await axios.post<User[]>(baseUrl, credentials);
+  const response = await axios.post<User>(baseUrl, credentials);
   return response.data;
 };
 
@@ -32,4 +41,4 @@ const remove = async (id: string) => {
   return response.data;
 };
 
-export default { create, remove, getAll, setToken };
+export default { create, remove, getAll, getOne, setToken };

@@ -17,6 +17,7 @@ const newTestNote: NewNote = {
   title: "newTestNote",
   description: "This is a new note for testing",
   deadlineDate,
+  noteCollection: null,
 };
 
 test.describe("notes", () => {
@@ -51,6 +52,7 @@ test.describe("notes", () => {
   });
 
   test("check note should work", async ({ page }) => {
+    page.on("console", (msg) => console.log(msg.text()));
     await page.getByTestId("createNoteBtn").click();
     await createNote(page, newTestNote);
     await page.getByTestId("checkNoteBtn").waitFor();
@@ -89,8 +91,6 @@ test.describe("notes", () => {
     await expect(page.getByTestId("noteDetailsPage")).toBeVisible();
 
     await expect(page.getByText("updatedTitle")).toBeVisible();
-    await expect(
-      page.getByText("Description: updated description"),
-    ).toBeVisible();
+    await expect(page.getByText("updated description")).toBeVisible();
   });
 });

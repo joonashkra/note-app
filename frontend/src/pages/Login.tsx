@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LoginForm from "../components/auth/LoginForm";
+import ErrorMessage from "../components/general/ErrorMessage";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -8,7 +9,7 @@ export default function Login() {
     <main className="authPage">
       <h1>Log in to NoteApp</h1>
       <LoginForm setErrorMsg={setErrorMsg} />
-      {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+      <ErrorMessage text={errorMsg} />
     </main>
   );
 }

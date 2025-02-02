@@ -1,11 +1,16 @@
-import { Note } from "../../../types/notes";
+import { PopulatedNote } from "../../../types/notes";
 import { Collection } from "../../../types/collections";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import collectionService from "../../../services/collectionService";
+import noteService from "../../../services/noteService";
+import Warning from "../../../assets/Warning";
+import { Tooltip } from "react-tooltip";
+import Check from "../../../assets/Check";
+import Uncheck from "../../../assets/Uncheck";
+import CollectionSvg from "../../../assets/CollectionSvg";
 
 interface AddToCollectionBtnProps {
-  note: Note;
+  note: PopulatedNote;
   setErrorMsg: (text: string) => void;
   collections: Collection[];
 }
@@ -23,19 +28,14 @@ export default function AddToCollectionBtn({
   const queryClient = useQueryClient();
 
   const { mutateAsync: addToCollectionMutation, isPending } = useMutation({
-    mutationFn: async (collection: Collection) =>
-      collectionService.update({
-        ...collection,
-        notes: collection.notes.concat(note.id),
+    mutationFn: async (collectionId: string) =>
+      noteService.update({
+        ...note,
+        user: note.user.id,
+        noteCollection: collectionId,
       }),
-    onSuccess: async (updatedCollection) => {
-      queryClient.setQueryData(["collection", updatedCollection.id], {
-        ...updatedCollection,
-        notes: updatedCollection.notes.concat(note.id),
-      });
-
-      await queryClient.invalidateQueries({ queryKey: ["note"] });
-
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ["note"] });
       setIsToggled(false);
     },
     onError: () => {
@@ -45,23 +45,33 @@ export default function AddToCollectionBtn({
 
   const handleAddToCollection = () => {
     if (!selectedCollection) return;
-    const collectionToUpdate = collections.find(
-      (col) => col.id === selectedCollection,
-    );
-    if (!collectionToUpdate) return;
-
-    addToCollectionMutation(collectionToUpdate);
+    addToCollectionMutation(selectedCollection);
   };
 
+  const availableCollections = note.noteCollection
+    ? collections.filter(
+        (collection) => collection.id !== note.noteCollection.id,
+      )
+    : collections;
+
+  if (availableCollections.length < 1) return null;
+
   return (
-    <div>
-      <button onClick={() => setIsToggled(!isToggled)}>
-        Add to collection
-      </button>
-      {isToggled && (
-        <div>
-          <p>Select collection to add note in:</p>
-          {collections.length > 0 ? (
+    <>
+      {isToggled ? (
+        <div className="noteCollectionSelector">
+          <div style={{ display: "flex" }}>
+            <Tooltip id="warning-tooltip" />
+            <p
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              data-tooltip-id="warning-tooltip"
+              data-tooltip-content="This note is already in a collection. Adding it to a new collection will remove it from its previous one."
+            >
+              Select collection to add note in{" "}
+              {note.noteCollection && <Warning size={20} color="#e04343" />}
+            </p>
+          </div>
+          {availableCollections.length > 0 ? (
             <select
               onChange={(e) => setSelectedCollection(e.target.value)}
               value={selectedCollection || ""}
@@ -69,7 +79,7 @@ export default function AddToCollectionBtn({
               <option value="" disabled>
                 Select a collection
               </option>
-              {collections.map((collection) => (
+              {availableCollections.map((collection) => (
                 <option key={collection.id} value={collection.id}>
                   {collection.title}
                 </option>
@@ -78,14 +88,34 @@ export default function AddToCollectionBtn({
           ) : (
             <p>No collections yet.</p>
           )}
-          <button
-            onClick={handleAddToCollection}
-            disabled={!selectedCollection || isPending}
-          >
-            {isPending ? "Adding..." : "Add"}
-          </button>
+          <div className="noteActionButtons">
+            <button
+              onClick={handleAddToCollection}
+              disabled={!selectedCollection || isPending}
+              className="noteActionBtn"
+            >
+              {isPending ? "Adding..." : "Add"}{" "}
+              <Check size={20} color="#F0F0F0" />
+            </button>
+            <button
+              onClick={() => setIsToggled(!isToggled)}
+              className="noteActionBtn"
+            >
+              Cancel <Uncheck size={20} color="#F0F0F0" />
+            </button>
+          </div>
         </div>
+      ) : (
+        <button
+          className="noteActionBtn"
+          onClick={() => setIsToggled(!isToggled)}
+        >
+          {note.noteCollection !== null
+            ? "Change collection"
+            : "Add to collection"}
+          <CollectionSvg size={18} color="F0F0F0" />
+        </button>
       )}
-    </div>
+    </>
   );
 }

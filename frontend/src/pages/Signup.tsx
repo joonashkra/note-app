@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SignupForm from "../components/auth/SignupForm";
+import ErrorMessage from "../components/general/ErrorMessage";
 
 export default function Signup() {
   const [errorMsg, setErrorMsg] = useState("");
@@ -8,7 +9,7 @@ export default function Signup() {
     <main className="authPage">
       <h1>Create your account</h1>
       <SignupForm setErrorMsg={setErrorMsg} />
-      {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+      <ErrorMessage text={errorMsg} />
     </main>
   );
 }

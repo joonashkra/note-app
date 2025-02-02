@@ -2,12 +2,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import noteService from "../../../services/noteService";
 import { useNavigate } from "react-router-dom";
 import Trash from "../../../assets/Trash";
-import { NoteActionProps } from "../../../types/props";
+import { PopulatedNote } from "../../../types/notes";
+
+interface DeleteNoteButtonProps {
+  note: PopulatedNote;
+  setErrorMsg: (text: string) => void;
+}
 
 export default function DeleteNoteButton({
   note,
   setErrorMsg,
-}: NoteActionProps) {
+}: DeleteNoteButtonProps) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 

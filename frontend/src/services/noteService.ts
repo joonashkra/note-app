@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Note, NewNote } from "../types/notes.ts";
+import { Note, NewNote, PopulatedNote } from "../types/notes.ts";
 
 const baseUrl = "/api/notes";
 
@@ -23,7 +23,7 @@ const getOne = async (id: string) => {
     headers: { Authorization: authToken },
   };
 
-  const response = await axios.get<Note>(`${baseUrl}/${id}`, config);
+  const response = await axios.get<PopulatedNote>(`${baseUrl}/${id}`, config);
   return response.data;
 };
 
@@ -46,11 +46,16 @@ const remove = async (id: string) => {
 };
 
 const update = async (note: Note) => {
+  console.log("Note", note);
   const config = {
     headers: { Authorization: authToken },
   };
 
-  const response = await axios.put(`${baseUrl}/${note.id}`, note, config);
+  const response = await axios.put<PopulatedNote>(
+    `${baseUrl}/${note.id}`,
+    note,
+    config,
+  );
   return response.data;
 };
 

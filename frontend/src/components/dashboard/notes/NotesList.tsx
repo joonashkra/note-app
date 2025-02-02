@@ -1,26 +1,24 @@
-import { useNavigate } from "react-router-dom";
 import NoteCard from "./NoteCard";
 import NotFound from "../../general/NotFound";
-import noteService from "../../../services/noteService";
-import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../pages/Loading";
+import { Note } from "../../../types/notes";
 
 interface NotesListProps {
-  layout: "grid" | "compact";
+  layout: "full" | "compact";
+  notes: Note[] | undefined;
+  isLoading: boolean;
 }
 
-export default function NotesList({ layout }: NotesListProps) {
-  const navigate = useNavigate();
-
-  const { data: notes, isLoading } = useQuery({
-    queryFn: () => noteService.getAll(),
-    queryKey: ["notes"],
-  });
-
+export default function NotesList({
+  layout,
+  notes,
+  isLoading,
+}: NotesListProps) {
   if (isLoading) return <Loading />;
 
   if (notes && notes.length < 1)
     return <NotFound text="No notes yet" size={50} color="#FFFFFF" />;
+
   if (notes === undefined)
     return (
       <NotFound
@@ -39,12 +37,8 @@ export default function NotesList({ layout }: NotesListProps) {
     return (
       <ul className="notesListCompact">
         {sortedNotes.map((note) => (
-          <li
-            key={note.id}
-            onClick={() => navigate(`notes/${note.id}`)}
-            data-testid="notesListItem"
-          >
-            <NoteCard note={note} layout="compact" />
+          <li key={note.id} data-testid="notesListItem">
+            <NoteCard note={note} layout={layout} />
           </li>
         ))}
       </ul>
@@ -53,12 +47,8 @@ export default function NotesList({ layout }: NotesListProps) {
   return (
     <ul className="notesList">
       {sortedNotes.map((note) => (
-        <li
-          key={note.id}
-          onClick={() => navigate(`notes/${note.id}`)}
-          data-testid="notesListItem"
-        >
-          <NoteCard note={note} layout="detailed" />
+        <li key={note.id} data-testid="notesListItem">
+          <NoteCard note={note} layout={layout} />
         </li>
       ))}
     </ul>

@@ -44,6 +44,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       localStorage.setItem("authUser", JSON.stringify(auth.user));
       noteService.setToken(auth.token);
       collectionService.setToken(auth.token);
+      userService.setToken(auth.token);
       queryClient.setQueryData(["auth"], {
         token: auth.token,
         user: auth.user,

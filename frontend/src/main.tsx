@@ -15,12 +15,14 @@ import Profile from "./pages/Profile.tsx";
 import Settings from "./pages/Settings.tsx";
 import AuthProvider from "./components/auth/AuthProvider.tsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
-import NoteDetails from "./pages/NoteDetails.tsx";
+import Note from "./pages/Note.tsx";
 import Fallback from "./pages/Fallback.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UpdateNote from "./pages/UpdateNote.tsx";
 import Home from "./pages/Home.tsx";
-import CollectionDetails from "./pages/CollectionDetails.tsx";
+import Collection from "./pages/Collection.tsx";
+import "react-tooltip/dist/react-tooltip.css";
+import UpdateCollection from "./pages/UpdateCollection.tsx";
 
 const router = createBrowserRouter(
   [
@@ -72,7 +74,7 @@ const router = createBrowserRouter(
         },
         {
           path: "/dashboard/notes/:id",
-          element: <NoteDetails />,
+          element: <Note />,
         },
         {
           path: "/dashboard/notes/:id/update",
@@ -80,7 +82,11 @@ const router = createBrowserRouter(
         },
         {
           path: "/dashboard/collections/:id",
-          element: <CollectionDetails />,
+          element: <Collection />,
+        },
+        {
+          path: "/dashboard/collections/:id/update",
+          element: <UpdateCollection />,
         },
       ],
     },
