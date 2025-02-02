@@ -58,6 +58,21 @@ const getEntries = () =>
     const users = yield user_1.default.find({});
     return users;
   });
+const getOne = (id, reqUser) =>
+  __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_1.default.findById(id);
+    if (!user) throw new mongoose_1.MongooseError("DocumentNotFoundError");
+    if (reqUser.id.toString() !== user._id.toString())
+      throw new mongoose_1.MongooseError("AuthError");
+    return user.populate([
+      { path: "notes", select: "title" },
+      {
+        path: "noteCollections",
+        select: "title",
+        match: { _id: { $ne: null } },
+      },
+    ]);
+  });
 const deleteEntry = (id) =>
   __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_1.default.findById(id);
@@ -67,5 +82,6 @@ const deleteEntry = (id) =>
 exports.default = {
   addEntry,
   getEntries,
+  getOne,
   deleteEntry,
 };

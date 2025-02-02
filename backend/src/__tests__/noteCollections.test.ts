@@ -287,6 +287,19 @@ describe("update collection", () => {
     assert.ok(note.noteCollection === null);
   });
 
+  test("returns 404 when adding nonexistent note to collection", async () => {
+    const nonExsitentNoteId = new mongoose.Types.ObjectId();
+    const updatedCollectionData = {
+      ...noteCollections[0],
+      notes: noteCollections[0].notes.concat(nonExsitentNoteId.toString()),
+    };
+    await api
+      .put(`/api/collections/${noteCollections[0].id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(updatedCollectionData)
+      .expect(404);
+  });
+
   test("returns 401 unauthorized with no access token", async () => {
     assert.ok(noteCollections.length > 0);
 

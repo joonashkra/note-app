@@ -41,23 +41,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const note_1 = __importDefault(require("../models/note"));
 const user_1 = __importDefault(require("../models/user"));
+const noteCollection_1 = __importDefault(require("../models/noteCollection"));
 const getEntries = (user) =>
   __awaiter(void 0, void 0, void 0, function* () {
     if (!user) return [];
-    const notes = yield note_1.default
-      .find({ user: user.id })
-      .populate("user", {
-        username: 1,
-      });
+    const notes = yield note_1.default.find({ user: user.id });
     return notes;
   });
 const getOne = (id, user) =>
   __awaiter(void 0, void 0, void 0, function* () {
     const note = yield note_1.default.findById(id);
     if (!note) throw new mongoose_1.MongooseError("DocumentNotFoundError");
-    if (note.user.toString() !== user.id.toString())
+    if (user.id.toString() !== note.user.toString())
       throw new mongoose_1.MongooseError("AuthError");
-    return note;
+    return note.populate([
+      { path: "user", select: "username" },
+      {
+        path: "noteCollection",
+        select: "title",
+        match: { _id: { $ne: null } },
+      },
+    ]);
   });
 const addEntry = (noteObject, user) =>
   __awaiter(void 0, void 0, void 0, function* () {
@@ -71,7 +75,7 @@ const addEntry = (noteObject, user) =>
     });
     const note = new note_1.default(newNote);
     const createdNote = yield note.save();
-    user.notes = user.notes.concat(createdNote._id);
+    noteUser.notes.push(createdNote._id);
     yield noteUser.save();
     return createdNote;
   });
@@ -79,20 +83,57 @@ const deleteEntry = (id, user) =>
   __awaiter(void 0, void 0, void 0, function* () {
     const note = yield note_1.default.findById(id);
     if (!note) throw new mongoose_1.MongooseError("DocumentNotFoundError");
-    if (note.user.toString() !== user.id.toString())
+    if (user.id.toString() !== note.user.toString())
       throw new mongoose_1.MongooseError("AuthError");
+    if (note.noteCollection !== null) {
+      yield noteCollection_1.default.updateOne(
+        { _id: note.noteCollection },
+        { $pull: { notes: id } },
+      );
+    }
     yield note_1.default.findByIdAndDelete(id);
   });
 const updateEntry = (id, user, note) =>
   __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const noteToUpdate = yield note_1.default.findById(id);
     if (!noteToUpdate)
       throw new mongoose_1.MongooseError("DocumentNotFoundError");
-    if (noteToUpdate.user.toString() !== user.id.toString())
+    if (user.id.toString() !== note.user.toString())
       throw new mongoose_1.MongooseError("AuthError");
-    const updatedNote = yield note_1.default.findByIdAndUpdate(id, note, {
-      new: true,
-    });
+    if (
+      !((_a = noteToUpdate.noteCollection) === null || _a === void 0
+        ? void 0
+        : _a.equals(note.noteCollection))
+    ) {
+      if (note.noteCollection !== null) {
+        const collection = yield noteCollection_1.default.findById(
+          note.noteCollection,
+        );
+        if (!collection)
+          throw new mongoose_1.MongooseError("DocumentNotFoundError");
+        yield noteCollection_1.default.updateOne(
+          { _id: note.noteCollection },
+          { $addToSet: { notes: id } },
+        );
+      }
+      yield noteCollection_1.default.updateOne(
+        { _id: noteToUpdate.noteCollection },
+        { $pull: { notes: note.id } },
+      );
+    }
+    const updatedNote = yield note_1.default
+      .findByIdAndUpdate(id, note, {
+        new: true,
+      })
+      .populate([
+        { path: "user", select: "username" },
+        {
+          path: "noteCollection",
+          select: "title",
+          match: { _id: { $ne: null } },
+        },
+      ]);
     return updatedNote;
   });
 exports.default = {

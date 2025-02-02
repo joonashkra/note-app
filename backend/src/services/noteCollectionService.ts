@@ -72,6 +72,7 @@ const updateEntry = async (
   collection: NoteCollection,
 ): Promise<NoteCollection | null> => {
   const noteCollectionToUpdate = await NoteCollectionModel.findById(id);
+
   if (!noteCollectionToUpdate) throw new MongooseError("DocumentNotFoundError");
 
   if (!noteCollectionToUpdate.users.includes(user.id))
@@ -100,6 +101,12 @@ const updateEntry = async (
           ),
       );
 
+      const existingNotesCount = await NoteModel.countDocuments({
+        _id: { $in: addedNoteIds },
+      });
+      if (existingNotesCount !== addedNoteIds.length)
+        throw new MongooseError("DocumentNotFoundError");
+
       await NoteModel.updateMany(
         { _id: { $in: addedNoteIds } },
         { noteCollection: collection.id },
@@ -108,7 +115,7 @@ const updateEntry = async (
   }
 
   const updatedNote = await NoteCollectionModel.findByIdAndUpdate(
-    noteCollectionToUpdate.id,
+    noteCollectionToUpdate._id,
     collection,
     { new: true },
   );

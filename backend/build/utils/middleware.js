@@ -38,48 +38,30 @@ var __importDefault =
     return mod && mod.__esModule ? mod : { default: mod };
   };
 Object.defineProperty(exports, "__esModule", { value: true });
-const schemas_1 = require("./schemas");
 const zod_1 = require("zod");
 const mongoose_1 = require("mongoose");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const helpers_1 = require("./helpers");
 const user_1 = __importDefault(require("../models/user"));
-const newNoteParser = (req, _res, next) => {
-  try {
-    schemas_1.NewNoteSchema.parse(req.body);
+const parseBody = (schema) => {
+  return (req, _res, next) => {
+    const parsedBody = schema.safeParse(req.body);
+    if (!parsedBody.success) {
+      return next(parsedBody.error);
+    }
+    req.body = parsedBody.data;
     next();
-  } catch (error) {
-    next(error);
-  }
+  };
 };
-const userParser = (req, _res, next) => {
-  try {
-    schemas_1.UserSchema.parse(req.body);
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-const newNoteCollectionParser = (req, _res, next) => {
-  try {
-    console.log("in newNoteCollectionParser with req.body: ", req.body);
-    const parsedCollection = schemas_1.NewNoteCollectionSchema.parse(req.body);
-    console.log(parsedCollection);
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-const errorHandler = (error, req, res, _next) => {
-  console.log(req.body);
+const errorHandler = (error, _req, res, _next) => {
   if (error instanceof zod_1.z.ZodError)
     return res.status(400).send({ error: error.issues });
   if (error instanceof mongoose_1.MongooseError) {
     switch (error.message) {
       case "DocumentNotFoundError":
-        return res.status(404).send({ error: "Note not found." });
+        return res.status(404).send({ error: "Document not found." });
       case "CastError":
-        return res.status(400).send({ error: "Malformatted note id." });
+        return res.status(400).send({ error: "Malformatted document id." });
       case "ValidationError":
         return res.status(400).send({ error: error.message });
       case "AuthError":
@@ -113,9 +95,7 @@ const checkAuth = (req, _res, next) =>
     next();
   });
 exports.default = {
-  newNoteParser,
-  userParser,
-  newNoteCollectionParser,
   errorHandler,
   checkAuth,
+  parseBody,
 };

@@ -20,6 +20,13 @@ router.get("/", middleware.checkAuth, async (_req, res) => {
   res.send(users);
 });
 
+router.get("/:id", middleware.checkAuth, async (req, res) => {
+  if (!req.user) return res.sendStatus(401);
+  const user = await userService.getOne(req.params.id, req.user);
+  res.send(user);
+  return;
+});
+
 router.delete("/:id", middleware.checkAuth, async (req, res) => {
   await userService.deleteEntry(req.params.id);
   res.sendStatus(204);

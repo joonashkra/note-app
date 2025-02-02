@@ -54,7 +54,6 @@ const login = (loginAttempt) =>
     const userForToken = {
       username: user.username,
       id: user._id,
-      notes: user.notes,
     };
     const secret = process.env.SECRET;
     if (!secret) {

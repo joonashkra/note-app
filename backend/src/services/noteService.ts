@@ -37,7 +37,8 @@ const addEntry = async (noteObject: NewNote, user: User): Promise<Note> => {
 
   const note = new NoteModel(newNote);
   const createdNote = await note.save();
-  user.notes = user.notes.concat(createdNote._id);
+
+  noteUser.notes.push(createdNote._id);
   await noteUser.save();
 
   return createdNote;
@@ -69,13 +70,22 @@ const updateEntry = async (
     throw new MongooseError("AuthError");
 
   if (!noteToUpdate.noteCollection?.equals(note.noteCollection)) {
+    if (note.noteCollection !== null) {
+      const collection = await NoteCollectionModel.findById(
+        note.noteCollection,
+      );
+
+      if (!collection) throw new MongooseError("DocumentNotFoundError");
+
+      await NoteCollectionModel.updateOne(
+        { _id: note.noteCollection },
+        { $addToSet: { notes: id } },
+      );
+    }
+
     await NoteCollectionModel.updateOne(
       { _id: noteToUpdate.noteCollection },
       { $pull: { notes: note.id } },
-    );
-    await NoteCollectionModel.updateOne(
-      { _id: note.noteCollection },
-      { $addToSet: { notes: id } },
     );
   }
 

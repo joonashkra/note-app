@@ -41,11 +41,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const loginService_1 = __importDefault(require("../services/loginService"));
 const middleware_1 = __importDefault(require("../utils/middleware"));
+const userSchema_1 = require("../schemas/userSchema");
 const router = (0, express_1.Router)();
-router.post("/", middleware_1.default.userParser, (req, res) =>
-  __awaiter(void 0, void 0, void 0, function* () {
-    const auth = yield loginService_1.default.login(req.body);
-    res.status(200).send(auth);
-  }),
+router.post(
+  "/",
+  middleware_1.default.parseBody(userSchema_1.UserSchema),
+  (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+      const auth = yield loginService_1.default.login(req.body);
+      res.status(200).send(auth);
+    }),
 );
 exports.default = router;

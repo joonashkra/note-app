@@ -41,17 +41,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const middleware_1 = __importDefault(require("../utils/middleware"));
 const userService_1 = __importDefault(require("../services/userService"));
+const userSchema_1 = require("../schemas/userSchema");
 const router = (0, express_1.Router)();
-router.post("/", middleware_1.default.userParser, (req, res) =>
-  __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield userService_1.default.addEntry(req.body);
-    res.status(201).json(newUser);
-  }),
+router.post(
+  "/",
+  middleware_1.default.parseBody(userSchema_1.UserSchema),
+  (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+      const newUser = yield userService_1.default.addEntry(req.body);
+      res.status(201).json(newUser);
+    }),
 );
 router.get("/", middleware_1.default.checkAuth, (_req, res) =>
   __awaiter(void 0, void 0, void 0, function* () {
     const users = yield userService_1.default.getEntries();
     res.send(users);
+  }),
+);
+router.get("/:id", middleware_1.default.checkAuth, (req, res) =>
+  __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.user) return res.sendStatus(401);
+    const user = yield userService_1.default.getOne(req.params.id, req.user);
+    res.send(user);
+    return;
   }),
 );
 router.delete("/:id", middleware_1.default.checkAuth, (req, res) =>

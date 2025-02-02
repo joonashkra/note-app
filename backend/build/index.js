@@ -40,11 +40,11 @@ if (MONGODB_URI) {
     .catch((error) => console.log("error connecting to MongoDB:", error));
 }
 if (process.env.NODE_ENV === "test") {
-  app.use("/api/testing", testing_1.default);
   app.get("/", (_req, res) => {
     res.status(200).send("OK");
   });
 }
+app.use("/api/testing", testing_1.default);
 app.use("/api/readme", readme_1.default);
 app.use("/api/login", login_1.default);
 app.use("/api/users", users_1.default);

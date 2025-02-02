@@ -41,11 +41,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const note_1 = __importDefault(require("../models/note"));
 const user_1 = __importDefault(require("../models/user"));
+const noteCollection_1 = __importDefault(require("../models/noteCollection"));
 const router = (0, express_1.Router)();
 router.post("/reset", (_req, res) =>
   __awaiter(void 0, void 0, void 0, function* () {
     yield note_1.default.deleteMany({});
     yield user_1.default.deleteMany({});
+    yield noteCollection_1.default.deleteMany({});
     res.status(204).end();
   }),
 );

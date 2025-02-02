@@ -13,7 +13,6 @@ export interface NewUser {
   password: string;
 }
 
-//For transformed mongoDb document without passwordHash etc.
 export interface NonSensitiveUser {
   _id?: mongoose.Types.ObjectId;
   id?: string;

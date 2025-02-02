@@ -41,8 +41,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const noteService_1 = __importDefault(require("../services/noteService"));
 const middleware_1 = __importDefault(require("../utils/middleware"));
-const schemas_1 = require("../utils/schemas");
-const mongoose_1 = __importDefault(require("mongoose"));
+const noteSchema_1 = require("../schemas/noteSchema");
+const helpers_1 = require("../utils/helpers");
 const router = (0, express_1.Router)();
 router.get("/", (req, res) =>
   __awaiter(void 0, void 0, void 0, function* () {
@@ -60,13 +60,23 @@ router.get("/:id", (req, res) =>
     return;
   }),
 );
-router.post("/", middleware_1.default.newNoteParser, (req, res) =>
-  __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.user) return res.sendStatus(401);
-    const newNote = yield noteService_1.default.addEntry(req.body, req.user);
-    res.status(201).json(newNote);
-    return;
-  }),
+router.post(
+  "/",
+  middleware_1.default.parseBody(noteSchema_1.NewNoteSchema),
+  (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+      if (!req.user) return res.sendStatus(401);
+      const { noteCollection } = req.body;
+      const data = Object.assign(Object.assign({}, req.body), {
+        noteCollection:
+          noteCollection === null
+            ? null
+            : (0, helpers_1.toObjectId)(noteCollection),
+      });
+      const newNote = yield noteService_1.default.addEntry(data, req.user);
+      res.status(201).json(newNote);
+      return;
+    }),
 );
 router.delete("/:id", (req, res) =>
   __awaiter(void 0, void 0, void 0, function* () {
@@ -76,36 +86,28 @@ router.delete("/:id", (req, res) =>
     return;
   }),
 );
-router.put("/:id", (req, res) =>
-  __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.user) return res.sendStatus(401);
-    const parsedNote = schemas_1.NoteSchema.safeParse(req.body);
-    if (!parsedNote.success) return res.sendStatus(400);
-    const {
-      id,
-      title,
-      description,
-      creationDate,
-      deadlineDate,
-      checked,
-      user,
-    } = parsedNote.data;
-    const note = {
-      id: new mongoose_1.default.Types.ObjectId(`${id}`),
-      title,
-      description,
-      creationDate,
-      deadlineDate,
-      checked,
-      user: new mongoose_1.default.Types.ObjectId(`${user}`),
-    };
-    const updatedNote = yield noteService_1.default.updateEntry(
-      req.params.id,
-      req.user,
-      note,
-    );
-    res.send(updatedNote);
-    return;
-  }),
+router.put(
+  "/:id",
+  middleware_1.default.parseBody(noteSchema_1.NoteSchema),
+  (req, res) =>
+    __awaiter(void 0, void 0, void 0, function* () {
+      if (!req.user) return res.sendStatus(401);
+      const { id, user, noteCollection } = req.body;
+      const data = Object.assign(Object.assign({}, req.body), {
+        id: (0, helpers_1.toObjectId)(id),
+        user: (0, helpers_1.toObjectId)(user),
+        noteCollection:
+          noteCollection === null
+            ? null
+            : (0, helpers_1.toObjectId)(noteCollection),
+      });
+      const updatedNote = yield noteService_1.default.updateEntry(
+        req.params.id,
+        req.user,
+        data,
+      );
+      res.send(updatedNote);
+      return;
+    }),
 );
 exports.default = router;

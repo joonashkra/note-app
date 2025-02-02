@@ -32,9 +32,9 @@ const errorHandler = (
   if (error instanceof MongooseError) {
     switch (error.message) {
       case "DocumentNotFoundError":
-        return res.status(404).send({ error: "Note not found." });
+        return res.status(404).send({ error: "Document not found." });
       case "CastError":
-        return res.status(400).send({ error: "Malformatted note id." });
+        return res.status(400).send({ error: "Malformatted document id." });
       case "ValidationError":
         return res.status(400).send({ error: error.message });
       case "AuthError":
