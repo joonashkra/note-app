@@ -19,14 +19,19 @@ const addEntry = async (userObject: NewUser): Promise<User> => {
 };
 
 const getEntries = async (): Promise<User[]> => {
-  const users = await UserModel.find({}).populate("notes", {
-    title: 1,
-    description: 1,
-    creationDate: 1,
-    deadlineDate: 1,
-    checked: 1,
-  });
+  const users = await UserModel.find({});
   return users;
+};
+
+const getOne = async (id: string, reqUser: User): Promise<User | null> => {
+  const user = await UserModel.findById(id);
+  if (!user) throw new MongooseError("DocumentNotFoundError");
+  if (reqUser.id.toString() !== user._id.toString())
+    throw new MongooseError("AuthError");
+  return user.populate([
+    { path: "notes", select: "title" },
+    { path: "noteCollections", select: "title", match: { _id: { $ne: null } } },
+  ]);
 };
 
 const deleteEntry = async (id: string) => {
@@ -38,5 +43,6 @@ const deleteEntry = async (id: string) => {
 export default {
   addEntry,
   getEntries,
+  getOne,
   deleteEntry,
 };

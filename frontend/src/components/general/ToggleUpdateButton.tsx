@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import Edit from "../../../assets/Edit";
-import { Note } from "../../../types/notes";
+import Edit from "../../assets/Edit";
+import { PopulatedNote } from "../../types/notes";
+import { PopulatedCollection } from "../../types/collections";
 
 interface ToggleUpdateButtonProps {
-  note: Note;
+  data: PopulatedNote | PopulatedCollection;
 }
 
-export default function ToggleUpdateButton({ note }: ToggleUpdateButtonProps) {
+export default function ToggleUpdateButton({ data }: ToggleUpdateButtonProps) {
   const navigate = useNavigate();
 
   const toggleUpdate = () => {
-    navigate(`update`, { state: { note } });
+    navigate(`update`, { state: { data } });
   };
 
   return (

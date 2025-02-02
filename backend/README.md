@@ -24,7 +24,7 @@
 
 ### Containerization:
 
-    - Docker (Docker Compose)
+    - Docker
     - Nginx (reverse proxy as single point of entry to application)
 
 ## Usage

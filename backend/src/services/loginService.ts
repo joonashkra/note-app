@@ -16,7 +16,6 @@ const login = async (loginAttempt: NewUser): Promise<AuthResponse> => {
   const userForToken = {
     username: user.username,
     id: user._id,
-    notes: user.notes,
   };
 
   const secret = process.env.SECRET;

@@ -11,6 +11,7 @@ import userRouter from "./routes/users";
 import loginRouter from "./routes/login";
 import readmeRouter from "./routes/readme";
 import testingRouter from "./routes/testing";
+import noteCollectionRouter from "./routes/noteCollections";
 
 const app = express();
 
@@ -38,19 +39,22 @@ if (MONGODB_URI) {
 }
 
 if (process.env.NODE_ENV === "test") {
-  app.use("/api/testing", testingRouter);
   app.get("/", (_req, res) => {
     res.status(200).send("OK");
   });
 }
+
+app.use("/api/testing", testingRouter);
 
 app.use("/api/readme", readmeRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/users", userRouter);
 
 app.use("/api/notes", middleware.checkAuth);
+app.use("/api/collections", middleware.checkAuth);
 
 app.use("/api/notes", noteRouter);
+app.use("/api/collections", noteCollectionRouter);
 
 app.get("*", (_req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));

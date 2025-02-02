@@ -1,27 +1,36 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import noteService from "../../../services/noteService";
 import Check from "../../../assets/Check";
-import { Note } from "../../../types/notes";
+import { PopulatedNote } from "../../../types/notes";
 import Uncheck from "../../../assets/Uncheck";
-import { NoteActionProps } from "../../../types/props";
+
+interface CheckNoteButtonProps {
+  note: PopulatedNote;
+  setErrorMsg: (text: string) => void;
+}
 
 export default function CheckNoteButton({
   note,
   setErrorMsg,
-}: NoteActionProps) {
+}: CheckNoteButtonProps) {
   const queryClient = useQueryClient();
 
+  console.log("note in component", note);
+
   const { mutateAsync: checkNoteMutation } = useMutation({
-    mutationFn: (note: Note) =>
-      noteService.update({ ...note, checked: !note.checked }),
-    onSuccess: (updatedNote) => {
-      queryClient.setQueryData(
-        ["note"],
-        { ...updatedNote, checked: !note.checked },
-        updatedNote,
-      );
+    mutationFn: (note: PopulatedNote) =>
+      noteService.update({
+        ...note,
+        checked: !note.checked,
+        noteCollection:
+          note.noteCollection === null ? null : note.noteCollection.id,
+        user: note.user.id,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["note"] });
     },
-    onError: () => {
+    onError: (error) => {
+      console.log("Error:", error);
       setErrorMsg("Unexpected error when checking note");
     },
   });

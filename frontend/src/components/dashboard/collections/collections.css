@@ -11,10 +11,13 @@
 }
 
 .collectionCard {
+  display: flex;
+  justify-content: space-between;
   border: 1px solid var(--white);
-  padding: 1rem;
+  padding: 0 1rem;
   width: 100%;
   box-sizing: border-box;
+  gap: 2rem;
 }
 
 .collectionCard:hover {
@@ -29,4 +32,134 @@
     #000000 50%
   );
   cursor: pointer;
+}
+
+.collectionForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.collectionFormInputFields {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.collectionFormTextFields {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 80%;
+}
+
+.collectionFormTextFields input,
+.collectionFormTextFields textarea {
+  padding: 0.5rem;
+  background-color: var(--dark);
+  border: 1px solid var(--pink);
+  color: var(--white);
+  font-size: 1rem;
+  resize: none;
+  width: 100%;
+}
+
+.collectionFormAddProperties {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.noteToAdd {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--pink);
+  width: max-content;
+  padding: 0.5rem;
+}
+
+.noteToAddList {
+  list-style: none;
+  padding-inline-start: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.collectionFormNotes label {
+  font-size: 1.5rem;
+}
+
+.removeSelection {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.noteSelectionItem {
+  cursor: pointer;
+}
+
+.collectionDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.collectionDetailsLists {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+  gap: 2rem;
+}
+
+.collectionDetails ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-inline-start: 0;
+  width: max-content;
+  overflow-y: scroll;
+  width: 100%;
+  max-height: 26rem;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink) var(--black);
+  gap: 0.5rem;
+}
+
+.collectionDetailsNotes li {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  gap: 1rem;
+  justify-content: space-between;
+  border: 1px solid var(--pink);
+  cursor: pointer;
+}
+
+.collectionDetailsNotes li:hover {
+  background-size: 7px 7px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #131313 0,
+    #131313 0.7000000000000001px,
+    #000000 0,
+    #000000 50%
+  );
+}
+
+.collectionDetailsUsers li {
+  padding-right: 1rem;
+}
+
+.removeNote {
+  display: flex;
+  cursor: pointer;
+  align-self: center;
+  justify-self: center;
+}
+
+.collectionDetailsData {
+  display: flex;
+  justify-content: space-between;
 }

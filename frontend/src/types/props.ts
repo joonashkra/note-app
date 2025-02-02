@@ -1,5 +1,3 @@
-import { Note } from "./notes";
-
 export interface SvgButtonProps {
   size: number;
   color: string;
@@ -7,8 +5,3 @@ export interface SvgButtonProps {
 }
 
 export type SvgProps = Omit<SvgButtonProps, "navigate">;
-
-export interface NoteActionProps {
-  note: Note;
-  setErrorMsg: (text: string) => void;
-}

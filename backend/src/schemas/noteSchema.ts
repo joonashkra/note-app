@@ -4,11 +4,7 @@ export const NewNoteSchema = z.object({
   title: z.string(),
   description: z.string(),
   deadlineDate: z.coerce.date(),
-});
-
-export const UserSchema = z.object({
-  username: z.string(),
-  password: z.string().min(5),
+  noteCollection: z.string().nullable(),
 });
 
 export const NoteSchema = z.object({
@@ -19,9 +15,10 @@ export const NoteSchema = z.object({
   deadlineDate: z.coerce.date(),
   user: z.string(),
   checked: z.boolean(),
+  noteCollection: z.string().nullable(),
 });
 
-export const NoteFromBackendSchema = z.object({
+export const PopulatedNoteSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
@@ -29,15 +26,10 @@ export const NoteFromBackendSchema = z.object({
   deadlineDate: z.coerce.date(),
   user: z.object({ username: z.string(), id: z.string() }),
   checked: z.boolean(),
-});
-
-export const NotesFromBackendSchema = z.array(NoteFromBackendSchema);
-
-export const AuthResponseSchema = z.object({
-  user: z.object({
-    username: z.string(),
-    id: z.string(),
-    notes: z.array(z.string()),
-  }),
-  token: z.string(),
+  noteCollection: z
+    .object({
+      title: z.string(),
+      id: z.string(),
+    })
+    .nullable(),
 });

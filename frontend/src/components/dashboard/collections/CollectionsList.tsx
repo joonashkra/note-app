@@ -1,11 +1,22 @@
-import { Collection } from "../../../types/collections";
 import NotFound from "../../general/NotFound";
+import Loading from "../../../pages/Loading";
+import { useNavigate } from "react-router-dom";
+import { Collection } from "../../../types/collections";
+import CollectionCard from "./CollectionCard";
 
-export default function CollectionsList() {
-  const collections: Collection[] = [];
+interface CollectionsListProps {
+  collections: Collection[] | undefined;
+  isLoading: boolean;
+}
 
-  if (collections.length < 1)
-    return <NotFound text="No collections yet" size={24} color="#FFFFFF" />;
+export default function CollectionsList({
+  collections,
+  isLoading,
+}: CollectionsListProps) {
+  const navigate = useNavigate();
+
+  if (isLoading) return <Loading />;
+
   if (collections === undefined)
     return (
       <NotFound
@@ -15,11 +26,18 @@ export default function CollectionsList() {
       />
     );
 
+  if (collections.length < 1)
+    return <NotFound text="No collections yet" size={50} color="#FFFFFF" />;
+
   return (
     <ul className="collectionList">
       {collections.map((collection, index) => (
-        <li key={index} className="collectionCard">
-          <p>{collection.title}</p>
+        <li
+          key={index}
+          onClick={() => navigate(`collections/${collection.id}`)}
+          data-testid="collectionListItem"
+        >
+          <CollectionCard collection={collection} layout="compact" />
         </li>
       ))}
     </ul>

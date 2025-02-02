@@ -1,36 +1,25 @@
-import supertest, { Response } from "supertest";
+import supertest from "supertest";
 import app, { server } from "../index";
 import mongoose from "mongoose";
 import { mockNotes, mockUser, mockUser2 } from "./mockData";
 import NoteModel from "../models/note";
 import UserModel from "../models/user";
 import assert from "node:assert";
-import { Note } from "../types/notes";
-import {
-  AuthResponseSchema,
-  NoteSchema,
-  NotesFromBackendSchema,
-} from "../utils/schemas";
-import { ZodSchema } from "zod";
+import helpers, { NoteFromBackend } from "./helpers";
+import { z } from "zod";
+import { AuthResponseSchema } from "../schemas/userSchema";
+import { NoteSchema, PopulatedNoteSchema } from "../schemas/noteSchema";
+import NoteCollectionModel from "../models/noteCollection";
+import { NoteCollectionSchema } from "../schemas/noteCollectionSchema";
 
 const api = supertest(app);
 
 let token: string;
 let notes: NoteFromBackend[] = [];
 const initialNotes = mockNotes;
-
-//Backend populates note.user as { username, id }
-type NoteFromBackend = Omit<Note, "user" | "id"> & {
-  user: { username: string; id: string };
-  id: string;
-};
-
-const parseBody = <T>(res: Response, schema: ZodSchema<T>) => {
-  const parsedBody = schema.safeParse(res.body);
-  if (!parsedBody.success) throw new Error("res.body validation failed");
-  const data = parsedBody.data;
-  return data;
-};
+const initialCollections = [
+  { title: "Collection 1", description: "Test collection 1", notes: [] },
+];
 
 const fetchNotes = async (): Promise<NoteFromBackend[]> => {
   const res = await api
@@ -38,15 +27,9 @@ const fetchNotes = async (): Promise<NoteFromBackend[]> => {
     .set("Authorization", `Bearer ${token}`)
     .expect(200);
 
-  const notes = parseBody(res, NotesFromBackendSchema);
+  const notes = helpers.parseBody(res, z.array(NoteSchema));
 
-  return notes.map(
-    (note: NoteFromBackend): NoteFromBackend => ({
-      ...note,
-      id: note.id,
-      user: note.user,
-    }),
-  );
+  return notes;
 };
 
 beforeEach(async () => {
@@ -62,7 +45,7 @@ beforeEach(async () => {
   });
   await newNote.save();
 
-  newUser.notes = newUser.notes.concat(newNote);
+  newUser.notes = newUser.notes.concat(newNote._id);
   await newUser.save();
 
   newNote = new NoteModel({
@@ -71,7 +54,16 @@ beforeEach(async () => {
   });
   await newNote.save();
 
-  newUser.notes = newUser.notes.concat(newNote);
+  newUser.notes = newUser.notes.concat(newNote._id);
+  await newUser.save();
+
+  const newCollection = new NoteCollectionModel({
+    ...initialCollections[0],
+    users: [newUser._id],
+  });
+  await newCollection.save();
+
+  newUser.noteCollections = newUser.noteCollections.concat(newCollection._id);
   await newUser.save();
 
   const loginRes = await api
@@ -82,7 +74,7 @@ beforeEach(async () => {
     })
     .expect(200);
 
-  const auth = parseBody(loginRes, AuthResponseSchema);
+  const auth = helpers.parseBody(loginRes, AuthResponseSchema);
 
   token = auth.token;
 
@@ -90,8 +82,20 @@ beforeEach(async () => {
 });
 
 describe("get notes", () => {
-  test("all notes are returned", () => {
+  test("all notes are returned with correct data", () => {
     assert.strictEqual(notes.length, initialNotes.length - 1); // initialNotes.length - 1, since only 2 notes belong to logged in user atm
+    const noteTitles = notes.map((note) => note.title);
+    assert(noteTitles.includes(initialNotes[0].title));
+  });
+
+  test("returns single note with correct data", async () => {
+    const res = await api
+      .get(`/api/notes/${notes[0].id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const note = helpers.parseBody(res, PopulatedNoteSchema);
+    assert.strictEqual(note.title, notes[0].title);
   });
 
   test("returns 404 if note doesn't exist", async () => {
@@ -100,11 +104,6 @@ describe("get notes", () => {
       .get(`/api/notes/${nonexistentNoteId}`)
       .set("Authorization", `Bearer ${token}`)
       .expect(404);
-  });
-
-  test("returned note details are correct", () => {
-    const noteTitles = notes.map((note) => note.title);
-    assert(noteTitles.includes(initialNotes[0].title));
   });
 
   test("returns bad request without access token", async () => {
@@ -129,7 +128,7 @@ describe("get notes", () => {
       })
       .expect(200);
 
-    const auth = parseBody(loginRes, AuthResponseSchema);
+    const auth = helpers.parseBody(loginRes, AuthResponseSchema);
 
     const token = auth.token;
 
@@ -138,10 +137,10 @@ describe("get notes", () => {
       .set("Authorization", `Bearer ${token}`)
       .expect(200);
 
-    const notes = parseBody(res, NotesFromBackendSchema);
+    const notes = helpers.parseBody(res, z.array(NoteSchema));
 
     assert.strictEqual(notes.length, 1);
-    assert.strictEqual(notes[0].user.id, newUser._id.toString());
+    assert.strictEqual(notes[0].user, newUser._id.toString());
   });
 });
 
@@ -150,6 +149,7 @@ describe("post note", () => {
     title: "testNote",
     description: "testNote",
     deadlineDate: "2025-05-30T22:00:00",
+    noteCollection: null,
   };
 
   test("works with valid token & data", async () => {
@@ -173,7 +173,6 @@ describe("post note", () => {
     const invalidNotes = [
       { ...testNote, title: null },
       { ...testNote, description: null },
-      { ...testNote, deadlineDate: null },
     ];
 
     for (const invalidNote of invalidNotes) {
@@ -194,8 +193,8 @@ describe("update note", () => {
 
     const updatedNoteData = {
       ...noteToUpdate,
-      user: noteToUpdate.user.id,
       title: "updatedTitle",
+      checked: !notes[0].checked,
     };
 
     const putRes = await api
@@ -204,10 +203,11 @@ describe("update note", () => {
       .send(updatedNoteData)
       .expect(200);
 
-    const note = parseBody(putRes, NoteSchema);
+    const note = helpers.parseBody(putRes, PopulatedNoteSchema);
 
     assert.strictEqual(note.title, updatedNoteData.title);
-    assert.strictEqual(note.id, noteToUpdate.id);
+    assert.strictEqual(note.id, updatedNoteData.id);
+    assert.strictEqual(note.checked, updatedNoteData.checked);
 
     const updatedNotes = await fetchNotes();
     const updatedNote = updatedNotes.find(
@@ -216,6 +216,59 @@ describe("update note", () => {
 
     assert.ok(updatedNote);
     assert.strictEqual(updatedNote.title, updatedNoteData.title);
+  });
+
+  test("updating note's collection updates also collection's notes property", async () => {
+    const getRes1 = await api
+      .get("/api/collections")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const collectionsBefore = helpers.parseBody(
+      getRes1,
+      z.array(NoteCollectionSchema),
+    );
+
+    const noteToUpdate = notes[0];
+
+    const updatedNoteData = {
+      ...noteToUpdate,
+      noteCollection: collectionsBefore[0].id,
+    };
+
+    const putRes = await api
+      .put(`/api/notes/${noteToUpdate.id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(updatedNoteData)
+      .expect(200);
+
+    const updatedNote = helpers.parseBody(putRes, PopulatedNoteSchema);
+    assert.ok(updatedNote.noteCollection !== null);
+    assert.strictEqual(updatedNote.noteCollection.id, collectionsBefore[0].id);
+
+    const getRes2 = await api
+      .get("/api/collections")
+      .set("Authorization", `Bearer ${token}`)
+      .expect(200);
+
+    const collectionsAfter = helpers.parseBody(
+      getRes2,
+      z.array(NoteCollectionSchema),
+    );
+    assert.strictEqual(collectionsAfter[0].notes[0], updatedNote.id);
+  });
+
+  test("returns 404 when added to nonexistent noteCollection", async () => {
+    const nonExsitentCollectionId = new mongoose.Types.ObjectId();
+    const updatedNoteData = {
+      ...notes[0],
+      noteCollection: nonExsitentCollectionId.toString(),
+    };
+    await api
+      .put(`/api/notes/${notes[0].id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send(updatedNoteData)
+      .expect(404);
   });
 
   test("returns 401 unauthorized with no access token", async () => {
@@ -234,7 +287,7 @@ describe("update note", () => {
       .expect(401);
   });
 
-  test("returns 400 bar request with invalid data", async () => {
+  test("returns 400 bad request with invalid data", async () => {
     assert.ok(notes.length > 0);
 
     const noteToUpdate = notes[0];

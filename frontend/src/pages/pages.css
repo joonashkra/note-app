@@ -63,7 +63,7 @@
 
 .noteDetailsPage {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   margin: 2rem 0rem;
   gap: 1rem;
 }
@@ -98,6 +98,10 @@
   padding: 2rem 8rem;
 }
 
+.overviewPage h1 {
+  font-size: 2rem;
+}
+
 .createCollectionPage {
   display: flex;
   flex-direction: column;
@@ -124,4 +128,17 @@
 .overviewImages img {
   border: 1px solid var(--pink);
   max-width: 100%;
+}
+
+.collectionDetailsPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0rem;
+}
+
+.updateCollectionPage {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0rem;
 }
