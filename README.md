@@ -2,7 +2,7 @@
 
 ## Overview
 
-This personal project serves as a hands-on learning experience in full-stack development, incorporating modern methodologies and technologies. The application is in continuous development, as its primary purpose is to facilitate my learning. As a result, some features are missing, and e.g. the CSS is not yet responsive. However, the app is **[deployed to Render](https://note-app-gk6d.onrender.com/)**, but only after each successful pipeline run from a push or pull request to the main branch, ensuring it is never in a "broken" state.
+This personal project serves as a hands-on learning experience in full-stack development, incorporating modern methodologies and technologies. The application is in continuous development, as its primary purpose is to facilitate my learning. As a result, some features are missing, and e.g. the CSS is not yet responsive. However, the app is **[deployed to Render](https://note-app-gk6d.onrender.com/)**, but only after each successful pipeline run from a push or pull request to the main branch, ensuring it is never in a "broken" state. The free instance of Render will spin down with inactivity, which can delay requests by 50 seconds or more.
 
 ## Languages, frameworks and libraries
 
