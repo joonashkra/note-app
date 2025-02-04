@@ -11,16 +11,18 @@ const linkStyle = ({ isActive }: LinkStyleProps) => ({
   textUnderlineOffset: isActive ? "0.2rem" : "none",
 });
 
-export default function NavLinks() {
+interface NavLinksProps {
+  dropdown: boolean;
+  setDropdown: (value: boolean) => void;
+}
+
+export default function NavLinks({ dropdown, setDropdown }: NavLinksProps) {
   const { token, handleLogout } = useAuth();
 
   return (
-    <nav className="navLinks">
+    <nav className={`navLinks ${dropdown ? "dropdown" : ""}`} onClick={() => setDropdown(false)}>
       <NavLink to="/" style={linkStyle}>
         Home
-      </NavLink>
-      <NavLink to="/overview" style={linkStyle}>
-        Overview
       </NavLink>
       {token ? (
         <>

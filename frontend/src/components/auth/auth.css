@@ -1,8 +1,11 @@
 .authForm {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  justify-content: start;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  box-sizing: border-box;
 }
 
 .authFormInput {
@@ -26,21 +29,34 @@
 .authBtn {
   background-color: var(--dark);
   color: var(--white);
-  padding: 0.8rem;
+  padding: 0.6rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
   font-size: 1rem;
   border: 1px solid var(--pink);
   transition:
     background-color 0.2s ease-in-out,
     color 0.2s ease-in-out,
     border 0.2s ease-in-out;
+  width: 50%;
 }
 
 .authBtn:hover {
   background-color: var(--pink);
   color: var(--white);
+}
+
+
+@media (max-width: 768px) {
+  .authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    box-sizing: border-box;
+  }
 }

@@ -27,7 +27,6 @@ export default function Home() {
     );
 
   const styles = {
-    padding: "4rem 8rem",
     backgroundColor: "var(--black)",
   };
 

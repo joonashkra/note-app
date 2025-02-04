@@ -1,15 +1,18 @@
-@import url("./pages/pages.css");
-@import url("./components/dashboard/sidebar/sidebar.css");
-@import url("./components/dashboard/topbar/topbar.css");
 @import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("./pages/pages.css");
 @import url("./components/navbar/navbar.css");
-@import url("./components/dashboard/dashboard.css");
+@import url("./components/auth/auth.css");
+/*
+@import url("./components/dashboard/sidebar/sidebar.css");
+@import url("./components/dashboard/topbar/topbar.css"); */
+
+/* @import url("./components/dashboard/dashboard.css");
 @import url("./components/profile/profile.css");
 @import url("./components/settings/settings.css");
 @import url("./components/dashboard/notes/notes.css");
 @import url("./components/dashboard/collections/collections.css");
-@import url("./components/general/general.css");
-@import url("./components/auth/auth.css");
+@import url("./components/general/general.css"); */
+
 
 :root {
   --white: #fafafa;
@@ -35,7 +38,7 @@ body {
   color: white;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   .body {
     background-color: var(--white);
     color: var(--black);
@@ -48,6 +51,8 @@ body {
     color: var(--white);
   }
 }
+
+   */
 
 ::selection {
   color: var(--black);
@@ -69,6 +74,7 @@ input[data-autocompleted] {
   background-color: transparent !important;
 }
 
+
 input,
 textarea {
   padding: 0.5rem;
@@ -77,4 +83,55 @@ textarea {
   color: var(--white);
   font-size: 1rem;
   resize: none;
+}
+
+ @media (max-width: 768px) {
+  .hidden {
+    display: none;
+   }
+ }
+
+ button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark);
+  color: var(--white);
+  width: max-content;
+  padding: 0.8rem;
+  cursor: pointer;
+  gap: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid var(--pink);
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--pink);
+  color: var(--white);
+}
+
+button svg {
+  fill: var(--white);
+  transition: fill 0.2s ease-in-out;
+}
+
+button:hover svg {
+  fill: var(--white);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6b6b6b;
+  border-radius: 1rem;
 }

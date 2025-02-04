@@ -7,7 +7,7 @@ export default function Signup() {
 
   return (
     <main className="authPage">
-      <h1>Create your account</h1>
+      <h1>Create account</h1>
       <SignupForm setErrorMsg={setErrorMsg} />
       <ErrorMessage text={errorMsg} />
     </main>

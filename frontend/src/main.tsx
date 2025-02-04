@@ -8,7 +8,6 @@ import DashboardContent from "./components/dashboard/DashboardContent.tsx";
 import Landing from "./pages/Landing.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
-import Overview from "./pages/Overview.tsx";
 import CreateCollection from "./pages/CreateCollection.tsx";
 import Connections from "./pages/Connections.tsx";
 import Profile from "./pages/Profile.tsx";
@@ -41,10 +40,6 @@ const router = createBrowserRouter(
         {
           path: "/signup",
           element: <Signup />,
-        },
-        {
-          path: "/overview",
-          element: <Overview />,
         },
       ],
     },

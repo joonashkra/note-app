@@ -7,7 +7,7 @@ export default function Login() {
 
   return (
     <main className="authPage">
-      <h1>Log in to NoteApp</h1>
+      <h1>Log In</h1>
       <LoginForm setErrorMsg={setErrorMsg} />
       <ErrorMessage text={errorMsg} />
     </main>
