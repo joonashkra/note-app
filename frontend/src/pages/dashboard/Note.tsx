@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
-import noteService from "../services/noteService";
+import noteService from "../../services/noteService";
 import { useQuery } from "@tanstack/react-query";
-import NotFound from "../components/general/NotFound";
-import Loading from "./Loading";
-import DeleteNoteButton from "../components/dashboard/notes/DeleteNoteButton";
+import NotFound from "../../components/general/NotFound";
+import Loading from "../Loading";
+import DeleteNoteButton from "../../components/dashboard/notes/DeleteNoteButton";
 import { useState } from "react";
-import CheckNoteButton from "../components/dashboard/notes/CheckNoteButton";
-import AddToCollectionBtn from "../components/dashboard/notes/AddToCollectionBtn";
-import collectionService from "../services/collectionService";
-import ErrorMessage from "../components/general/ErrorMessage";
-import NoteDetails from "../components/dashboard/notes/NoteDetails";
-import RemoveFromCollection from "../components/dashboard/notes/RemoveFromCollection";
-import ToggleUpdateButton from "../components/general/ToggleUpdateButton";
+import CheckNoteButton from "../../components/dashboard/notes/CheckNoteButton";
+import AddToCollectionBtn from "../../components/dashboard/notes/AddToCollectionBtn";
+import collectionService from "../../services/collectionService";
+import ErrorMessage from "../../components/general/ErrorMessage";
+import NoteDetails from "../../components/dashboard/notes/NoteDetails";
+import RemoveFromCollection from "../../components/dashboard/notes/RemoveFromCollection";
+import ToggleUpdateButton from "../../components/general/ToggleUpdateButton";
 
 export default function Note() {
   const { id = "" } = useParams();

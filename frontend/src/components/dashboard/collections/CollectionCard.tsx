@@ -12,7 +12,7 @@ export default function CollectionCard({
   if (layout === "compact")
     return (
       <div className="collectionCard">
-        <p>{collection.title}</p>
+        <p className="collectionCardTitle">{collection.title}</p>
         <p>
           {collection.notes.length}{" "}
           {collection.notes.length === 1 ? "note" : "notes"}

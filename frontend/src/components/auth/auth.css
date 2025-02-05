@@ -17,38 +17,6 @@
   gap: 0.5rem;
 }
 
-.authFormInput input {
-  background-color: #080808 !important;
-  border: 1px solid var(--pink) !important;
-  color: var(--white);
-  font-size: 1rem;
-  padding: 0.4rem;
-  margin: 0;
-}
-
-.authBtn {
-  background-color: var(--dark);
-  color: var(--white);
-  padding: 0.6rem;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1rem;
-  border: 1px solid var(--pink);
-  transition:
-    background-color 0.2s ease-in-out,
-    color 0.2s ease-in-out,
-    border 0.2s ease-in-out;
-  width: 50%;
-}
-
-.authBtn:hover {
-  background-color: var(--pink);
-  color: var(--white);
-}
-
-
 @media (max-width: 768px) {
   .authForm {
     display: flex;

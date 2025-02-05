@@ -28,11 +28,11 @@ export default function NoteCard({ note, layout }: NoteCardProps) {
     );
   return (
     <div className="noteCard" onClick={() => navigate(`notes/${note.id}`)}>
-      <div>
+      <div className="noteCardTitleContainer">
         <p>{note.title}</p>
         {note.checked && <Check size={24} color="#FFFFFF" />}
       </div>
-      <p>Deadline: {formatDate(note.deadlineDate)}</p>
+      <p>Due: {formatDate(note.deadlineDate)}</p>
     </div>
   );
 }

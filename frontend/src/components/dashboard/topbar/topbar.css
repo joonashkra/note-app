@@ -1,14 +1,38 @@
+@media (prefers-color-scheme: dark) {
+  .topBar {
+    background-color: var(--black);
+    border-bottom: 1px solid var(--pink);
+    color: var(--white);
+  }
+  .topBarBtn {
+    fill: var(--white);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .topBar {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--black);
+    color: var(--black);
+  }
+  .topBarBtn {
+    fill: var(--black);
+  }
+}
+
 .topBar {
   display: flex;
-  background-color: var(--black);
   justify-content: space-between;
-  padding: 1.2rem 2rem;
   align-items: center;
   border-radius: 0;
-  color: var(--white);
-  border-bottom: 1px solid var(--pink);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 3.5rem;
+  max-height: 3.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1rem 0 1rem;
+  z-index: 50;
 }
 
 .topBar h1 {
@@ -20,12 +44,19 @@
   display: flex;
   gap: 2rem;
   justify-content: center;
+  box-sizing: border-box;
+  height: 3.5rem;
+  align-items: center;
+  margin-right: 3.5rem;
 }
 
 .topBarBtn {
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
+  height: 24px;
+  align-self: center;
+  display: flex;
 }
 
 .topBarBtn:hover {
@@ -44,5 +75,20 @@
   }
   100% {
     transform: rotate(360deg) scale(1.1);
+  }
+}
+
+@media (max-width: 768px) {
+  .topBar {
+    left: 0rem;
+  }
+  .topBar h1 {
+    display: none;
+  }
+  .topBarActions {
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 0;
+    margin: 0;
   }
 }

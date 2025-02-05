@@ -1,4 +1,4 @@
-import WorkInProgress from "../components/general/WorkInProgress";
+import WorkInProgress from "../../components/general/WorkInProgress";
 
 export default function Connections() {
   return (

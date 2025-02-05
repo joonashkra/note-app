@@ -1,10 +1,10 @@
 import { useState } from "react";
-import CreateCollectionForm from "../components/dashboard/collections/CreateCollectionForm";
-import ErrorMessage from "../components/general/ErrorMessage";
-import NotFound from "../components/general/NotFound";
-import noteService from "../services/noteService";
+import CreateCollectionForm from "../../components/dashboard/collections/CreateCollectionForm";
+import ErrorMessage from "../../components/general/ErrorMessage";
+import NotFound from "../../components/general/NotFound";
+import noteService from "../../services/noteService";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "./Loading";
+import Loading from "../Loading";
 
 export default function CreateCollection() {
   const [errorMsg, setErrorMsg] = useState("");

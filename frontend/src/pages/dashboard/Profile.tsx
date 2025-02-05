@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import GoBackButton from "../components/general/GoBackButton";
-import ProfileContent from "../components/profile/ProfileContent";
-import { useAuth } from "../hooks/useAuth";
-import userService from "../services/userService";
-import Loading from "./Loading";
+import GoBackButton from "../../components/general/GoBackButton";
+import ProfileContent from "../../components/profile/ProfileContent";
+import { useAuth } from "../../hooks/useAuth";
+import userService from "../../services/userService";
+import Loading from "../Loading";
 import { useState } from "react";
-import ErrorMessage from "../components/general/ErrorMessage";
+import ErrorMessage from "../../components/general/ErrorMessage";
 
 export default function Profile() {
   const { user } = useAuth();

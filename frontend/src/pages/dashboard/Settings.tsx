@@ -1,5 +1,5 @@
-import GoBackButton from "../components/general/GoBackButton";
-import SettingsContent from "../components/settings/SettingsContent";
+import GoBackButton from "../../components/general/GoBackButton";
+import SettingsContent from "../../components/settings/SettingsContent";
 
 export default function Settings() {
   return (

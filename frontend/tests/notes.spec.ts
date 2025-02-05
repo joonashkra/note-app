@@ -68,7 +68,7 @@ test.describe("notes", () => {
 
     await page.getByTestId("deleteNoteBtn").click();
 
-    await page.getByTestId("dashboardOutlet").waitFor();
+    await page.getByTestId("dashboardContent").waitFor();
 
     await expect(page.getByText("No notes yet")).toBeVisible();
   });

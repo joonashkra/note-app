@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LoginForm from "../components/auth/LoginForm";
-import ErrorMessage from "../components/general/ErrorMessage";
+import LoginForm from "../../components/auth/LoginForm";
+import ErrorMessage from "../../components/general/ErrorMessage";
 
 export default function Login() {
   const [errorMsg, setErrorMsg] = useState("");

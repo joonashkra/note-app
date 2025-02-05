@@ -1,25 +1,60 @@
+@media (prefers-color-scheme: light) {
+  .noteCard {
+    border: 1px solid var(--black);
+    background-color: var(--offwhite);
+  }
+  .noteCard:hover {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #d6d6d6 0,
+      #ffffff 0.7px,
+      var(--offwhite) 0.7px,
+      var(--offwhite) 50%
+    );
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .noteCard {
+    border: 1px solid var(--white);
+    background-color: var(--black);
+  }
+  .noteCard:hover {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #131313 0,
+      #131313 0.7px,
+      #000000 0.7px,
+      #000000 50%
+    );
+  }
+}
+
 .notesList {
   display: inline-grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0.5rem;
   list-style: none;
-  width: 100%;
   padding: 0;
   margin: 0;
-}
-
-.notesList > div {
-  border-top: 1px solid black;
-  border-right: 1px solid black;
+  box-sizing: border-box;
 }
 
 .noteCard {
   display: flex;
   flex-direction: column;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--white);
-  background-color: var(--black);
+  overflow: hidden;
+  width: 12dvw;
+  justify-content: center;
 }
+
+.noteCardTitleContainer p {
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} 
 
 .noteCard svg {
   fill: var(--white);
@@ -29,13 +64,6 @@
   border: 1px solid var(--pink);
   opacity: 1;
   background-size: 7px 7px;
-  background-image: repeating-linear-gradient(
-    45deg,
-    #131313 0,
-    #131313 0.7000000000000001px,
-    #000000 0,
-    #000000 50%
-  );
   cursor: pointer;
 }
 
@@ -211,4 +239,22 @@ textarea {
 
 .noteDetailsDetails h2 {
   margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .notesList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .noteCard {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .noteCardTitleContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

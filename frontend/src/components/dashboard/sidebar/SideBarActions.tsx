@@ -11,7 +11,7 @@ export default function SideBarActions() {
 
   return (
     <nav className="sideBarActions">
-      <div>
+      <div className="sideBarBtnContainer">
         <CreateNoteButton
           size={buttonSize}
           color={buttonColor}
@@ -19,7 +19,7 @@ export default function SideBarActions() {
         />
         <p className="sideBarBtnPopUp">Create new note</p>
       </div>
-      <div>
+      <div className="sideBarBtnContainer">
         <CreateCollectionButton
           size={buttonSize}
           color={buttonColor}
@@ -27,7 +27,7 @@ export default function SideBarActions() {
         />
         <p className="sideBarBtnPopUp">Create new collection</p>
       </div>
-      <div>
+      <div className="sideBarBtnContainer">
         <ConnectButton
           size={buttonSize}
           color={buttonColor}

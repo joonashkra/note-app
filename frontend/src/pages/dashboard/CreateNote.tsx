@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CreateNoteForm from "../components/dashboard/notes/CreateNoteForm";
-import ErrorMessage from "../components/general/ErrorMessage";
+import CreateNoteForm from "../../components/dashboard/notes/CreateNoteForm";
+import ErrorMessage from "../../components/general/ErrorMessage";
 
 export default function CreateNote() {
   const [errorMsg, setErrorMsg] = useState("");

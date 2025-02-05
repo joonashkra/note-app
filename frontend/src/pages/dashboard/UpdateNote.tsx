@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
-import UpdateNoteForm from "../components/dashboard/notes/UpdateNoteForm";
+import UpdateNoteForm from "../../components/dashboard/notes/UpdateNoteForm";
 import { useState } from "react";
-import ErrorMessage from "../components/general/ErrorMessage";
-import Fallback from "./Fallback";
+import ErrorMessage from "../../components/general/ErrorMessage";
+import Fallback from "../Fallback";
 
 export default function UpdateNote() {
   const [errorMsg, setErrorMsg] = useState("");

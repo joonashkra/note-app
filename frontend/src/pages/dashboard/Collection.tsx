@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import collectionService from "../services/collectionService";
-import Loading from "./Loading";
-import CollectionDetails from "../components/dashboard/collections/CollectionDetails";
-import DeleteCollectionBtn from "../components/dashboard/collections/DeleteCollectionBtn";
-import Fallback from "./Fallback";
-import ErrorMessage from "../components/general/ErrorMessage";
-import ToggleUpdateButton from "../components/general/ToggleUpdateButton";
+import collectionService from "../../services/collectionService";
+import Loading from "../Loading";
+import CollectionDetails from "../../components/dashboard/collections/CollectionDetails";
+import DeleteCollectionBtn from "../../components/dashboard/collections/DeleteCollectionBtn";
+import Fallback from "../Fallback";
+import ErrorMessage from "../../components/general/ErrorMessage";
+import ToggleUpdateButton from "../../components/general/ToggleUpdateButton";
 
 export default function Collection() {
   const { id = "" } = useParams();

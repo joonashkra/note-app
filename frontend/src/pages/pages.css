@@ -1,14 +1,18 @@
 .landing {
-  padding-top: 3.5rem;
+  margin: 0;
+  padding: 0;
   height: 100%;
+  padding-top: 4rem;
+  padding-bottom: 1rem;
 }
 
 .dashboard {
-  padding-top: 3.5rem;
+  padding-top: 4rem;
+  padding-left: 4rem;
 }
 
 .homePage {
-  margin: 3rem 10rem;
+  margin: 4rem 10rem;
 }
 
 .authPage {
@@ -23,10 +27,42 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard {
+    padding: 0;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    box-sizing: border-box;
+  }
   .homePage  {
     margin: 2rem;
   }
   .authPage {
     height: 80dvh;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .landing {
+    background-color: var(--offwhite);
+  }
+  .dashboard {
+    background-color: var(--offwhite);
+  }
+  .homePage {
+    background-color: var(--offwhite);
+    color: var(--black);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .landing {
+    background-color: var(--black);
+  }
+  .dashboard {
+    background-color: var(--black);
+  }
+  .homePage {
+    background-color: var(--black);
+    color: var(--white);
   }
 }
