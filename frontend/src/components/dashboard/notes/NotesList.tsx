@@ -17,16 +17,10 @@ export default function NotesList({
   if (isLoading) return <Loading />;
 
   if (notes && notes.length < 1)
-    return <NotFound text="No notes yet" size={50} color="#FFFFFF" />;
+    return <NotFound text="No notes yet" size={50} />;
 
   if (notes === undefined)
-    return (
-      <NotFound
-        text="Unexpected error when fetching notes"
-        size={24}
-        color="#FFFFFF"
-      />
-    );
+    return <NotFound text="Unexpected error when fetching notes" size={24} />;
 
   const sortedNotes = [...notes].sort(
     (a, b) =>

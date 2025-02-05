@@ -61,7 +61,7 @@ export default function CreateCollectionForm({
 
   const cancelCreate = () => {
     if (window.confirm("Cancel? All changes will be lost.")) {
-      navigate(-1);
+      navigate("/dashboard");
     }
   };
 
@@ -69,10 +69,26 @@ export default function CreateCollectionForm({
     setSelectedNotes(selectedNotes.filter((note) => note.id !== id));
   };
 
+  const [overview, setOverview] = useState(true);
+
   return (
     <form className="collectionForm" onSubmit={handleSubmit}>
+      <nav className="collectionFormNav">
+        <a
+          onClick={() => setOverview(true)}
+          className={overview ? "active" : ""}
+        >
+          Overview
+        </a>
+        <a
+          onClick={() => setOverview(false)}
+          className={!overview ? "active" : ""}
+        >
+          Notes
+        </a>
+      </nav>
       <div className="collectionFormInputFields">
-        <div className="collectionFormTextFields">
+        <div className={`collectionFormTextFields ${overview ? "active" : ""}`}>
           <input
             required
             type="text"
@@ -88,26 +104,30 @@ export default function CreateCollectionForm({
             rows={12}
             placeholder="Description and details for collection..."
           ></textarea>
-          <div className="collectionFormNotes">
-            <h2>Notes for collection</h2>
-            <CollectionNotesList
-              notes={selectedNotes}
-              removeNoteSelection={removeNoteSelection}
-            />
-          </div>
         </div>
-        <SelectNotesToAdd
-          notes={notes}
-          selectedNotes={selectedNotes}
-          setSelectedNotes={setSelectedNotes}
+        <div
+          className={`collectionFormAddProperties ${!overview ? "active" : ""}`}
+        >
+          <SelectNotesToAdd
+            notes={notes}
+            selectedNotes={selectedNotes}
+            setSelectedNotes={setSelectedNotes}
+          />
+        </div>
+      </div>
+      <div className={`collectionFormNotes ${!overview ? "active" : ""}`}>
+        <h2>Notes for collection</h2>
+        <CollectionNotesList
+          notes={selectedNotes}
+          removeNoteSelection={removeNoteSelection}
         />
       </div>
       <div className="noteActionButtons">
         <button className="noteActionBtn" type="submit">
-          Create <Check size={20} color="#000000" />
+          Create <Check size={20} />
         </button>
         <button className="noteActionBtn" type="button" onClick={cancelCreate}>
-          Cancel <Uncheck size={18} color="#000000" />
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

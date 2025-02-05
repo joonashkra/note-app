@@ -60,7 +60,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
 
   const cancelCreate = () => {
     if (window.confirm("Cancel? All changes will be lost.")) {
-      navigate(-1);
+      navigate("/dashboard");
     }
   };
 
@@ -99,11 +99,11 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
         ></input>
       </div>
       <div className="noteActionButtons">
-        <button className="noteActionBtn" type="submit">
-          Create <Check size={20} color="#000000" />
+        <button type="submit">
+          Create <Check size={20} />
         </button>
-        <button className="noteActionBtn" type="button" onClick={cancelCreate}>
-          Cancel <Uncheck size={18} color="#000000" />
+        <button type="button" onClick={cancelCreate}>
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

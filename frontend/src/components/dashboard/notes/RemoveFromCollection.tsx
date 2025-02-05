@@ -40,7 +40,7 @@ export default function RemoveFromCollection({
         className="noteActionBtn"
         onClick={() => removeNoteFromCollectionMutation()}
       >
-        Remove from current collection <Uncheck size={18} color="#e04343" />
+        Remove from current collection <Uncheck size={18} />
       </button>
     );
 
@@ -53,7 +53,7 @@ export default function RemoveFromCollection({
         data-tooltip-id="remove-note"
         data-tooltip-content="Remove note from collection."
       >
-        <Uncheck size={18} color="#e04343" />
+        <Uncheck size={18} />
       </div>
     </div>
   );

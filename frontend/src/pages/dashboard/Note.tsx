@@ -12,6 +12,7 @@ import ErrorMessage from "../../components/general/ErrorMessage";
 import NoteDetails from "../../components/dashboard/notes/NoteDetails";
 import RemoveFromCollection from "../../components/dashboard/notes/RemoveFromCollection";
 import ToggleUpdateButton from "../../components/general/ToggleUpdateButton";
+import Check from "../../assets/Check";
 
 export default function Note() {
   const { id = "" } = useParams();
@@ -29,11 +30,9 @@ export default function Note() {
 
   if (isNoteLoading || isCollectionsLoading) return <Loading />;
 
-  if (!note)
-    return <NotFound text="Note not found." size={50} color="#FFFFFF" />;
+  if (!note) return <NotFound text="Note not found." size={50} />;
 
-  if (!collections)
-    return <NotFound text="Collections not found." size={50} color="#FFFFFF" />;
+  if (!collections) return <NotFound text="Collections not found." size={50} />;
 
   const currentCollection =
     note.noteCollection !== null
@@ -43,38 +42,38 @@ export default function Note() {
       : null;
 
   return (
-    <main className="noteDetailsPage" data-testid="noteDetailsPage">
+    <main className="notePage" data-testid="notePage">
+      <section
+        style={{ display: "flex", gap: "1rem", alignItems: "center" }}
+        data-testid="noteTitleDiv"
+      >
+        <h1>{note.title}</h1>
+        {note.checked && <Check size={30} />}
+      </section>
       <div>
         <NoteDetails note={note} />
         <ErrorMessage text={errorMsg} />
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "end",
-          gap: "1rem",
-        }}
-      >
+      <div className="noteActions">
         <CheckNoteButton note={note} setErrorMsg={setErrorMsg} />
         <ToggleUpdateButton data={note} />
         <DeleteNoteButton note={note} setErrorMsg={setErrorMsg} />
-        {collections.length > 0 && (
-          <AddToCollectionBtn
-            collections={collections}
-            note={note}
-            setErrorMsg={setErrorMsg}
-          />
-        )}
-        {currentCollection && (
-          <RemoveFromCollection
-            collection={currentCollection}
-            noteId={note.id}
-            layout="button"
-            setErrorMsg={setErrorMsg}
-          />
-        )}
       </div>
+      {currentCollection && (
+        <RemoveFromCollection
+          collection={currentCollection}
+          noteId={note.id}
+          layout="button"
+          setErrorMsg={setErrorMsg}
+        />
+      )}
+      {collections.length > 0 && (
+        <AddToCollectionBtn
+          collections={collections}
+          note={note}
+          setErrorMsg={setErrorMsg}
+        />
+      )}
     </main>
   );
 }

@@ -45,7 +45,7 @@
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
-  height: 24px;
+  height: 25px;
 }
 
 .sideBarBtn:hover {
@@ -90,8 +90,7 @@
   visibility: visible;
 }
 
-
- @media (max-width: 768px) {
+@media (max-width: 768px) {
   .sideBar {
     max-height: 3.5rem;
     position: fixed;
@@ -102,7 +101,7 @@
     justify-content: center;
     height: auto;
     flex-direction: row;
-    border-right: none; 
+    border-right: none;
     position: fixed;
     top: auto;
     left: auto;
@@ -133,5 +132,4 @@
       border-top: 1px solid var(--pink);
     }
   }
- }
-
+}

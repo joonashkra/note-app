@@ -54,7 +54,7 @@
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
-  height: 24px;
+  height: 25px;
   align-self: center;
   display: flex;
 }

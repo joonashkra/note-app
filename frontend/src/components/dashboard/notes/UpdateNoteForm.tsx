@@ -104,10 +104,10 @@ export default function UpdateNoteForm({
           type="submit"
           data-testid="updateNoteBtn"
         >
-          Update <Check size={20} color="#000000" />
+          Update <Check size={20} />
         </button>
         <button className="noteActionBtn" type="button" onClick={cancelUpdate}>
-          Cancel <Uncheck size={18} color="#000000" />
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

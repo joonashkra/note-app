@@ -45,7 +45,7 @@ export default function DeleteCollectionBtn({
         className="noteActionBtn"
         data-testid="deleteCollectionBtn"
       >
-        Delete collection <Trash size={18} color="#000000" />
+        Delete collection <Trash size={18} />
       </button>
     </div>
   );

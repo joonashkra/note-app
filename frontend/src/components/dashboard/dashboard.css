@@ -39,7 +39,7 @@
     top: 5rem;
     z-index: 10;
   }
-  
+
   .dashboardContentNav a {
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -90,8 +90,8 @@
 @media (prefers-color-scheme: dark) {
   .dashboardContentNav a {
     text-shadow:
-    1px 1px 2px var(--black),
-    0 0 1em var(--black),
-    0 0 0.2em var(--black);
+      1px 1px 2px var(--black),
+      0 0 1em var(--black),
+      0 0 0.2em var(--black);
   }
 }

@@ -1,15 +1,10 @@
 import { SvgButtonProps } from "../../../types/props";
 
-export default function CreateNoteButton({
-  size,
-  color,
-  navigate,
-}: SvgButtonProps) {
+export default function CreateNoteButton({ size, navigate }: SvgButtonProps) {
   return (
     <svg
       className="sideBarBtn"
       xmlns="http://www.w3.org/2000/svg"
-      fill={color}
       viewBox="0 0 32 32"
       height={size}
       width={size}

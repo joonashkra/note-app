@@ -20,7 +20,10 @@ export default function NavLinks({ dropdown, setDropdown }: NavLinksProps) {
   const { token, handleLogout } = useAuth();
 
   return (
-    <nav className={`navLinks ${dropdown ? "dropdown" : ""}`} onClick={() => setDropdown(false)}>
+    <nav
+      className={`navLinks ${dropdown ? "dropdown" : ""}`}
+      onClick={() => setDropdown(false)}
+    >
       <NavLink to="/" style={linkStyle}>
         Home
       </NavLink>

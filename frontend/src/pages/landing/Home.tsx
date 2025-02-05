@@ -28,7 +28,10 @@ export default function Home() {
 
   return (
     <main className="homePage" data-testid="homePage">
-      <MarkdownPreview source={readMe} style={{ backgroundColor: "transparent" }} />
+      <MarkdownPreview
+        source={readMe}
+        style={{ backgroundColor: "transparent" }}
+      />
     </main>
   );
 }

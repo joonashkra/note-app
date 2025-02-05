@@ -22,20 +22,37 @@ export default function DashboardContent() {
     <div className="dashboardContent" data-testid="dashboardContent">
       <h1>Dashboard</h1>
       <nav className="dashboardContentNav">
-        <a onClick={() => setNotesView(true)} className={notesView ? "active" : ""}>Notes</a>
-        <a onClick={() => setNotesView(false)} className={!notesView ? "active" : ""}>Collections</a>
+        <a
+          onClick={() => setNotesView(true)}
+          className={notesView ? "active" : ""}
+        >
+          Notes
+        </a>
+        <a
+          onClick={() => setNotesView(false)}
+          className={!notesView ? "active" : ""}
+        >
+          Collections
+        </a>
       </nav>
       <div className="dashboardContentContainer">
-        <section className={`dashboardContentSection ${notesView ? "active" : ""}`}>
+        <section
+          className={`dashboardContentSection ${notesView ? "active" : ""}`}
+        >
           <h2>Notes</h2>
           <div className="dashboardContentSectionData">
             <NotesList notes={notes} isLoading={isLoadingNotes} layout="full" />
           </div>
         </section>
-        <section className={`dashboardContentSection ${!notesView ? "active" : ""}`}>
+        <section
+          className={`dashboardContentSection ${!notesView ? "active" : ""}`}
+        >
           <h2>Collections</h2>
           <div className="dashboardContentSectionData">
-            <CollectionsList collections={collections} isLoading={isLoadingCollections} />
+            <CollectionsList
+              collections={collections}
+              isLoading={isLoadingCollections}
+            />
           </div>
         </section>
       </div>

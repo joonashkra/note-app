@@ -12,6 +12,17 @@
       var(--offwhite) 50%
     );
   }
+  .notesListCompact {
+    border: 1px solid var(--black);
+  }
+  .noteCollectionSelector {
+    border: 1px solid var(--black);
+    background-color: var(--offwhite);
+  }
+  .noteCollectionSelector select {
+    background-color: var(--offwhite);
+    background-image: var(--offwhite);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +38,20 @@
       #000000 0.7px,
       #000000 50%
     );
+  }
+  .notesListCompact {
+    border: 1px solid var(--pink);
+  }
+  .noteCollectionSelector {
+    border: 1px solid var(--pink);
+    background-color: var(--black);
+  }
+  .noteCollectionSelector select {
+    background-color: var(--dark);
+    background-image: var(--dark);
+  }
+  .noteCollectionSelector option {
+    background-color: var(--dark);
   }
 }
 
@@ -54,7 +79,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-} 
+}
 
 .noteCard svg {
   fill: var(--white);
@@ -73,16 +98,6 @@
   gap: 2rem;
 }
 
-.noteForm input,
-textarea {
-  padding: 0.5rem;
-  background-color: var(--dark);
-  border: 1px solid var(--pink);
-  color: var(--white);
-  font-size: 1rem;
-  resize: none;
-}
-
 #dateInput {
   width: max-content;
 }
@@ -96,76 +111,27 @@ textarea {
   flex-direction: column;
 }
 
-.noteCard div {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.noteButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
 .noteActionButtons {
   display: flex;
   gap: 1rem;
-}
-
-.noteActionBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--dark);
-  color: var(--white);
-  width: max-content;
-  padding: 0.8rem;
-  cursor: pointer;
-  gap: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid var(--pink);
-  transition:
-    background-color 0.2s ease-in-out,
-    color 0.2s ease-in-out,
-    border 0.2s ease-in-out;
-}
-
-.noteActionBtn:hover {
-  background-color: var(--pink);
-  color: var(--white);
-}
-
-.noteActionBtn svg {
-  fill: var(--white);
-  transition: fill 0.2s ease-in-out;
-}
-
-.noteActionBtn:hover svg {
-  fill: var(--white);
-}
-
-.checkNoteBtn:hover {
-  background-color: var(--green);
-}
-
-.checkNoteBtn svg {
-  fill: var(--black);
-  transition: fill 0.2s ease-in-out;
-}
-
-.checkNoteBtn:hover svg {
-  fill: var(--white);
 }
 
 .noteCardCompact {
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
-  gap: 1rem;
   justify-content: space-between;
-  gap: 5rem;
-  background-color: var(--dark);
+  width: 20dvw;
+  box-sizing: border-box;
+  gap: 1rem;
+  height: 3rem;
+}
+
+.noteCardCompact p {
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .notesListCompact {
@@ -175,28 +141,25 @@ textarea {
   padding-inline-start: 0;
   width: max-content;
   overflow-y: scroll;
-  width: 100%;
-  max-height: 16.7rem;
+  max-height: 16.1rem;
+  box-sizing: border-box;
   margin: 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--pink) var(--black);
 }
 
-.notesListCompact li {
-  border: 1px solid var(--pink);
+.notesListItem {
+  box-sizing: border-box;
+  cursor: pointer;
+  border-bottom: 1px solid var(--dark);
+}
+
+.notesListItem:last-child {
   border-bottom: none;
-}
-
-.notesListCompact li:last-child {
-  border-bottom: 1px solid var(--pink);
 }
 
 .noteCollectionSelector {
   display: flex;
   flex-direction: column;
   width: max-content;
-  border: 1px solid var(--pink);
-  background-color: var(--black);
   padding: 0 1rem 1rem 1rem;
   gap: 1rem;
 }
@@ -205,40 +168,31 @@ textarea {
   padding: 0.5rem;
   outline: none;
   width: 100%;
-  border: 1px solid var(--pink);
   font-size: 1rem;
   cursor: pointer;
-  background-color: var(--dark);
-  background-image: var(--dark);
-  color: var(--white);
-}
-
-.noteCollectionSelector option {
-  background-color: var(--dark);
 }
 
 .noteDetails {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  gap: 2rem;
 }
 
-.noteDetails h1 {
-  font-size: 2rem;
-}
-
-.noteDetailsDetails {
+.noteActions {
   display: flex;
-  gap: 6rem;
+  gap: 1rem;
 }
 
-.noteDetailsDetails div {
-  display: flex;
-  flex-direction: column;
+.noteCollectionSelector,
+#addToCollectionBtn {
+  margin-bottom: 2rem;
 }
 
-.noteDetailsDetails h2 {
-  margin-bottom: 0;
+.noteDetailsDescription p,
+.noteDetailsCollection p {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 @media (max-width: 768px) {
@@ -247,14 +201,48 @@ textarea {
     flex-direction: column;
     width: 100%;
   }
+
   .noteCard {
     width: 100%;
     box-sizing: border-box;
   }
+
   .noteCardTitleContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .notesListCompact {
+    width: 100%;
+    max-height: 12rem;
+  }
+
+  .notesListItem {
+    width: 100%;
+  }
+
+  .noteCardCompact {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 1rem;
+    height: 3rem;
+  }
+
+  .noteDetails {
+    gap: 1rem;
+  }
+
+  .noteCollectionSelector {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .noteCollectionSelector label {
+    margin: 0;
   }
 }

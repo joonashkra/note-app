@@ -14,8 +14,7 @@ export default function CollectionDetails({
 }: CollectionDetailsProps) {
   const navigate = useNavigate();
 
-  if (!collection)
-    return <NotFound text="Collection not found." size={50} color="#FFFFFF" />;
+  if (!collection) return <NotFound text="Collection not found." size={50} />;
 
   const nonPopulatedCollection = {
     ...collection,
@@ -45,7 +44,7 @@ export default function CollectionDetails({
           <div className="collectionDetailsNotes">
             <h2>Notes</h2>
             {collection.notes.length < 1 ? (
-              <NotFound text="No notes yet." size={50} color="#F0F0F0" />
+              <NotFound text="No notes yet." size={50} />
             ) : (
               <ul>
                 {collection.notes.map((note) => (

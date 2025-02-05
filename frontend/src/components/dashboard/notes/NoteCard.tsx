@@ -22,7 +22,7 @@ export default function NoteCard({ note, layout }: NoteCardProps) {
           data-tooltip-content="This note is already in a collection. Adding it to a new collection will remove it from its previous one."
         >
           <Tooltip id="warning-tooltip" />
-          {note.noteCollection && <Warning size={24} color="#e04343" />}
+          {note.noteCollection && <Warning size={24} />}
         </div>
       </div>
     );
@@ -30,7 +30,7 @@ export default function NoteCard({ note, layout }: NoteCardProps) {
     <div className="noteCard" onClick={() => navigate(`notes/${note.id}`)}>
       <div className="noteCardTitleContainer">
         <p>{note.title}</p>
-        {note.checked && <Check size={24} color="#FFFFFF" />}
+        {note.checked && <Check size={24} />}
       </div>
       <p>Due: {formatDate(note.deadlineDate)}</p>
     </div>
