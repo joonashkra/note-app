@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <header className={`navBar ${dropdown ? "expanded" : ""}`}>
       <div className="navBarTitle">
-        <h1>NoteApp</h1>
+        <h1>To-Do App</h1>
         <div id="menuBtn" onClick={() => setDropdown(!dropdown)}>
           <Menu />
         </div>

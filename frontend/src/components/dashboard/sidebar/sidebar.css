@@ -1,7 +1,7 @@
 @media (prefers-color-scheme: dark) {
   .sideBar {
     background-color: var(--black);
-    border-right: 1px solid var(--pink);
+    border-right: 1px solid var(--user);
   }
   .sideBarBtn {
     fill: var(--white);
@@ -51,7 +51,7 @@
 .sideBarBtn:hover {
   transform: scale(1.1);
   cursor: pointer;
-  fill: var(--pink);
+  fill: var(--user);
 }
 
 .sideBarBtnContainer {
@@ -67,7 +67,7 @@
   left: 120%;
   top: 0%;
   transform: translateY(-50%);
-  background-color: var(--pink);
+  background-color: var(--user);
   color: var(--white);
   padding: 1rem;
   opacity: 0;
@@ -129,7 +129,7 @@
   @media (prefers-color-scheme: dark) {
     .sideBar {
       background-color: var(--black);
-      border-top: 1px solid var(--pink);
+      border-top: 1px solid var(--user);
     }
   }
 }

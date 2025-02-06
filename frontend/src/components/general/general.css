@@ -1,20 +1,23 @@
 #goBackBtn {
-  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .notFound {
   display: flex;
   align-items: center;
+  width: max-content;
+}
+
+.notFound p {
+  min-width: max-content;
 }
 
 .errorMsg {
-  color: var(--pink);
+  color: var(--user);
 }
 
-.workInProgress {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.workInProgress h1 {
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {

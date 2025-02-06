@@ -17,7 +17,7 @@
   .navBar {
     background-color: var(--black);
     color: var(--white);
-    border-bottom: 1px solid var(--pink);
+    border-bottom: 1px solid var(--user);
   }
   .navLinks a {
     color: var(--white);
@@ -63,7 +63,7 @@
 
 .navLinks a:hover {
   cursor: pointer;
-  color: var(--pink);
+  color: var(--user);
 }
 
 @media (max-width: 768px) {

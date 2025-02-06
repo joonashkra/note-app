@@ -16,9 +16,7 @@ test.describe("auth", () => {
     await page.getByRole("button", { name: "Sign Up" }).click();
 
     // redirect after succesful login
-    await expect(
-      page.getByRole("heading", { name: "Log in to NoteApp" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Log In" })).toBeVisible();
   });
 
   test("signup should show error message when user already exists", async ({

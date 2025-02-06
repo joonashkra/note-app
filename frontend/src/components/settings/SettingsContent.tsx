@@ -1,9 +1,9 @@
-import WorkInProgress from "../general/WorkInProgress";
+import ColorPicker from "./ColorPicker";
 
 export default function SettingsContent() {
   return (
     <div className="settings">
-      <WorkInProgress />
+      <ColorPicker />
     </div>
   );
 }

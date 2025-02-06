@@ -6,14 +6,14 @@ export interface User {
   username: string;
   passwordHash: string;
   notes: string[];
-  collections: string[];
+  noteCollections: string[];
 }
 
 export interface PopulatedUser {
   id: string;
   username: string;
   notes: Pick<Note, "id" | "title">[];
-  collections: Pick<Collection, "id" | "title">[];
+  noteCollections: Pick<Collection, "id" | "title">[];
 }
 
 export interface NewUser {

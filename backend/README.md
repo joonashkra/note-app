@@ -1,8 +1,8 @@
-# Note / To-Do Web Application
+# To-Do Application
 
 ## Description
 
-This is a personal project aimed at gaining experience in full-stack development with modern methodologies and technologies. At the time of writing this, the frontend is missing some features and e.g. the CSS is not responsive in the slightest. The app is [deployed to Render](https://note-app-gk6d.onrender.com/) after each successful pipeline run from a push or PR to the main branch.
+This is a note/to-do web application. It's my personal project aimed at gaining experience in full-stack development with modern technologies and methods. The app features e.g. CRUD-operations for notes and collections, user authentication and authorization and a responsive user interface. The app is [deployed to Render](https://note-app-gk6d.onrender.com/) after each successful pipeline run from a push or PR to the main branch.
 
 ## Languages, frameworks and libraries
 

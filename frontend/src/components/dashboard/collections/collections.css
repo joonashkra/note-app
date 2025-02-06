@@ -11,6 +11,19 @@
       #000000 50%
     );
   }
+  .noteToAdd {
+    border: 1px solid var(--white);
+  }
+  .noteToAdd:hover {
+    background-size: 7px 7px;
+    background-image: repeating-linear-gradient(
+      45deg,
+      #131313 0,
+      #131313 0.7000000000000001px,
+      #000000 0,
+      #000000 50%
+    );
+  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -18,6 +31,19 @@
     border: 1px solid var(--black);
   }
   .collectionCard:hover {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #d6d6d6 0,
+      #ffffff 0.7px,
+      var(--offwhite) 0.7px,
+      var(--offwhite) 50%
+    );
+  }
+  .noteToAdd {
+    border: 1px solid var(--black);
+  }
+  .noteToAdd:hover {
+    background-size: 7px 7px;
     background-image: repeating-linear-gradient(
       45deg,
       #d6d6d6 0,
@@ -60,7 +86,7 @@
   opacity: 1;
   background-size: 7px 7px;
   cursor: pointer;
-  border: 1px solid var(--pink);
+  border: 1px solid var(--user);
 }
 
 .collectionForm {
@@ -74,6 +100,15 @@
   display: flex;
   box-sizing: border-box;
   gap: 4rem;
+}
+
+.collectionFormAddProperties label {
+  display: none;
+}
+
+.collectionFormAddProperties label {
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 .collectionFormTextFields {
@@ -96,9 +131,25 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid var(--pink);
+  padding: 1rem 0.5rem;
+  box-sizing: border-box;
+  justify-content: space-between;
+  overflow: hidden;
   width: max-content;
-  padding: 0.5rem;
+  min-width: 0;
+}
+
+.noteToAdd:hover {
+  border: 1px solid var(--user);
+}
+
+.noteToAdd p {
+  min-width: 0;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
 }
 
 .notesToAddList {
@@ -107,6 +158,7 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 .removeSelection {
@@ -128,41 +180,7 @@
   display: flex;
   justify-content: space-between;
   width: 25%;
-  gap: 2rem;
-}
-
-.collectionDetails ul {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  padding-inline-start: 0;
-  width: max-content;
-  overflow-y: scroll;
-  width: 100%;
-  max-height: 26rem;
-  margin: 0;
-  gap: 0.5rem;
-}
-
-.collectionDetailsNotes li {
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem;
-  gap: 1rem;
-  justify-content: space-between;
-  border: 1px solid var(--pink);
-  cursor: pointer;
-}
-
-.collectionDetailsNotes li:hover {
-  background-size: 7px 7px;
-  background-image: repeating-linear-gradient(
-    45deg,
-    #131313 0,
-    #131313 0.7000000000000001px,
-    #000000 0,
-    #000000 50%
-  );
+  gap: 4rem;
 }
 
 .collectionDetailsUsers li {
@@ -187,6 +205,27 @@
 
 .collectionFormNav {
   display: none;
+}
+
+.collectionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.createCollectionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  bottom: 2rem;
+}
+
+.collectionFormAddedNotes label {
+  font-size: 1.5rem;
+}
+
+#updateCollectionAddProperties {
+  margin-top: 1.7rem;
 }
 
 @media (max-width: 768px) {
@@ -215,33 +254,26 @@
   }
 
   .collectionFormNav a.active {
-    border-color: var(--pink);
+    border-color: var(--user);
+  }
+
+  .collectionFormInputFields {
+    display: flex;
+    flex-direction: column;
   }
 
   .collectionFormTextFields {
-    display: none;
-  }
-
-  .collectionFormTextFields.active {
     display: flex;
     width: 100%;
   }
 
   .collectionFormAddProperties {
-    display: none;
-  }
-
-  .collectionFormAddProperties.active {
     display: flex;
     width: 100%;
     max-width: 100%;
   }
 
   .collectionFormNotes {
-    display: none;
-  }
-
-  .collectionFormNotes.active {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -254,5 +286,25 @@
 
   #notFoundSvg {
     height: 40px;
+  }
+
+  .collectionDetailsLists {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .collectionFormAddedNotes label,
+  .collectionFormAddProperties label {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .noteToAdd {
+    width: 100%;
+  }
+
+  #updateCollectionAddProperties {
+    margin: 0;
   }
 }

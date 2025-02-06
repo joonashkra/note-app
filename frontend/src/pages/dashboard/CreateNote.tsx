@@ -8,10 +8,10 @@ export default function CreateNote() {
 
   return (
     <main className="createNotePage">
+      <GoBackButton text="Back to Dashboard" route="/dashboard" />
       <h1>Create New Note</h1>
       <CreateNoteForm setErrorMsg={setErrorMsg} />
       <ErrorMessage text={errorMsg} />
-      <GoBackButton text="Back to Dashboard" route="/dashboard" />
     </main>
   );
 }

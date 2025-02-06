@@ -13,6 +13,7 @@ import NoteDetails from "../../components/dashboard/notes/NoteDetails";
 import RemoveFromCollection from "../../components/dashboard/notes/RemoveFromCollection";
 import ToggleUpdateButton from "../../components/general/ToggleUpdateButton";
 import Check from "../../assets/Check";
+import GoBackButton from "../../components/general/GoBackButton";
 
 export default function Note() {
   const { id = "" } = useParams();
@@ -43,9 +44,11 @@ export default function Note() {
 
   return (
     <main className="notePage" data-testid="notePage">
+      <GoBackButton text="Back to Dashboard" route="/dashboard" />
       <section
         style={{ display: "flex", gap: "1rem", alignItems: "center" }}
         data-testid="noteTitleDiv"
+        className="noteTitleDiv"
       >
         <h1>{note.title}</h1>
         {note.checked && <Check size={30} />}

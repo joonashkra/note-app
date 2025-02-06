@@ -27,6 +27,7 @@ export default function SelectNotesToAdd({
 
   return (
     <>
+      <label>Notes for collection</label>
       <input
         type="text"
         placeholder="Search for notes..."

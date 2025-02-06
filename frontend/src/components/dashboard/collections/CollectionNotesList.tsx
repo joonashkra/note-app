@@ -15,7 +15,7 @@ export default function CollectionNotesList({
     <ul className="notesToAddList">
       {notes.map((note) => (
         <li key={note.id} className="noteToAdd">
-          {note.title}
+          <p>{note.title}</p>
           <div
             className="removeSelection"
             onClick={() => removeNoteSelection(note.id)}
@@ -24,7 +24,7 @@ export default function CollectionNotesList({
           </div>
         </li>
       ))}
-      {notes.length < 1 && <NotFound size={50} text="No notes yet" />}
+      {notes.length < 1 && <NotFound size={50} text="No notes added yet" />}
     </ul>
   );
 }

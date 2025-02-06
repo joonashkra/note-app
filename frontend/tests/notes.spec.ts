@@ -37,7 +37,7 @@ test.describe("notes", () => {
     await page.getByTestId("createNoteBtn").click();
     await createNote(page, newTestNote);
 
-    await expect(page.getByTestId("noteDetailsPage")).toBeVisible();
+    await expect(page.getByTestId("notePage")).toBeVisible();
 
     await expect(page.getByText(newTestNote.title)).toBeVisible();
     await expect(page.getByText(newTestNote.description)).toBeVisible();
@@ -57,14 +57,14 @@ test.describe("notes", () => {
     await createNote(page, newTestNote);
     await page.getByTestId("checkNoteBtn").waitFor();
     await page.getByTestId("checkNoteBtn").click();
-    await expect(page.getByText("Uncheck done")).toBeVisible();
+    await expect(page.getByText("Uncheck")).toBeVisible();
   });
 
   test("delete note should work", async ({ page }) => {
     await page.getByTestId("createNoteBtn").click();
     await createNote(page, { ...newTestNote, title: "noteToDelete" });
 
-    await expect(page.getByTestId("noteDetailsPage")).toBeVisible();
+    await expect(page.getByTestId("notePage")).toBeVisible();
 
     await page.getByTestId("deleteNoteBtn").click();
 
@@ -77,7 +77,7 @@ test.describe("notes", () => {
     await page.getByTestId("createNoteBtn").click();
     await createNote(page, newTestNote);
 
-    await expect(page.getByTestId("noteDetailsPage")).toBeVisible();
+    await expect(page.getByTestId("notePage")).toBeVisible();
 
     await page.getByTestId("toggleUpdateBtn").click();
 
@@ -88,7 +88,7 @@ test.describe("notes", () => {
 
     await page.getByTestId("updateNoteBtn").click();
 
-    await expect(page.getByTestId("noteDetailsPage")).toBeVisible();
+    await expect(page.getByTestId("notePage")).toBeVisible();
 
     await expect(page.getByText("updatedTitle")).toBeVisible();
     await expect(page.getByText("updated description")).toBeVisible();

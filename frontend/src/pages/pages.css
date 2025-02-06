@@ -41,9 +41,61 @@
   gap: 1rem;
 }
 
-.notePage h1 {
+.noteTitleDiv {
+  display: flex;
+}
+
+.noteTitleDiv h1 {
+  min-width: 0;
+  box-sizing: border-box;
   font-size: 2rem;
   margin: 0;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.collectionPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  gap: 1rem;
+}
+
+.collectionPage h1 {
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 2rem;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.updateNotePage {
+  margin: 2rem;
+}
+
+.updateCollectionPage {
+  margin: 2rem;
+}
+
+.connectionsPage {
+  margin: 2rem;
+}
+
+.settingsPage {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 2rem;
+}
+
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -66,7 +118,6 @@
     font-size: 0.8rem;
   }
   .createNotePage h1 {
-    text-align: center;
     margin-bottom: 1.5rem;
   }
   .createCollectionPage {
@@ -76,11 +127,43 @@
     font-size: 0.8rem;
   }
   .createCollectionPage h1 {
-    text-align: center;
     margin-bottom: 1.5rem;
   }
   .notePage {
     margin: 1rem;
+  }
+  .noteTitleDiv h1 {
+    font-size: 1.8rem;
+  }
+  .collectionPage {
+    margin: 1rem;
+  }
+  .collectionPage h1 {
+    font-size: 1.8rem;
+  }
+  .updateNotePage {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    font-size: 0.8rem;
+  }
+  .updateNotePage h1 {
+    margin-bottom: 1.5rem;
+  }
+  .updateCollectionPage {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    font-size: 0.8rem;
+  }
+  .updateCollectionPage h1 {
+    margin-bottom: 1.5rem;
+  }
+  .connectionsPage {
+    margin: 2rem 1rem;
+  }
+  .connectionsPage h1 {
+    font-size: 1.8rem;
   }
 }
 

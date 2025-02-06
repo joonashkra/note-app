@@ -11,7 +11,7 @@
 
 .dashboardContentContainer {
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .dashboardContentNav {
@@ -49,7 +49,7 @@
   }
 
   .dashboardContentNav a.active {
-    border-color: var(--pink);
+    border-color: var(--user);
   }
 
   .dashboardContentContainer {

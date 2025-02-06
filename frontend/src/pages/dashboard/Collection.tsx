@@ -8,6 +8,7 @@ import DeleteCollectionBtn from "../../components/dashboard/collections/DeleteCo
 import Fallback from "../Fallback";
 import ErrorMessage from "../../components/general/ErrorMessage";
 import ToggleUpdateButton from "../../components/general/ToggleUpdateButton";
+import GoBackButton from "../../components/general/GoBackButton";
 
 export default function Collection() {
   const { id = "" } = useParams();
@@ -23,9 +24,11 @@ export default function Collection() {
   if (isLoading) return <Loading />;
 
   return (
-    <main className="collectionDetailsPage">
+    <main className="collectionPage">
+      <GoBackButton text="Back to Dashboard" route="/dashboard" />
+      <h1>{collection.title}</h1>
       <CollectionDetails collection={collection} setErrorMsg={setErrorMsg} />
-      <div className="noteActionButtons">
+      <div className="collectionButtons">
         <ToggleUpdateButton data={collection} />
         <DeleteCollectionBtn
           collectionId={collection.id}

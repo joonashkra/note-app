@@ -59,7 +59,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
   const currDate = now.toISOString().slice(0, 16);
 
   const cancelCreate = () => {
-    if (window.confirm("Cancel? All changes will be lost.")) {
+    if (confirm("Cancel? All changes will be lost.")) {
       navigate("/dashboard");
     }
   };
@@ -87,7 +87,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
         placeholder="Description and details for note..."
       ></textarea>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        <label>Deadline date:</label>
+        <label>Deadline date</label>
         <input
           required
           name="deadlineDate"

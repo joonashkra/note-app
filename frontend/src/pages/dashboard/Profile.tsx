@@ -9,7 +9,7 @@ import ErrorMessage from "../../components/general/ErrorMessage";
 
 export default function Profile() {
   const { user } = useAuth();
-  console.log(user);
+
   const [errorMsg, setErrorMsg] = useState("");
 
   const { data, isLoading, isError } = useQuery({
@@ -23,10 +23,7 @@ export default function Profile() {
 
   return (
     <div className="profilePage">
-      <div id="GoBackBtn">
-        <GoBackButton route={-1} text="Go Back" />
-      </div>
-      <h1>Profile</h1>
+      <GoBackButton route="/dashboard" text="Back to Dashboard" />
       {data && <ProfileContent user={data} />}
       <ErrorMessage text={errorMsg} />
     </div>

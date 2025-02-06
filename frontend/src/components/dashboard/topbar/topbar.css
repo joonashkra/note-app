@@ -1,7 +1,7 @@
 @media (prefers-color-scheme: dark) {
   .topBar {
     background-color: var(--black);
-    border-bottom: 1px solid var(--pink);
+    border-bottom: 1px solid var(--user);
     color: var(--white);
   }
   .topBarBtn {
@@ -62,7 +62,7 @@
 .topBarBtn:hover {
   transform: scale(1.1);
   cursor: pointer;
-  fill: var(--pink);
+  fill: var(--user);
 }
 
 #settingsBtn:hover {

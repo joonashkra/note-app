@@ -7,7 +7,7 @@ interface LinkStyleProps {
 
 const linkStyle = ({ isActive }: LinkStyleProps) => ({
   textDecoration: isActive ? "underline" : "none",
-  textDecorationColor: isActive ? "var(--pink)" : "none",
+  textDecorationColor: isActive ? "var(--user)" : "none",
   textUnderlineOffset: isActive ? "0.2rem" : "none",
 });
 

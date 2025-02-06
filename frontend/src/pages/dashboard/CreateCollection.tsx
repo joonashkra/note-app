@@ -22,10 +22,10 @@ export default function CreateCollection() {
 
   return (
     <main className="createCollectionPage">
+      <GoBackButton text="Back to Dashboard" route="/dashboard" />
       <h1>Create New Collection</h1>
       <CreateCollectionForm setErrorMsg={setErrorMsg} notes={notes} />
       <ErrorMessage text={errorMsg} />
-      <GoBackButton text="Back to Dashboard" route="/dashboard" />
     </main>
   );
 }
