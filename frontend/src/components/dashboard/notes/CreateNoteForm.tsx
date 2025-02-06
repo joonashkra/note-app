@@ -59,8 +59,8 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
   const currDate = now.toISOString().slice(0, 16);
 
   const cancelCreate = () => {
-    if (window.confirm("Cancel? All changes will be lost.")) {
-      navigate(-1);
+    if (confirm("Cancel? All changes will be lost.")) {
+      navigate("/dashboard");
     }
   };
 
@@ -87,7 +87,7 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
         placeholder="Description and details for note..."
       ></textarea>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        <label>Deadline date:</label>
+        <label>Deadline date</label>
         <input
           required
           name="deadlineDate"
@@ -99,11 +99,11 @@ export default function CreateNoteForm({ setErrorMsg }: CreateNoteFormProps) {
         ></input>
       </div>
       <div className="noteActionButtons">
-        <button className="noteActionBtn" type="submit">
-          Create <Check size={20} color="#000000" />
+        <button type="submit">
+          Create <Check size={20} />
         </button>
-        <button className="noteActionBtn" type="button" onClick={cancelCreate}>
-          Cancel <Uncheck size={18} color="#000000" />
+        <button type="button" onClick={cancelCreate}>
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

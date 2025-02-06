@@ -82,47 +82,58 @@ export default function UpdateCollectionForm({
     <form className="collectionForm" onSubmit={handleSubmit}>
       <div className="collectionFormInputFields">
         <div className="collectionFormTextFields">
-          <input
-            required
-            type="text"
-            name="title"
-            maxLength={25}
-            id="titleInput"
-            placeholder="Title for collection..."
-            defaultValue={collection.title}
-          ></input>
-          <textarea
-            typeof="text"
-            name="description"
-            maxLength={2500}
-            rows={12}
-            placeholder="Description and details for collection..."
-            defaultValue={collection.description}
-          ></textarea>
-          <div className="collectionFormNotes">
-            <h2>Notes in collection</h2>
-            <CollectionNotesList
-              notes={selectedNotes}
-              removeNoteSelection={removeNoteSelection}
-            />
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+          >
+            <label>Title</label>
+            <input
+              required
+              type="text"
+              name="title"
+              maxLength={25}
+              id="titleInput"
+              placeholder="Title for collection..."
+              defaultValue={collection.title}
+            ></input>
+          </div>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+          >
+            <label>Description</label>
+            <textarea
+              typeof="text"
+              name="description"
+              maxLength={2500}
+              rows={12}
+              placeholder="Description and details for collection..."
+              defaultValue={collection.description}
+            ></textarea>
           </div>
         </div>
-        <SelectNotesToAdd
-          notes={notes}
-          selectedNotes={selectedNotes}
-          setSelectedNotes={setSelectedNotes}
+        <div
+          className="collectionFormAddProperties"
+          id="updateCollectionAddProperties"
+        >
+          <SelectNotesToAdd
+            notes={notes}
+            selectedNotes={selectedNotes}
+            setSelectedNotes={setSelectedNotes}
+          />
+        </div>
+      </div>
+      <div className="collectionFormAddedNotes">
+        <label>Added notes</label>
+        <CollectionNotesList
+          notes={selectedNotes}
+          removeNoteSelection={removeNoteSelection}
         />
       </div>
-      <div className="noteActionButtons">
-        <button
-          className="noteActionBtn"
-          type="submit"
-          data-testid="updateCollectionBtn"
-        >
-          Update <Check size={20} color="#000000" />
+      <div className="createCollectionButtons">
+        <button type="submit" data-testid="updateCollectionBtn">
+          Update <Check size={20} />
         </button>
-        <button className="noteActionBtn" type="button" onClick={cancelUpdate}>
-          Cancel <Uncheck size={18} color="#000000" />
+        <button type="button" onClick={cancelUpdate}>
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

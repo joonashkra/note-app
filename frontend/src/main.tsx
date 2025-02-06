@@ -2,27 +2,26 @@ import "./index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./pages/Dashboard.tsx";
-import CreateNote from "./pages/CreateNote.tsx";
+import Dashboard from "./pages/dashboard/Dashboard.tsx";
+import CreateNote from "./pages/dashboard/CreateNote.tsx";
 import DashboardContent from "./components/dashboard/DashboardContent.tsx";
-import Landing from "./pages/Landing.tsx";
-import Login from "./pages/Login.tsx";
-import Signup from "./pages/Signup.tsx";
-import Overview from "./pages/Overview.tsx";
-import CreateCollection from "./pages/CreateCollection.tsx";
-import Connections from "./pages/Connections.tsx";
-import Profile from "./pages/Profile.tsx";
-import Settings from "./pages/Settings.tsx";
+import Landing from "./pages/landing/Landing.tsx";
+import Login from "./pages/landing/Login.tsx";
+import Signup from "./pages/landing/Signup.tsx";
+import CreateCollection from "./pages/dashboard/CreateCollection.tsx";
+import Connections from "./pages/dashboard/Connections.tsx";
+import Profile from "./pages/dashboard/Profile.tsx";
+import Settings from "./pages/dashboard/Settings.tsx";
 import AuthProvider from "./components/auth/AuthProvider.tsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
-import Note from "./pages/Note.tsx";
+import Note from "./pages/dashboard/Note.tsx";
 import Fallback from "./pages/Fallback.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import UpdateNote from "./pages/UpdateNote.tsx";
-import Home from "./pages/Home.tsx";
-import Collection from "./pages/Collection.tsx";
+import UpdateNote from "./pages/dashboard/UpdateNote.tsx";
+import Home from "./pages/landing/Home.tsx";
+import Collection from "./pages/dashboard/Collection.tsx";
 import "react-tooltip/dist/react-tooltip.css";
-import UpdateCollection from "./pages/UpdateCollection.tsx";
+import UpdateCollection from "./pages/dashboard/UpdateCollection.tsx";
 
 const router = createBrowserRouter(
   [
@@ -41,10 +40,6 @@ const router = createBrowserRouter(
         {
           path: "/signup",
           element: <Signup />,
-        },
-        {
-          path: "/overview",
-          element: <Overview />,
         },
       ],
     },

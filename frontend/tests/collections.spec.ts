@@ -28,7 +28,7 @@ test.describe("collections", () => {
     });
 
     await login(page, existingUser.username, existingUser.password);
-    await page.getByTestId("dashboardOutlet").waitFor();
+    await page.getByTestId("dashboardContent").waitFor();
   });
 
   test("create collection should work", async ({ page }) => {
@@ -63,7 +63,7 @@ test.describe("collections", () => {
 
     await page.getByTestId("deleteCollectionBtn").click();
 
-    await page.getByTestId("dashboardOutlet").waitFor();
+    await page.getByTestId("dashboardContent").waitFor();
 
     await expect(page.getByText("No collections yet")).toBeVisible();
   });

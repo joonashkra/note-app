@@ -20,7 +20,7 @@ export default function ToggleUpdateButton({ data }: ToggleUpdateButtonProps) {
       onClick={toggleUpdate}
       data-testid="toggleUpdateBtn"
     >
-      Update <Edit size={16} color="#000000" />
+      Update <Edit size={16} />
     </button>
   );
 }

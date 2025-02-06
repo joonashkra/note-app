@@ -1,8 +1,8 @@
-# Note / To-Do Web Application
+# To-Do Application
 
 ## Overview
 
-This personal project serves as a hands-on learning experience in full-stack development, incorporating modern methodologies and technologies. The application is in continuous development, as its primary purpose is to facilitate my learning. As a result, some features are missing, and e.g. the CSS is not yet responsive. However, the app is **[deployed to Render](https://note-app-gk6d.onrender.com/)**, but only after each successful pipeline run from a push or pull request to the main branch, ensuring it is never in a "broken" state. The free instance of Render will spin down with inactivity, which can delay requests by 50 seconds or more.
+This is a note/to-do web application. It's my personal project aimed at gaining experience in full-stack development with modern technologies and methods. The app features e.g. CRUD-operations for notes and collections, user authentication and authorization and a responsive user interface. The app is [deployed to Render](https://note-app-gk6d.onrender.com/) after each successful pipeline run from a push or PR to the main branch.
 
 ## Languages, frameworks and libraries
 

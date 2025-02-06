@@ -19,15 +19,11 @@ export default function CollectionsList({
 
   if (collections === undefined)
     return (
-      <NotFound
-        text="Unexpected error when fetching collections"
-        size={24}
-        color="#FFFFFF"
-      />
+      <NotFound text="Unexpected error when fetching collections" size={24} />
     );
 
   if (collections.length < 1)
-    return <NotFound text="No collections yet" size={50} color="#FFFFFF" />;
+    return <NotFound text="No collections yet" size={50} />;
 
   return (
     <ul className="collectionList">

@@ -1,42 +1,97 @@
-.dashboardOutlet {
-  display: flex;
-  flex-direction: column;
-}
-
-.dashboard h1 {
-  margin-bottom: 0;
-}
-
 .dashboardContent {
-  margin-top: 0;
-  display: flex;
-  background-color: transparent;
-  justify-content: space-between;
-  color: var(--white);
-  gap: 4rem;
-  margin-bottom: 1rem;
-}
-
-.dashboardContentSection {
   display: flex;
   flex-direction: column;
+  margin: 2rem;
+  gap: 1rem;
 }
 
-.dashboardContentSection:first-child {
-  flex: 3;
+.dashboardContent h1 {
+  margin: 0;
 }
 
-.dashboardContentSection:last-child {
-  flex: 1;
-}
-
-.dashboardContentSectionData {
+.dashboardContentContainer {
   display: flex;
-  background-color: var(--black);
-  align-items: center;
+  gap: 4rem;
 }
 
-.dashboardContentSectionData svg {
-  fill: black;
-  stroke: black;
+.dashboardContentNav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .dashboardContent {
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1rem;
+  }
+
+  .dashboardContent h1 {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .dashboardContentNav {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
+    z-index: 10;
+  }
+
+  .dashboardContentNav a {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  .dashboardContentNav a.active {
+    border-color: var(--user);
+  }
+
+  .dashboardContentContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dashboardContentSection {
+    display: none;
+  }
+
+  .dashboardContentSection.active h2 {
+    display: none;
+  }
+
+  .dashboardContentSection.active {
+    display: block;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .noteCard {
+    border: 1px solid var(--black);
+    background-color: var(--offwhite);
+  }
+  .noteCard:hover {
+    background-image: repeating-linear-gradient(
+      45deg,
+      #ffffff 0,
+      #ffffff 0.7px,
+      var(--offwhite) 0.7px,
+      var(--offwhite) 50%
+    );
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dashboardContentNav a {
+    text-shadow:
+      1px 1px 2px var(--black),
+      0 0 1em var(--black),
+      0 0 0.2em var(--black);
+  }
 }

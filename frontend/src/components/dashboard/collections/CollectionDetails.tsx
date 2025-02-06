@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { PopulatedCollection } from "../../../types/collections";
 import NotFound from "../../general/NotFound";
 import RemoveFromCollection from "../notes/RemoveFromCollection";
+import Uncheck from "../../../assets/Uncheck";
+import { Tooltip } from "react-tooltip";
 
 interface CollectionDetailsProps {
   collection: PopulatedCollection | undefined;
@@ -14,8 +16,7 @@ export default function CollectionDetails({
 }: CollectionDetailsProps) {
   const navigate = useNavigate();
 
-  if (!collection)
-    return <NotFound text="Collection not found." size={50} color="#FFFFFF" />;
+  if (!collection) return <NotFound text="Collection not found." size={50} />;
 
   const nonPopulatedCollection = {
     ...collection,
@@ -25,31 +26,22 @@ export default function CollectionDetails({
 
   return (
     <div className="collectionDetails" data-testid="collectionDetails">
-      <h1>{collection.title}</h1>
-      <div className="collectionDetailsData">
-        <section className="collectionDetailsDescription">
-          <h2>Description</h2>
-          <p>
-            {collection.description ? collection.description : "No description"}
-          </p>
-        </section>
-        <section className="collectionDetailsLists">
-          <div className="collectionDetailsUsers">
-            <h2>Users</h2>
-            <ul>
-              {collection.users.map((user) => (
-                <li key={user.id}>{user.username}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="collectionDetailsNotes">
-            <h2>Notes</h2>
-            {collection.notes.length < 1 ? (
-              <NotFound text="No notes yet." size={50} color="#F0F0F0" />
-            ) : (
-              <ul>
-                {collection.notes.map((note) => (
-                  <li key={note.id}>
+      <section className="collectionDetailsDescription">
+        <h2>Description</h2>
+        <p>
+          {collection.description ? collection.description : "No description"}
+        </p>
+      </section>
+      <section className="collectionDetailsLists">
+        <div>
+          <h2>Notes</h2>
+          {collection.notes.length < 1 ? (
+            <NotFound text="No notes yet." size={50} />
+          ) : (
+            <ul className="notesListCompact">
+              {collection.notes.map((note) => (
+                <li key={note.id} className="notesListItem">
+                  <div className="noteCardCompact">
                     <p
                       style={{ cursor: "pointer" }}
                       onClick={() => navigate(`/dashboard/notes/${note.id}`)}
@@ -62,13 +54,30 @@ export default function CollectionDetails({
                       setErrorMsg={setErrorMsg}
                       layout="icon"
                     />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </section>
-      </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div>
+          <h2>Users</h2>
+          <ul className="notesListCompact users">
+            {collection.users.map((user) => (
+              <li className="notesListItem" key={user.id}>
+                <div
+                  className="noteCardCompact"
+                  data-tooltip-id="remove-user"
+                  data-tooltip-content="Managing collection users not available yet."
+                >
+                  <Tooltip id="remove-user" />
+                  {user.username} <Uncheck size={18} />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
     </div>
   );
 }

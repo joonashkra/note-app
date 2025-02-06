@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import axios from "axios";
-import Loading from "./Loading";
-import NotFound from "../components/general/NotFound";
+import Loading from "../Loading";
+import NotFound from "../../components/general/NotFound";
 
 export default function Home() {
   const getReadMe = async () => {
@@ -23,17 +23,15 @@ export default function Home() {
 
   if (isError)
     return (
-      <NotFound text="Failed to fetch README.md" size={60} color="#FFFFFF" />
+      <NotFound text="Failed to fetch README.md" size={60} />
     );
-
-  const styles = {
-    padding: "4rem 8rem",
-    backgroundColor: "var(--black)",
-  };
 
   return (
     <main className="homePage" data-testid="homePage">
-      <MarkdownPreview source={readMe} style={styles} />
+      <MarkdownPreview
+        source={readMe}
+        style={{ backgroundColor: "transparent" }}
+      />
     </main>
   );
 }

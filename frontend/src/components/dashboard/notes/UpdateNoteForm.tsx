@@ -68,26 +68,38 @@ export default function UpdateNoteForm({
 
   return (
     <form className="noteForm" onSubmit={handleSubmit}>
-      <input
-        required
-        type="text"
-        name="title"
-        maxLength={25}
-        id="titleInput"
-        placeholder="Title for note..."
-        defaultValue={note.title}
-      ></input>
-      <textarea
-        required
-        typeof="text"
-        name="description"
-        maxLength={2500}
-        rows={12}
-        placeholder="Description and details for note..."
-        defaultValue={note.description}
-      ></textarea>
+      <div
+        className="noteFormInput"
+        style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+      >
+        <label>Title</label>
+        <input
+          required
+          type="text"
+          name="title"
+          maxLength={25}
+          id="titleInput"
+          placeholder="Title for note..."
+          defaultValue={note.title}
+        ></input>
+      </div>
+      <div
+        className="noteFormInput"
+        style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+      >
+        <label>Description</label>
+        <textarea
+          required
+          typeof="text"
+          name="description"
+          maxLength={2500}
+          rows={12}
+          placeholder="Description and details for note..."
+          defaultValue={note.description}
+        ></textarea>
+      </div>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        <label>Deadline date:</label>
+        <label>Deadline date</label>
         <input
           required
           name="deadlineDate"
@@ -104,10 +116,10 @@ export default function UpdateNoteForm({
           type="submit"
           data-testid="updateNoteBtn"
         >
-          Update <Check size={20} color="#000000" />
+          Update <Check size={20} />
         </button>
         <button className="noteActionBtn" type="button" onClick={cancelUpdate}>
-          Cancel <Uncheck size={18} color="#000000" />
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

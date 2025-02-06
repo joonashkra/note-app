@@ -1,72 +1,41 @@
 "use strict";
-var __awaiter =
-  (this && this.__awaiter) ||
-  function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-      return value instanceof P
-        ? value
-        : new P(function (resolve) {
-            resolve(value);
-          });
-    }
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
-      function fulfilled(value) {
-        try {
-          step(generator.next(value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function rejected(value) {
-        try {
-          step(generator["throw"](value));
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function step(result) {
-        result.done
-          ? resolve(result.value)
-          : adopt(result.value).then(fulfilled, rejected);
-      }
-      step((generator = generator.apply(thisArg, _arguments || [])).next());
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../models/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const mongoose_1 = require("mongoose");
-const login = (loginAttempt) =>
-  __awaiter(void 0, void 0, void 0, function* () {
+const login = (loginAttempt) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = loginAttempt;
     const user = yield user_1.default.findOne({ username });
-    const validLogin =
-      user === null
-        ? false
-        : yield bcrypt_1.default.compare(password, user.passwordHash);
-    if (!(user && validLogin)) throw new mongoose_1.MongooseError("LoginError");
+    const validLogin = user === null ? false : yield bcrypt_1.default.compare(password, user.passwordHash);
+    if (!(user && validLogin))
+        throw new mongoose_1.MongooseError("LoginError");
     const userForToken = {
-      username: user.username,
-      id: user._id,
+        username: user.username,
+        id: user._id,
     };
     const secret = process.env.SECRET;
     if (!secret) {
-      throw new Error("No secret.");
+        throw new Error("No secret.");
     }
-    const token = jsonwebtoken_1.default.sign(userForToken, secret, {
-      expiresIn: "1d",
-    });
+    const token = jsonwebtoken_1.default.sign(userForToken, secret, { expiresIn: "1d" });
     return {
-      user: userForToken,
-      token,
+        user: userForToken,
+        token,
     };
-  });
+});
 exports.default = {
-  login,
+    login,
 };

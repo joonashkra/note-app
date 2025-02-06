@@ -1,6 +1,6 @@
 import { SvgProps } from "../types/props";
 
-export default function Edit({ size, color }: SvgProps) {
+export default function Edit({ size }: SvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@ export default function Edit({ size, color }: SvgProps) {
       viewBox="0 0 1920 1920"
       height={size}
       width={size}
-      fill={color}
+      className="buttonSvg"
     >
       <path
         fillRule="evenodd"

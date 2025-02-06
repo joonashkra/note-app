@@ -12,21 +12,19 @@ export default function CollectionNotesList({
   removeNoteSelection,
 }: CollectionNotesListProps) {
   return (
-    <ul className="noteToAddList">
+    <ul className="notesToAddList">
       {notes.map((note) => (
         <li key={note.id} className="noteToAdd">
-          {note.title}
+          <p>{note.title}</p>
           <div
             className="removeSelection"
             onClick={() => removeNoteSelection(note.id)}
           >
-            <Uncheck color="#e04343" size={15} />
+            <Uncheck size={15} />
           </div>
         </li>
       ))}
-      {notes.length < 1 && (
-        <NotFound size={50} color="#F0F0F0" text="No notes yet." />
-      )}
+      {notes.length < 1 && <NotFound size={50} text="No notes added yet" />}
     </ul>
   );
 }

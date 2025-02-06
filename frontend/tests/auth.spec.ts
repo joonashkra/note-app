@@ -16,9 +16,7 @@ test.describe("auth", () => {
     await page.getByRole("button", { name: "Sign Up" }).click();
 
     // redirect after succesful login
-    await expect(
-      page.getByRole("heading", { name: "Log in to NoteApp" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Log In" })).toBeVisible();
   });
 
   test("signup should show error message when user already exists", async ({
@@ -50,7 +48,7 @@ test.describe("auth", () => {
     await page.getByRole("button", { name: "Log In" }).click();
 
     // redirect to dashboard after successful login
-    await expect(page.getByTestId("dashboardOutlet")).toBeVisible();
+    await expect(page.getByTestId("dashboardContent")).toBeVisible();
   });
 
   test("login should show error message with invalid credentials", async ({

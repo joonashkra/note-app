@@ -26,7 +26,8 @@ export default function SelectNotesToAdd({
   );
 
   return (
-    <div className="collectionFormAddProperties">
+    <>
+      <label>Notes for collection</label>
       <input
         type="text"
         placeholder="Search for notes..."
@@ -39,12 +40,12 @@ export default function SelectNotesToAdd({
             key={note.id}
             onClick={() => setSelectedNotes(selectedNotes.concat(note))}
             data-testid="notesListItem"
-            className="noteSelectionItem"
+            className="notesListItem"
           >
             <NoteCard note={note} layout="compact" />
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }

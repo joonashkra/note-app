@@ -63,12 +63,17 @@ export default function AddToCollectionBtn({
           <div style={{ display: "flex" }}>
             <Tooltip id="warning-tooltip" />
             <p
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                marginBottom: 0,
+              }}
               data-tooltip-id="warning-tooltip"
               data-tooltip-content="This note is already in a collection. Adding it to a new collection will remove it from its previous one."
             >
-              Select collection to add note in{" "}
-              {note.noteCollection && <Warning size={20} color="#e04343" />}
+              Select a collection for note{" "}
+              {note.noteCollection && <Warning size={20} />}
             </p>
           </div>
           {availableCollections.length > 0 ? (
@@ -92,28 +97,23 @@ export default function AddToCollectionBtn({
             <button
               onClick={handleAddToCollection}
               disabled={!selectedCollection || isPending}
-              className="noteActionBtn"
             >
-              {isPending ? "Adding..." : "Add"}{" "}
-              <Check size={20} color="#F0F0F0" />
+              {isPending ? "Adding..." : "Add"} <Check size={20} />
             </button>
-            <button
-              onClick={() => setIsToggled(!isToggled)}
-              className="noteActionBtn"
-            >
-              Cancel <Uncheck size={20} color="#F0F0F0" />
+            <button onClick={() => setIsToggled(!isToggled)}>
+              Cancel <Uncheck size={20} />
             </button>
           </div>
         </div>
       ) : (
         <button
-          className="noteActionBtn"
           onClick={() => setIsToggled(!isToggled)}
+          id="addToCollectionBtn"
         >
           {note.noteCollection !== null
             ? "Change collection"
             : "Add to collection"}
-          <CollectionSvg size={18} color="F0F0F0" />
+          <CollectionSvg size={18} />
         </button>
       )}
     </>

@@ -43,11 +43,11 @@ export default function CheckNoteButton({
     >
       {!note.checked ? (
         <>
-          Check as done <Check size={22} color="#000000" />
+          Check <Check size={22} />
         </>
       ) : (
         <>
-          Uncheck done <Uncheck size={22} color="#000000" />
+          Uncheck <Uncheck size={22} />
         </>
       )}
     </button>

@@ -61,7 +61,7 @@ export default function CreateCollectionForm({
 
   const cancelCreate = () => {
     if (window.confirm("Cancel? All changes will be lost.")) {
-      navigate(-1);
+      navigate("/dashboard");
     }
   };
 
@@ -88,26 +88,28 @@ export default function CreateCollectionForm({
             rows={12}
             placeholder="Description and details for collection..."
           ></textarea>
-          <div className="collectionFormNotes">
-            <h2>Notes for collection</h2>
-            <CollectionNotesList
-              notes={selectedNotes}
-              removeNoteSelection={removeNoteSelection}
-            />
-          </div>
         </div>
-        <SelectNotesToAdd
-          notes={notes}
-          selectedNotes={selectedNotes}
-          setSelectedNotes={setSelectedNotes}
+        <div className="collectionFormAddProperties">
+          <SelectNotesToAdd
+            notes={notes}
+            selectedNotes={selectedNotes}
+            setSelectedNotes={setSelectedNotes}
+          />
+        </div>
+      </div>
+      <div className="collectionFormAddedNotes">
+        <label>Added notes</label>
+        <CollectionNotesList
+          notes={selectedNotes}
+          removeNoteSelection={removeNoteSelection}
         />
       </div>
-      <div className="noteActionButtons">
-        <button className="noteActionBtn" type="submit">
-          Create <Check size={20} color="#000000" />
+      <div className="createCollectionButtons">
+        <button type="submit">
+          Create <Check size={20} />
         </button>
-        <button className="noteActionBtn" type="button" onClick={cancelCreate}>
-          Cancel <Uncheck size={18} color="#000000" />
+        <button type="button" onClick={cancelCreate}>
+          Cancel <Uncheck size={18} />
         </button>
       </div>
     </form>

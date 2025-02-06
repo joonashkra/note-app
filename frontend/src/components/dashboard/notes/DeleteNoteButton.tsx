@@ -37,7 +37,7 @@ export default function DeleteNoteButton({
       }}
       data-testid="deleteNoteBtn"
     >
-      Delete <Trash size={18} color="#000000" />
+      Delete <Trash size={18} />
     </button>
   );
 }

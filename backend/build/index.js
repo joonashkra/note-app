@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.server = void 0;
 const path_1 = __importDefault(require("path"));
@@ -22,27 +20,27 @@ const testing_1 = __importDefault(require("./routes/testing"));
 const noteCollections_1 = __importDefault(require("./routes/noteCollections"));
 const app = (0, express_1.default)();
 if (process.env.NODE_ENV === "production") {
-  app.use(express_1.default.static(path_1.default.join(__dirname, "dist")));
+    app.use(express_1.default.static(path_1.default.join(__dirname, "dist")));
 }
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 mongoose_1.default.set("strictQuery", false);
-const MONGODB_URI =
-  process.env.NODE_ENV === "test"
+const MONGODB_URI = process.env.NODE_ENV === "test"
     ? process.env.TEST_MONGODB_URI
     : process.env.MONGODB_URI;
 if (MONGODB_URI) {
-  const safeURI = MONGODB_URI.match(/@([^/]+\/[^?]+)/);
-  if (safeURI) console.log("connecting to", safeURI[1]);
-  mongoose_1.default
-    .connect(MONGODB_URI)
-    .then((_result) => console.log("Connected to MongoDB"))
-    .catch((error) => console.log("error connecting to MongoDB:", error));
+    const safeURI = MONGODB_URI.match(/@([^/]+\/[^?]+)/);
+    if (safeURI)
+        console.log("connecting to", safeURI[1]);
+    mongoose_1.default
+        .connect(MONGODB_URI)
+        .then((_result) => console.log("Connected to MongoDB"))
+        .catch((error) => console.log("error connecting to MongoDB:", error));
 }
 if (process.env.NODE_ENV === "test") {
-  app.get("/", (_req, res) => {
-    res.status(200).send("OK");
-  });
+    app.get("/", (_req, res) => {
+        res.status(200).send("OK");
+    });
 }
 app.use("/api/testing", testing_1.default);
 app.use("/api/readme", readme_1.default);
@@ -53,11 +51,11 @@ app.use("/api/collections", middleware_1.default.checkAuth);
 app.use("/api/notes", notes_1.default);
 app.use("/api/collections", noteCollections_1.default);
 app.get("*", (_req, res) => {
-  res.sendFile(path_1.default.join(__dirname, "dist", "index.html"));
+    res.sendFile(path_1.default.join(__dirname, "dist", "index.html"));
 });
 app.use(middleware_1.default.errorHandler);
 const PORT = process.env.PORT || 3001;
 exports.server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
 exports.default = app;

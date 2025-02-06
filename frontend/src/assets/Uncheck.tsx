@@ -1,13 +1,13 @@
 import { SvgProps } from "../types/props";
 
-export default function Uncheck({ size, color }: SvgProps) {
+export default function Uncheck({ size }: SvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
       height={size}
       width={size}
-      fill={color}
+      className="buttonSvg"
     >
       <title>{"cancel"}</title>
       <path

@@ -5,3 +5,28 @@
   align-items: center;
   text-align: start;
 }
+
+.colorPickerContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.colorPicker {
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+}
+
+.colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colorPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
