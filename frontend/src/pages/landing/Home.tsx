@@ -23,7 +23,7 @@ export default function Home() {
 
   if (isError)
     return (
-      <NotFound text="Failed to fetch README.md" size={60} color="#FFFFFF" />
+      <NotFound text="Failed to fetch README.md" size={60} />
     );
 
   return (
