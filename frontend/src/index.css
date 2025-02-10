@@ -12,16 +12,18 @@
 @import url("./components/general/general.css");
 
 :root {
-  --white: #f5f5f5;
-  --offwhite: #ececec;
+  --white: #f0f0f0;
+  --offwhite: #e4e4e4;
   --pink: #db3c3c;
-  --gray: #ffffff00;
   --blue: #21294c;
   --purple: #15002b;
-  --dark: #080808;
+  --darkblue: #07070e;
+  --gray: #515155;
+  --darkgray: #212125;
   --black: #080808;
   --green: #3c6149;
   --user: #db3c3c;
+  --orange: #e6a16a;
 }
 
 body {
@@ -35,63 +37,73 @@ body {
     background-color: var(--offwhite);
     color: var(--black);
   }
-  ::selection {
-    color: var(--black);
-    background: var(--user);
-  }
   input:focus {
     background-color: var(--white);
-    outline: 1px solid var(--black);
+    outline: 1px solid var(--darkgray);
   }
   input,
   textarea {
     background-color: var(--white);
-    border: 1px solid var(--black);
+    border: 1px solid var(--gray);
     color: var(--black);
   }
 
   button {
     background-color: var(--white);
     color: var(--black);
-    border: 1px solid var(--black);
+    border: 1px solid var(--gray);
   }
   .buttonSvg {
     fill: var(--black);
     background-color: transparent;
   }
+  button:hover {
+    background-color: var(--offwhite);
+    border: 1px solid var(--black);
+    color: var(--black);
+  }
+  button:hover svg {
+    fill: var(--black);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: var(--black);
+    background-color: var(--darkblue);
     color: var(--white);
   }
 
-  ::selection {
-    color: var(--black);
-    background: var(--user);
-  }
-
   input:focus {
-    background-color: var(--black);
-    outline: 1px solid var(--user);
+    background-color: var(--darkgray);
+    outline: 1px solid var(--gray);
   }
 
   input,
   textarea {
-    background-color: var(--dark);
-    border: 1px solid var(--user);
-    color: var(--white);
+    background-color: var(--darkgray);
+    border: 1px solid var(--darkgray);
+    color: var(--offwhite);
+  }
+
+  textarea:focus {
+    outline: 1px solid var(--gray);
   }
 
   button {
-    background-color: var(--dark);
-    color: var(--white);
-    border: 1px solid var(--user);
+    color: var(--offwhite);
+    background-color: transparent;
+    border: 1px solid var(--gray);
   }
   .buttonSvg {
     fill: var(--white);
     background-color: transparent;
+  }
+  button:hover {
+    background-color: var(--darkgray);
+    color: var(--white);
+  }
+  button:hover svg {
+    fill: var(--white);
   }
 }
 
@@ -117,6 +129,7 @@ input,
 textarea {
   padding: 0.5rem;
   font-size: 1rem;
+  border-radius: 0.5rem;
   resize: none;
 }
 
@@ -135,25 +148,16 @@ button {
   cursor: pointer;
   gap: 0.5rem;
   font-size: 1rem;
+  border-radius: 0.5rem;
   transition:
     background-color 0.2s ease-in-out,
     color 0.2s ease-in-out,
     border 0.2s ease-in-out;
 }
 
-button:hover {
-  background-color: var(--user);
-  color: var(--white);
-  border: 1px solid transparent;
-}
-
 button svg {
   fill: var(--white);
   transition: fill 0.2s ease-in-out;
-}
-
-button:hover svg {
-  fill: var(--white);
 }
 
 ::-webkit-scrollbar {

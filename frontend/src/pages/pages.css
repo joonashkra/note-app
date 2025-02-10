@@ -182,13 +182,13 @@
 
 @media (prefers-color-scheme: dark) {
   .landing {
-    background-color: var(--black);
+    background-color: var(--darkblue);
   }
   .dashboard {
-    background-color: var(--black);
+    background-color: var(--darkblue);
   }
   .homePage {
-    background-color: var(--black);
+    background-color: var(--darkblue);
     color: var(--white);
   }
 }

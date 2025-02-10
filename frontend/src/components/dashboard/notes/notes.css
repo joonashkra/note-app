@@ -1,16 +1,12 @@
 @media (prefers-color-scheme: light) {
   .noteCard {
-    border: 1px solid var(--black);
-    background-color: var(--offwhite);
+    border: 1px solid var(--gray);
+    background-color: var(--white);
   }
   .noteCard:hover {
-    background-image: repeating-linear-gradient(
-      45deg,
-      #d6d6d6 0,
-      #ffffff 0.7px,
-      var(--offwhite) 0.7px,
-      var(--offwhite) 50%
-    );
+    border: 1px solid var(--black);
+    background-color: var(--offwhite);
+    background-image: none;
   }
   .notesListCompact {
     border: 1px solid var(--black);
@@ -20,22 +16,14 @@
     background-color: var(--offwhite);
   }
   .noteCollectionSelector select {
-    background-color: var(--offwhite);
-    background-image: var(--offwhite);
+    background-color: var(--white);
   }
   .notesListItem {
     border-bottom: 1px solid var(--dark);
     background-color: var(--white);
   }
   .notesListItem:hover {
-    background-size: 7px 7px;
-    background-image: repeating-linear-gradient(
-      45deg,
-      #d6d6d6 0,
-      #ffffff 0.7px,
-      var(--offwhite) 0.7px,
-      var(--offwhite) 50%
-    );
+    background-color: var(--offwhite);
   }
   .noteToAdd {
     background-color: var(--white);
@@ -44,29 +32,20 @@
 
 @media (prefers-color-scheme: dark) {
   .noteCard {
-    border: 1px solid var(--white);
-    background-color: var(--black);
+    border: 1px solid var(--gray);
   }
   .noteCard:hover {
-    background-image: repeating-linear-gradient(
-      45deg,
-      #131313 0,
-      #131313 0.7px,
-      #000000 0.7px,
-      #000000 50%
-    );
+    border: 1px solid var(--offwhite);
   }
   .notesListCompact {
-    border: 1px solid var(--user);
+    border: 1px solid var(--gray);
   }
   .noteCollectionSelector {
-    border: 1px solid var(--user);
-    background-color: var(--black);
+    border: 1px solid var(--gray);
   }
   .noteCollectionSelector select {
-    background-color: var(--dark);
+    background-color: var(--darkgray);
     color: var(--white);
-    background-image: var(--dark);
   }
   .noteCollectionSelector option {
     color: var(--white);
@@ -76,18 +55,11 @@
     border-bottom: 1px solid var(--black);
     background-color: var(--dark);
   }
-  .notesListItem:hover {
-    background-size: 7px 7px;
-    background-image: repeating-linear-gradient(
-      45deg,
-      #131313 0,
-      #131313 0.7000000000000001px,
-      #000000 0,
-      #000000 50%
-    );
-  }
   .noteToAdd {
     background-color: var(--dark);
+  }
+  .notesListItem:hover {
+    background-color: var(--darkgray);
   }
 }
 
@@ -110,6 +82,13 @@
   justify-content: center;
 }
 
+.noteCardTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .noteCardTitleContainer p {
   box-sizing: border-box;
   white-space: nowrap;
@@ -118,9 +97,6 @@
 }
 
 .noteCard:hover {
-  border: 1px solid var(--user);
-  opacity: 1;
-  background-size: 7px 7px;
   cursor: pointer;
 }
 

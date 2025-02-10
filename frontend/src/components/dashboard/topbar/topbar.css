@@ -1,10 +1,13 @@
 @media (prefers-color-scheme: dark) {
   .topBar {
-    background-color: var(--black);
-    border-bottom: 1px solid var(--user);
-    color: var(--white);
+    background-color: var(--darkblue);
+    border-bottom: 1px solid var(--gray);
+    color: var(--offwhite);
   }
   .topBarBtn {
+    fill: var(--offwhite);
+  }
+  .topBarBtn:hover {
     fill: var(--white);
   }
 }
@@ -12,10 +15,13 @@
 @media (prefers-color-scheme: light) {
   .topBar {
     background-color: var(--white);
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid var(--darkgray);
     color: var(--black);
   }
   .topBarBtn {
+    fill: var(--darkgray);
+  }
+  .topBarBtn:hover {
     fill: var(--black);
   }
 }
@@ -36,7 +42,7 @@
 }
 
 .topBar h1 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin: 0;
 }
 
@@ -54,7 +60,7 @@
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
-  height: 25px;
+  height: 24px;
   align-self: center;
   display: flex;
 }
@@ -62,7 +68,6 @@
 .topBarBtn:hover {
   transform: scale(1.1);
   cursor: pointer;
-  fill: var(--user);
 }
 
 #settingsBtn:hover {

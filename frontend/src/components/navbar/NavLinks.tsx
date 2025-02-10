@@ -7,8 +7,8 @@ interface LinkStyleProps {
 
 const linkStyle = ({ isActive }: LinkStyleProps) => ({
   textDecoration: isActive ? "underline" : "none",
-  textDecorationColor: isActive ? "var(--user)" : "none",
-  textUnderlineOffset: isActive ? "0.2rem" : "none",
+  textDecorationColor: isActive ? "var(--gray)" : "none",
+  textUnderlineOffset: isActive ? "0.3rem" : "none",
 });
 
 interface NavLinksProps {

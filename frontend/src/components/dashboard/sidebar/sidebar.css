@@ -1,10 +1,18 @@
 @media (prefers-color-scheme: dark) {
   .sideBar {
-    background-color: var(--black);
-    border-right: 1px solid var(--user);
+    background-color: var(--darkblue);
+    border-right: 1px solid var(--gray);
   }
   .sideBarBtn {
+    fill: var(--offwhite);
+  }
+  .sideBarBtn:hover {
     fill: var(--white);
+  }
+  .sideBarBtnPopUp {
+    background-color: var(--darkgray);
+    color: var(--offwhite);
+    border: 1px solid var(--gray);
   }
 }
 
@@ -14,7 +22,15 @@
     border-right: 1px solid var(--black);
   }
   .sideBarBtn {
+    fill: var(--darkgray);
+  }
+  .sideBarBtn:hover {
     fill: var(--black);
+  }
+  .sideBarBtnPopUp {
+    background-color: var(--white);
+    color: var(--black);
+    border: 1px solid var(--gray);
   }
 }
 
@@ -28,6 +44,7 @@
   top: 0;
   left: 0;
   max-width: 3.5rem;
+  z-index: 100;
 }
 
 .sideBarActions {
@@ -45,13 +62,12 @@
   transition:
     transform 0.2s ease-in-out,
     fill 0.2s ease-in-out;
-  height: 25px;
+  height: 24px;
 }
 
 .sideBarBtn:hover {
   transform: scale(1.1);
   cursor: pointer;
-  fill: var(--user);
 }
 
 .sideBarBtnContainer {
@@ -65,14 +81,11 @@
 .sideBarBtnPopUp {
   position: absolute;
   left: 120%;
-  top: 0%;
+  top: -10%;
   transform: translateY(-50%);
-  background-color: var(--user);
-  color: var(--white);
   padding: 1rem;
   opacity: 0;
   visibility: hidden;
-  color: var(--white);
   transition:
     opacity 0.2s ease-in-out,
     visibility 0.2s ease-in-out;
@@ -128,8 +141,8 @@
   }
   @media (prefers-color-scheme: dark) {
     .sideBar {
-      background-color: var(--black);
-      border-top: 1px solid var(--user);
+      background-color: var(--darkblue);
+      border-top: 1px solid var(--gray);
     }
   }
 }

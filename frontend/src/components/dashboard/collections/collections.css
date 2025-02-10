@@ -1,56 +1,30 @@
 @media (prefers-color-scheme: dark) {
   .collectionCard {
-    border: 1px solid var(--white);
+    border: 1px solid var(--gray);
   }
   .collectionCard:hover {
-    background-image: repeating-linear-gradient(
-      45deg,
-      #131313 0,
-      #131313 0.7000000000000001px,
-      #000000 0,
-      #000000 50%
-    );
+    border: 1px solid var(--offwhite);
   }
   .noteToAdd {
-    border: 1px solid var(--white);
+    border: 1px solid var(--gray);
   }
   .noteToAdd:hover {
-    background-size: 7px 7px;
-    background-image: repeating-linear-gradient(
-      45deg,
-      #131313 0,
-      #131313 0.7000000000000001px,
-      #000000 0,
-      #000000 50%
-    );
+    border: 1px solid var(--offwhite);
   }
 }
 
 @media (prefers-color-scheme: light) {
   .collectionCard {
-    border: 1px solid var(--black);
+    border: 1px solid var(--gray);
+    background-color: var(--white);
   }
   .collectionCard:hover {
-    background-image: repeating-linear-gradient(
-      45deg,
-      #d6d6d6 0,
-      #ffffff 0.7px,
-      var(--offwhite) 0.7px,
-      var(--offwhite) 50%
-    );
+    border: 1px solid var(--black);
+    background-color: var(--offwhite);
+    background-image: none;
   }
   .noteToAdd {
     border: 1px solid var(--black);
-  }
-  .noteToAdd:hover {
-    background-size: 7px 7px;
-    background-image: repeating-linear-gradient(
-      45deg,
-      #d6d6d6 0,
-      #ffffff 0.7px,
-      var(--offwhite) 0.7px,
-      var(--offwhite) 50%
-    );
   }
 }
 
@@ -86,7 +60,6 @@
   opacity: 1;
   background-size: 7px 7px;
   cursor: pointer;
-  border: 1px solid var(--user);
 }
 
 .collectionForm {
@@ -137,10 +110,6 @@
   overflow: hidden;
   width: max-content;
   min-width: 0;
-}
-
-.noteToAdd:hover {
-  border: 1px solid var(--user);
 }
 
 .noteToAdd p {

@@ -2,28 +2,28 @@
   .navBar {
     background-color: var(--white);
     color: var(--black);
-    border-bottom: 1px solid var(--black);
+    border-bottom: 1px solid var(--darkgray);
   }
   .navLinks a {
     color: var(--black);
   }
   .navBarTitle svg {
-    stroke: var(--black);
+    stroke: var(--darkgray);
     cursor: pointer;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .navBar {
-    background-color: var(--black);
-    color: var(--white);
-    border-bottom: 1px solid var(--user);
+    background-color: var(--darkblue);
+    color: var(--offwhite);
+    border-bottom: 1px solid var(--gray);
   }
   .navLinks a {
-    color: var(--white);
+    color: var(--offwhite);
   }
   .navBarTitle svg {
-    stroke: var(--white);
+    stroke: var(--offwhite);
     cursor: pointer;
   }
 }
@@ -40,7 +40,7 @@
   width: 100%;
   justify-content: space-around;
   align-items: center;
-  z-index: 50;
+  z-index: 100;
 }
 
 .navBar h1 {
@@ -63,7 +63,6 @@
 
 .navLinks a:hover {
   cursor: pointer;
-  color: var(--user);
 }
 
 @media (max-width: 768px) {
